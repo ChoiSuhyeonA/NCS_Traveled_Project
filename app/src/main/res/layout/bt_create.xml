@@ -95,6 +95,26 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnPhotoBookSave"
+        android:layout_width="337dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="#E2EEF6"
+        android:fontFamily="@font/binggraebold"
+        android:shadowColor="#0890FB"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowRadius="5"
+        android:text="저 장"
+        android:textSize="20dp" />
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_launcher_foreground"
+        android:id="@+id/testimage"/>
+    <Button
         android:id="@+id/btnPhotoBookPageCreate"
         android:layout_width="337dp"
         android:layout_height="42dp"
@@ -123,20 +143,7 @@
         android:text="페이지 삭제"
         android:textSize="20dp" />
 
-    <Button
-        android:id="@+id/btnPhotoBookSave"
-        android:layout_width="337dp"
-        android:layout_height="42dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:background="#E2EEF6"
-        android:fontFamily="@font/binggraebold"
-        android:shadowColor="#0890FB"
-        android:shadowDx="0"
-        android:shadowDy="1"
-        android:shadowRadius="5"
-        android:text="저 장"
-        android:textSize="20dp" />
+
 
 
 </LinearLayout>

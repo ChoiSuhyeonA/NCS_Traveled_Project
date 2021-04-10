@@ -13,9 +13,11 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
@@ -83,6 +85,7 @@ public class BT_CreateActivity extends Activity {
         Button btnPhotoBookSave = findViewById(R.id.btnPhotoBookSave);
         Button btnPhotoBookPageCreate = findViewById(R.id.btnPhotoBookPageCreate);
         Button btnPhotoBookPageDelete = findViewById(R.id.btnPhotoBookPageDelete);
+        final ImageView testimage = findViewById(R.id.testimage);
 
         //그리드뷰 + 어댑터
         GridView gridView = findViewById(R.id.gridview);
@@ -164,45 +167,49 @@ public class BT_CreateActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReference();
-                StorageReference imageRef = storageRef.child("images/");
-
-               Uri file  = Uri.fromFile(new File(String.valueOf(imageList.get(0))));
-
-               UploadTask uploadTask = imageRef.putFile(file);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(BT_CreateActivity.this, "업로드 실패", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(BT_CreateActivity.this, "업로드 성공", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-//                //다운로드 테스트
-//                String fileName= "pet1.png";
-//                File fileDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES +"/images");
-//                File downloadFile = new File(fileDir, fileName);
 //                FirebaseStorage storage = FirebaseStorage.getInstance();
-//                StorageReference storageReference = storage.getReference();
-//                StorageReference downloadRef = storageReference.child("images/pet1.png");
+//                StorageReference storageRef = storage.getReference();
+//                StorageReference imageRef = storageRef.child("images/");
 //
 //
-//                downloadRef.getFile(downloadFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-//                        Toast.makeText(BT_CreateActivity.this, "다운로드 성공", Toast.LENGTH_SHORT).show();
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
+//
+//               Uri file  = Uri.fromFile(new File(imageList.get(0).toString()));
+//
+//               UploadTask uploadTask = imageRef.putFile(file);
+//                uploadTask.addOnFailureListener(new OnFailureListener() {
 //                    @Override
 //                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(BT_CreateActivity.this, "다운로드 실패", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(BT_CreateActivity.this, "업로드 실패", Toast.LENGTH_SHORT).show();
+//                    }
+//                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    Toast.makeText(BT_CreateActivity.this, "업로드 성공", Toast.LENGTH_SHORT).show();
 //                    }
 //                });
+
+                // 다운로드 테스트
+                String fileName= "pet1.png";
+                File fileDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES +"/images");
+                final File downloadFile = new File(fileDir, fileName);
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageReference = storage.getReference();
+                StorageReference downloadRef = storageReference.child("images/pet1.png");
+
+
+                downloadRef.getFile(downloadFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(BT_CreateActivity.this, "다운로드 성공", Toast.LENGTH_SHORT).show();
+
+                        Glide.with(BT_CreateActivity.this).load(new File(downloadFile.getAbsolutePath())).into(testimage);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(BT_CreateActivity.this, "다운로드 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
 
