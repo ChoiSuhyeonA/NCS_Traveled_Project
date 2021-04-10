@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "769067809670",
-    "project_id": "traveled-b4f5b",
-    "storage_bucket": "traveled-b4f5b.appspot.com"
+    "project_number": "536271702433",
+    "project_id": "traveled-886f3",
+    "storage_bucket": "traveled-886f3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:769067809670:android:7a5928c7bf12365fbdca07",
+        "mobilesdk_app_id": "1:536271702433:android:8a3d068ebb858255b4a3e0",
         "android_client_info": {
           "package_name": "com.hanshin.ncs_travled"
         }
       },
       "oauth_client": [
         {
-          "client_id": "769067809670-oojqss6vg95t4jq0okmepbs80jr2p6fc.apps.googleusercontent.com",
+          "client_id": "536271702433-3bqhufcmk9ro88tsl2jummi4s9dalem2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC_gmdkZBp5gkgGPn0GxFt32CW1O6EeRp8"
+          "current_key": "AIzaSyDOAZ3mX3PSVz147RImUBmcBNs9_jbldXA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "769067809670-oojqss6vg95t4jq0okmepbs80jr2p6fc.apps.googleusercontent.com",
+              "client_id": "536271702433-3bqhufcmk9ro88tsl2jummi4s9dalem2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -41,7 +41,6 @@ public class BT_CreateActivity extends Activity {
     ArrayList<Uri> videoList = new ArrayList<Uri>();
     BT_GridViewAdapter adapter;
 
-    private  final  File localFile =null;
 
     TabLayout tabLayout;
     public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
@@ -165,48 +164,45 @@ public class BT_CreateActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-//                FirebaseStorage storage = FirebaseStorage.getInstance();
-//
-//                //1. 사진을 storage에 저장하고 그 url을 알아내야함..
-//                StorageReference storageRef = storage.getReference();
-//               StorageReference imageRef = storageRef.child("images/upload1.jpg");
-//               Uri file  = Uri.fromFile(new File("path/to/images/cowgirl-419084_1920.jpg"));
-//
-//               UploadTask uploadTask = imageRef.putFile(file);
-//
-//                uploadTask.addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(BT_CreateActivity.this, "업로드 실패", Toast.LENGTH_SHORT).show();
-//                    }
-//                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Toast.makeText(BT_CreateActivity.this, "업로드 성공", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-
-                //다운로드 테스트
                 FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageReference = storage.getReference();
-                StorageReference imageRef = storageReference.child("images/채수빈.jpg");
-                try {
-                    File localFile = File.createTempFile("images","jpg");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                StorageReference storageRef = storage.getReference();
+                StorageReference imageRef = storageRef.child("images/");
 
-                imageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(BT_CreateActivity.this, "다운로드 실패", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+               Uri file  = Uri.fromFile(new File(String.valueOf(imageList.get(0))));
+
+               UploadTask uploadTask = imageRef.putFile(file);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(BT_CreateActivity.this, "다운로드 성공", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BT_CreateActivity.this, "업로드 실패", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(BT_CreateActivity.this, "업로드 성공", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+//                //다운로드 테스트
+//                String fileName= "pet1.png";
+//                File fileDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES +"/images");
+//                File downloadFile = new File(fileDir, fileName);
+//                FirebaseStorage storage = FirebaseStorage.getInstance();
+//                StorageReference storageReference = storage.getReference();
+//                StorageReference downloadRef = storageReference.child("images/pet1.png");
+//
+//
+//                downloadRef.getFile(downloadFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                        Toast.makeText(BT_CreateActivity.this, "다운로드 성공", Toast.LENGTH_SHORT).show();
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(BT_CreateActivity.this, "다운로드 실패", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
             }
 
