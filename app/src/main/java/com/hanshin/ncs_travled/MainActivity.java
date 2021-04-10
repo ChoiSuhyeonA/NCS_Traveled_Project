@@ -12,11 +12,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
+
 public class MainActivity extends AppCompatActivity {
 
     Button mapSelAreaBtn, mapGoyangnBtn, mapBuGwangBtn, mapSeoulBtn, mapAnAnBtn, mapSuwonBtn, mapSuYoBtn;
-    ListView listview ;
+    ListView listview;
     HT_ListViewAdapter adapter;
+    TabLayout tabLayout;
+    public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //////// 상단 맵
+        tabLayout = findViewById(R.id.Htabs);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                // TODO : tab의 상태가 선택 상태로 변경
+
+                int pos = tab.getPosition();
+                if (pos == 0) { // 첫 번째 탭 선택.
+                    Toast.makeText(getApplicationContext(), "탭1", Toast.LENGTH_SHORT).show();
+                } else if (pos == 1) { // 두 번째 탭 선택.
+                    Intent intent = new Intent(getApplicationContext(), BT_CreateActivity.class);
+                    startActivityForResult(intent, sub);
+                } else if (pos == 2) { // 세 번째 탭 선택.
+                    Toast.makeText(getApplicationContext(), "탭3", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+
+        });
 
         mapSelAreaBtn = findViewById(R.id.homeMap_selAreaBtn);
         mapGoyangnBtn = findViewById(R.id.homeMap_goyangBtn);
@@ -45,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         mapGoyangnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"버튼테스트",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "버튼테스트", Toast.LENGTH_SHORT).show();
             }
         });
         mapBuGwangBtn.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
             }
-        });mapAnAnBtn.setOnClickListener(new View.OnClickListener() {
+        });
+        mapAnAnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -68,8 +101,7 @@ public class MainActivity extends AppCompatActivity {
         mapSuwonBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent intent = new Intent(getApplicationContext(),BT_CreateActivity.class);
-            startActivity(intent);
+
             }
         });
         mapSuYoBtn.setOnClickListener(new View.OnClickListener() {
@@ -86,24 +118,24 @@ public class MainActivity extends AppCompatActivity {
         listview = findViewById(R.id.listview1);
         listview.setAdapter(adapter);
 
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_spring),"Book1","수원","AAA","2020/03/15");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_autumn),"Book2","서울","BBB","2020/02/21");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_summer),"Book3","고양","CCC","2020/01/04");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_winter),"Book4","광명","DDD","2019/12/23");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_spring), "Book1", "수원", "AAA", "2020/03/15");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_autumn), "Book2", "서울", "BBB", "2020/02/21");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_summer), "Book3", "고양", "CCC", "2020/01/04");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_winter), "Book4", "광명", "DDD", "2019/12/23");
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
-                HT_Listview_Item item = (HT_Listview_Item) parent.getItemAtPosition(position) ;
-                String titleStr = item.getTitle() ;
-                String placeStr = item.getPlace() ;
-                String memberStr = item.getMember() ;
-                String dateStr = item.getDate() ;
-                Drawable coverDrawable = item.getCover() ;
+                HT_Listview_Item item = (HT_Listview_Item) parent.getItemAtPosition(position);
+                String titleStr = item.getTitle();
+                String placeStr = item.getPlace();
+                String memberStr = item.getMember();
+                String dateStr = item.getDate();
+                Drawable coverDrawable = item.getCover();
                 // TODO : use item data.
             }
-        }) ;
+        });
     }
 
 

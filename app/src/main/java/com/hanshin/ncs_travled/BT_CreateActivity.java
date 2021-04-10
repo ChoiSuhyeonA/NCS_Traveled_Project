@@ -3,31 +3,80 @@ package com.hanshin.ncs_travled;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class BT_CreateActivity extends Activity {
     ArrayList<Uri> imageList = new ArrayList<Uri>();
     ArrayList<Uri> videoList = new ArrayList<Uri>();
     BT_GridViewAdapter adapter;
 
+    private  final  File localFile =null;
+
+    TabLayout tabLayout;
+    public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bt_create);
+
+        tabLayout = findViewById(R.id.Htabs);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                // TODO : tab의 상태가 선택 상태로 변경
+
+                int pos = tab.getPosition();
+
+                if (pos == 0) { // 첫 번째 탭 선택.
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivityForResult(intent, sub);
+                } else if (pos == 1) { // 두 번째 탭 선택.
+                    Toast.makeText(getApplicationContext(), "탭2", Toast.LENGTH_SHORT).show();
+                } else if (pos == 2) { // 세 번째 탭 선택.
+                    Toast.makeText(getApplicationContext(), "탭3", Toast.LENGTH_SHORT).show();
+                }
+            }
+             @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+
+        });
 
         //메인페이지 버튼의정
         Button btnPhotoBookInfo = findViewById(R.id.btnPhotoBookInfo);
@@ -47,7 +96,7 @@ public class BT_CreateActivity extends Activity {
         btnPhotoBookInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout dialogView = (LinearLayout) View.inflate(BT_CreateActivity.this, R.layout.dialog_photobookinfo, null);
+                LinearLayout dialogView = (LinearLayout) View.inflate(BT_CreateActivity.this, R.layout.bt_dialog_photobookinfo, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(BT_CreateActivity.this);
                 dlg.setTitle(" 포토북 정보");
                 dlg.setView(dialogView);
@@ -69,7 +118,7 @@ public class BT_CreateActivity extends Activity {
         btnPhotoBookCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout dialogView = (LinearLayout) View.inflate(BT_CreateActivity.this, R.layout.dialog_photobookcover, null);
+                LinearLayout dialogView = (LinearLayout) View.inflate(BT_CreateActivity.this, R.layout.bt_dialog_photobookcover, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(BT_CreateActivity.this);
                 dlg.setTitle(" 포토북 표지");
                 dlg.setView(dialogView);
@@ -116,13 +165,59 @@ public class BT_CreateActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+//                FirebaseStorage storage = FirebaseStorage.getInstance();
+//
+//                //1. 사진을 storage에 저장하고 그 url을 알아내야함..
+//                StorageReference storageRef = storage.getReference();
+//               StorageReference imageRef = storageRef.child("images/upload1.jpg");
+//               Uri file  = Uri.fromFile(new File("path/to/images/cowgirl-419084_1920.jpg"));
+//
+//               UploadTask uploadTask = imageRef.putFile(file);
+//
+//                uploadTask.addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(BT_CreateActivity.this, "업로드 실패", Toast.LENGTH_SHORT).show();
+//                    }
+//                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    Toast.makeText(BT_CreateActivity.this, "업로드 성공", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+
+                //다운로드 테스트
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageReference = storage.getReference();
+                StorageReference imageRef = storageReference.child("images/채수빈.jpg");
+                try {
+                    File localFile = File.createTempFile("images","jpg");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                imageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(BT_CreateActivity.this, "다운로드 실패", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(BT_CreateActivity.this, "다운로드 성공", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
+
+
         });
 
 
     }
 
     //갤러리 생성하기 필요한 메서드
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -145,4 +240,5 @@ public class BT_CreateActivity extends Activity {
             }
         }
     }
+
 }

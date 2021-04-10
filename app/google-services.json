@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "769067809670",
+    "project_id": "traveled-b4f5b",
+    "storage_bucket": "traveled-b4f5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769067809670:android:7a5928c7bf12365fbdca07",
+        "android_client_info": {
+          "package_name": "com.hanshin.ncs_travled"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "769067809670-oojqss6vg95t4jq0okmepbs80jr2p6fc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_gmdkZBp5gkgGPn0GxFt32CW1O6EeRp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "769067809670-oojqss6vg95t4jq0okmepbs80jr2p6fc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

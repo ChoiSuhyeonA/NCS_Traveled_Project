@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/PhotoBookTitle"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="  포토북 명 :  " />
+
+        <EditText
+            android:id="@+id/EditPhotoBookTitle"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="   여행일자 :  "
+            android:id="@+id/PhotoBookTravelDate"/>
+        <EditText
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditPhotoBookTravelDate"/>
+        <TextView
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:text="~"
+            android:id="@+id/Wave"/>
+        <EditText
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditPhotoBookTravelDate2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/PhotoBookTravelDestination"
+            android:text="      여행지 :  "/>
+        <EditText
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditPhotoBookTravelDestination"/>
+
+    </LinearLayout>
+
+</LinearLayout>

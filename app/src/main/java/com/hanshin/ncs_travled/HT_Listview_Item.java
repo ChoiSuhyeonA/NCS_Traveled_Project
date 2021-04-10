@@ -1,6 +1,6 @@
 package com.hanshin.ncs_travled;
 
-import android.graphics.drawable.Drawable;
+        import android.graphics.drawable.Drawable;
 
 public class HT_Listview_Item {
     private Drawable coverDrawable ;
