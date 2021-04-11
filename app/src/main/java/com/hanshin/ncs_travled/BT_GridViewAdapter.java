@@ -50,9 +50,6 @@ public class BT_GridViewAdapter extends BaseAdapter {
         final Context context = parent.getContext();
 
 
-
-
-
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -78,8 +75,17 @@ public class BT_GridViewAdapter extends BaseAdapter {
     }
 
 
-    public void add(ArrayList<Uri> imageList){
-        imageArrayList = imageList;
+    public void add(ArrayList<Uri> list,  int i){
+        int type = i;
+        if(type == 1){
+            //1번일 경우 이미지를 리스트에 추가
+            imageArrayList = list;
+        }
+        else if(type == 2){
+            //2번일 경우 비디오를 리스트에 추가
+            videoArrayList = list;
+        }
+
     }
     public void delete(){
         int i = imageArrayList.size();
