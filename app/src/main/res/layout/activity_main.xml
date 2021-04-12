@@ -59,6 +59,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
+
         <Button
             android:id="@+id/homeMap_goyangBtn"
             android:layout_width="94dp"
@@ -67,12 +68,12 @@
             android:layout_marginLeft="148dp"
             android:layout_marginTop="64dp"
             android:background="@drawable/buttonshape_g"
-            android:text="고양"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
+            android:text="고양"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
@@ -96,13 +97,13 @@
             android:id="@+id/homeMap_bugwangBtn"
             android:layout_width="83dp"
             android:layout_height="55dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginLeft="100dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/buttonshape_bg"
             android:text="부천\n광명"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.262"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/homeMap_goyangBtn"
             tools:ignore="MissingConstraints" />
@@ -128,8 +129,6 @@
             android:id="@+id/homeMap_suyoBtn"
             android:layout_width="72dp"
             android:layout_height="112dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="12dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/buttonshape_sy"
             android:text="성남\n용인 "
@@ -137,10 +136,10 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/homeMap_suwonBtn"
+            app:layout_constraintHorizontal_bias="0.172"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_ananBtn"
             app:layout_constraintTop_toBottomOf="@+id/homeMap_seoulBtn"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.021"
             tools:ignore="MissingConstraints" />
 
         <Button
