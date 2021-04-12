@@ -56,6 +56,9 @@ public class BT_CreateActivity extends Activity {
     ArrayList<Uri> videoList = new ArrayList<Uri>();
     ArrayList<Uri> seeList = new ArrayList<Uri>();
 
+
+
+
     BT_GridViewAdapter adapter;
 
     TabLayout tabLayout;
@@ -193,9 +196,11 @@ public class BT_CreateActivity extends Activity {
                 Date now = new Date();
                 String Datename = formatter.format(now);
 
-                String city = "수원";
+
                 String area = "경기도";
+                String city = "수원";
                 String title = "book";
+
                 //이미지 리스트를 파이어베이스에 업로드
                 for (int i = 0; i < imageList.size(); i++) {
                     StorageReference imageRef = storageRef.child(area + "/" + city + "/" + title + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
@@ -224,12 +229,12 @@ public class BT_CreateActivity extends Activity {
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(BT_CreateActivity.this, "업로드 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BT_CreateActivity.this, "비디오 업로드 실패", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(BT_CreateActivity.this, "업로드 성공", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BT_CreateActivity.this, "비디오 업로드 성공", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

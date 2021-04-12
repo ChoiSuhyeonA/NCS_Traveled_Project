@@ -48,7 +48,8 @@ public class BT_GridViewAdapter extends BaseAdapter {
     public long getItemId(int position) { return position; }
 
     @Override
-    public View getView(final int position, View convertView, final ViewGroup parent) { final int pos = position;
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+        final int pos = position;
         final Context context = parent.getContext();
 
 
@@ -59,12 +60,12 @@ public class BT_GridViewAdapter extends BaseAdapter {
         }
         ImageView image = convertView.findViewById(R.id.plus1);
 
-        if(String.valueOf(seeArrayList.get(position)).contains("image")){
-            image.setImageURI(seeArrayList.get(position));
-        } else if(String.valueOf(seeArrayList.get(position)).contains("vidoe")){
+        if(String.valueOf(seeArrayList.get(position)).contains("video")){
             image.setImageResource(R.drawable.video);
+        } else if(String.valueOf(seeArrayList.get(position)).contains("image")){
+            image.setImageURI(seeArrayList.get(position));
         }
-        
+
         image.setScaleType(ImageView.ScaleType.FIT_XY);
 
         image.setPadding(5,5,5,5);
@@ -101,19 +102,20 @@ public class BT_GridViewAdapter extends BaseAdapter {
         int i = seeArrayList.size();
         //삭제할 페이지가 있을 경우에만 삭제하도록 조건문 설정.
         if(i >0){
-
-            if(String.valueOf(imageArrayList.get(i-1)).contains("image")){
+            if(String.valueOf(seeArrayList.get(i-1)).contains("image")){
                 int i1 = imageArrayList.size();
-                imageArrayList.remove(i1-1);
-            }else if(String.valueOf(videoArrayList.get(i-1)).contains("video")){
+                if(i1>0){
+                    imageArrayList.remove(i1-1);
+                }
+            }else if(String.valueOf(seeArrayList.get(i-1)).contains("video")){
                 int i1 = videoArrayList.size();
-                videoArrayList.remove(i1-1);
+                if(i1>0){
+                    videoArrayList.remove(i1-1);
+                }
             }
            seeArrayList.remove(i-1);
         }
     }
-
-
 
 
 }
