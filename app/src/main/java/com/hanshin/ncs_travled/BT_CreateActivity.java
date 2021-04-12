@@ -232,7 +232,25 @@ public class BT_CreateActivity extends Activity {
                         }
                     });
                 }
-
+//                // 다운로드 테스트
+//                String fileName = "suhyeon0";
+//                File fileDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/suhyeon");
+//                final File downloadFile = new File(fileDir, fileName);
+//
+//               FirebaseStorage storage1 = FirebaseStorage.getInstance();
+//                StorageReference storageReference = storage1.getReference();
+//                StorageReference downloadRef = storageRef.child("060036bd-145e-4fd0-ae22-f577903a1744.png");
+//
+//                downloadRef.getFile(downloadFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                @Override
+//                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                 Toast.makeText(BT_CreateActivity.this, "다운로드 성공", Toast.LENGTH_SHORT).show();
+//                 Glide.with(BT_CreateActivity.this).load(new File(downloadFile.getAbsolutePath())).into(testimage); }
+//                 }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Toast.makeText(BT_CreateActivity.this, "다운로드 실패", Toast.LENGTH_SHORT).show();
+//                }});
             }
 
         });
