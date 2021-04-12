@@ -40,9 +40,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -54,12 +52,17 @@ import static android.content.ContentValues.TAG;
 public class BT_CreateActivity extends Activity {
     ArrayList<Uri> imageList = new ArrayList<Uri>();
     ArrayList<Uri> videoList = new ArrayList<Uri>();
+<<<<<<< HEAD
     ArrayList<Uri> seeList = new ArrayList<Uri>();
 
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+=======
+>>>>>>> parent of fa1532c (gallary)
     BT_GridViewAdapter adapter;
+
+
     TabLayout tabLayout;
     public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
 
@@ -117,7 +120,7 @@ public class BT_CreateActivity extends Activity {
 
         //그리드뷰 + 어댑터
         GridView gridView = findViewById(R.id.gridview);
-        adapter = new BT_GridViewAdapter(this, imageList, videoList, seeList);
+        adapter = new BT_GridViewAdapter(this, imageList, videoList);
         gridView.setAdapter(adapter);
 
         //포토북생성페이지에 정보버튼안에 대화상자 속성 정의
@@ -178,15 +181,15 @@ public class BT_CreateActivity extends Activity {
         btnPhotoBookPageCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //갤러리 접근해서 이미지, 비디오파일 경로 가져오기
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI); //갤러리 접근 선언
+                //BT_GridViewAdapter의 add메서드 실행
+
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/* video/*");
                 startActivityForResult(intent, 1000);
-                //BT_GridViewAdapter의 add메서드 실행
-                adapter.add(imageList, 1); // 이미지리스트를 어댑터에 전송
-                adapter.add(videoList, 2); // 비디오 리스트를 어댑터에 전송
-                adapter.add(seeList, 3); // 비디오 리스트를 어댑터에 전송
-                adapter.notifyDataSetChanged(); //리스트 최신화
+
+                adapter.add(imageList, 1);
+                adapter.add(videoList, 2);
+                adapter.notifyDataSetChanged();
             }
         });
         //포토북생성페이지에 페이지 삭제 버튼을 클릭할 때 이벤트 작성
@@ -205,9 +208,10 @@ public class BT_CreateActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                FirebaseStorage storage = FirebaseStorage.getInstance(); //파이어베이스 스토리지 시작 변수선언
-                StorageReference storageRef = storage.getReference();  // 스토리지 참조 변수선언
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageRef = storage.getReference();
 
+<<<<<<< HEAD
                 //업로드할때 날짜를 파일명앞에 지정해서, 파일을 분류
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd.hh.mm.ss");
                 Date now = new Date();
@@ -240,17 +244,24 @@ public class BT_CreateActivity extends Activity {
                 //비디오 리스트를 파이어베이스에 업로드
                 for(int i=0; i<videoList.size(); i++){
                     StorageReference videoRef = storageRef.child(area+"/"+city+"/"+title+"/"+Datename+"-video"+i); //파이어베이스에 업로드할 비디오 이름 지정
+=======
+                for(int i=0; i<videoList.size(); i++){
+                    StorageReference imageRef = storageRef.child("suhyeon"+i);
+
+                    //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png"));
+                    //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg"));
+>>>>>>> parent of fa1532c (gallary)
                     Uri file  = Uri.fromFile(new File(getPath(videoList.get(i)))); // 이미지리스트에서 내가 원하는 값을 집어넣음.
-                    UploadTask uploadTask = videoRef.putFile(file);
+                    UploadTask uploadTask = imageRef.putFile(file);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(BT_CreateActivity.this, "비디오 업로드 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BT_CreateActivity.this, "업로드 실패", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(BT_CreateActivity.this, "비디오 업로드 성공", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BT_CreateActivity.this, "업로드 성공", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -262,27 +273,28 @@ public class BT_CreateActivity extends Activity {
                 }
 
 
-//                // 다운로드 테스트
-//                String fileName= "suhyeon0";
-//                File fileDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES +"/suhyeon");
-//                final File downloadFile = new File(fileDir, fileName); //디바이스에 파일 만들기
-//                 // FirebaseStorage storage = FirebaseStorage.getInstance();
-//                //   StorageReference storageReference = storage.getReference();
-//                //StorageReference downloadRef = storageRef.child("060036bd-145e-4fd0-ae22-f577903a1744.png"); //파이어베이스에서 다운받고 싶은 파일명 넣기 예시
-//                StorageReference downloadRef = storageRef.child("suhyeon0"); //파이어베이스에서 다운받고 싶은 파일명 넣기 예시
-//                downloadRef.getFile(downloadFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-//                        Toast.makeText(BT_CreateActivity.this, "다운로드 성공", Toast.LENGTH_SHORT).show();
-//
-//                        Glide.with(BT_CreateActivity.this).load(new File(downloadFile.getAbsolutePath())).into(testimage);
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(BT_CreateActivity.this, "다운로드 실패", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+                // 다운로드 테스트
+                String fileName= "suhyeon0";
+                File fileDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES +"/suhyeon");
+                final File downloadFile = new File(fileDir, fileName);
+//                FirebaseStorage storage = FirebaseStorage.getInstance();
+//                StorageReference storageReference = storage.getReference();
+
+                //StorageReference downloadRef = storageRef.child("060036bd-145e-4fd0-ae22-f577903a1744.png");
+                StorageReference downloadRef = storageRef.child("suhyeon0");
+                downloadRef.getFile(downloadFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(BT_CreateActivity.this, "다운로드 성공", Toast.LENGTH_SHORT).show();
+
+                        Glide.with(BT_CreateActivity.this).load(new File(downloadFile.getAbsolutePath())).into(testimage);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(BT_CreateActivity.this, "다운로드 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
 
@@ -290,7 +302,7 @@ public class BT_CreateActivity extends Activity {
         });
 
     }
-    // Uri를 -> File로 데이터 형변환 ( 갤러리 Uri를 파일로 변환할때 사용하는 메서드이다)
+    // Uri를 -> File로 데이터 형변환
     public String getPath(Uri uri)
     {
         String[] projection = { MediaStore.Images.Media.DATA };
@@ -309,20 +321,19 @@ public class BT_CreateActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000) {
-            Uri gallaryPath = data.getData();
+            Uri imagePath = data.getData();
 
             adapter.notifyDataSetChanged();
-            if (gallaryPath.toString().contains("image")) {
+            if (imagePath.toString().contains("image")) {
                 //갤러리에서 이미지 경로 받아와서 리스트에 추가하기
-                imageList.add(gallaryPath);
-                seeList.add(gallaryPath);
-            } else  if (gallaryPath.toString().contains("video")) {
+                imageList.add(imagePath);
+            } else  if (imagePath.toString().contains("video")) {
                 //갤러리에서 비디오 경로 받아와서 리스트에 추가하기
-                videoList.add(gallaryPath);
-                seeList.add(gallaryPath);
+                videoList.add(imagePath);
             }
+
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), gallaryPath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imagePath);
             } catch (IOException e) {
                 e.printStackTrace();
             }

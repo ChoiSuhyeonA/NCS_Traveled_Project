@@ -5,6 +5,7 @@
     android:orientation="vertical"
     >
 
+<<<<<<< HEAD
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -47,6 +48,47 @@
 
 
 
+=======
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        >
+        <CheckBox
+            android:layout_width="172dp"
+            android:layout_height="185dp"
+            android:layout_margin="3dp"
+            android:id="@+id/bookCover1"
+            android:background="@drawable/bookcoverimage1"/>
+
+        <CheckBox
+            android:layout_width="172dp"
+            android:layout_height="185dp"
+            android:layout_margin="3dp"
+            android:id="@+id/bookCover2"
+            android:background="@drawable/bookcoverimage2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        >
+        <CheckBox
+            android:layout_width="172dp"
+            android:layout_height="185dp"
+            android:layout_margin="3dp"
+            android:id="@+id/bookCover3"
+            android:background="@drawable/bookcoverimage3"/>
+
+        <CheckBox
+            android:layout_width="172dp"
+            android:layout_height="185dp"
+            android:layout_margin="3dp"
+            android:id="@+id/bookCover4"
+            android:background="@drawable/bookcoverimage4"/>
+    </LinearLayout>
+>>>>>>> parent of fa1532c (gallary)
 
 
 
