@@ -1,17 +1,23 @@
 package com.hanshin.ncs_travled;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +27,9 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
@@ -40,17 +49,23 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
+import static android.content.ContentValues.TAG;
+
 public class BT_CreateActivity extends Activity {
     ArrayList<Uri> imageList = new ArrayList<Uri>();
     ArrayList<Uri> videoList = new ArrayList<Uri>();
     ArrayList<Uri> seeList = new ArrayList<Uri>();
-    public String area = "경기도"; //도시
-    public String city = "수원시";  //지역
-    public String bookname ="book"; // 포토북명
+
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     BT_GridViewAdapter adapter;
     TabLayout tabLayout;
     public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
+
+    //BT_Create_Item의 저장할 데이터 객체 변수 선언
+    BT_Create_Item item ;
+    EditText title, date, date2, member, area, city ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +92,20 @@ public class BT_CreateActivity extends Activity {
              @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+         LayoutInflater inflater = getLayoutInflater();
+         View view = inflater.inflate(R.layout.bt_dialog_photobookinfo, null);
+
+
+         title = view.findViewById(R.id.EditPhotoBookTitle);
+         date  = view.findViewById(R.id.EditPhotoBookTravelDate);
+         date2 = view.findViewById(R.id.EditPhotoBookTravelDate2);
+         member = view.findViewById(R.id.EditPhotoBookMember);
+         area = view.findViewById(R.id.EditPhotoBookTravelArea);
+         city = view.findViewById(R.id.EditPhotoBookTravelArea);
 
         //메인페이지 버튼의정
         Button btnPhotoBookInfo = findViewById(R.id.btnPhotoBookInfo);
@@ -112,12 +136,19 @@ public class BT_CreateActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //확인 버튼 누를시 이벤트 작성하기
-
+                        item = new BT_Create_Item();
+                        item.setPhotoBookTitle(title.getText().toString());
+                        item.setPhotoBookTravelDate(date.getText().toString());
+                        item.setPhotoBookTravelDate2(date2.getText().toString());
+                        item.setPhotoBookTravelMember(member.getText().toString());
+                        item.setPhotoBookTravelArea(area.getText().toString());
+                        item.setPhotoBookTravelCity(city.getText().toString());
 
                     }
                 });
                 dlg.setNegativeButton("취소", null);
                 dlg.show();
+
             }
         });
         //포토북생성페이지에 표지 버튼을 클릭할 때 이벤트 작성
@@ -168,6 +199,7 @@ public class BT_CreateActivity extends Activity {
                 adapter.notifyDataSetChanged();
             }
         });
+
         //포토북생성페이지에 저장 버튼을 클릭할 때 이벤트 작성
         btnPhotoBookSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,13 +213,16 @@ public class BT_CreateActivity extends Activity {
                 Date now = new Date();
                 String Datename = formatter.format(now);
 
+                String city = item.getPhotoBookTravelCity();
+                String area = item.getPhotoBookTravelArea();
+                String title = item.getPhotoBookTitle();
                 //이미지 리스트를 파이어베이스에 업로드
                 for(int i=0; i<imageList.size(); i++){
-                    StorageReference imageRef = storageRef.child(area+"/"+city+"/"+bookname+"/"+Datename+"-image"+i); //파이어베이스에 업로드할 이미지 이름 지정
+                    StorageReference imageRef = storageRef.child(area+"/"+city+"/"+title+"/"+Datename+"-image"+i); //파이어베이스에 업로드할 이미지 이름 지정
                     //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png")); // 파이어베이스 다운로드 경로 예시
                     //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg")); //갤러리경로 예시
 
-                   // Uri file = Uri.parse(String.valueOf(imageList.get(0)));  // 이렇게 uri값을 넣을 수 있음.
+                    // Uri file = Uri.parse(String.valueOf(imageList.get(0)));  // 이렇게 uri값을 넣을 수 있음.
                     Uri file  = Uri.fromFile(new File(getPath(imageList.get(i)))); // 이미지리스트에서 내가 원하는 값을 집어넣음.
                     UploadTask uploadTask = imageRef.putFile(file);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -204,7 +239,7 @@ public class BT_CreateActivity extends Activity {
                 }
                 //비디오 리스트를 파이어베이스에 업로드
                 for(int i=0; i<videoList.size(); i++){
-                    StorageReference videoRef = storageRef.child(area+"/"+city+"/"+bookname+"/"+Datename+"-video"+i); //파이어베이스에 업로드할 비디오 이름 지정
+                    StorageReference videoRef = storageRef.child(area+"/"+city+"/"+title+"/"+Datename+"-video"+i); //파이어베이스에 업로드할 비디오 이름 지정
                     Uri file  = Uri.fromFile(new File(getPath(videoList.get(i)))); // 이미지리스트에서 내가 원하는 값을 집어넣음.
                     UploadTask uploadTask = videoRef.putFile(file);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -219,7 +254,12 @@ public class BT_CreateActivity extends Activity {
                         }
                     });
                 }
-
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user != null) {
+                    // do your stuff
+                } else {
+                    signInAnonymously();
+                }
 
 
 //                // 다운로드 테스트
@@ -248,7 +288,6 @@ public class BT_CreateActivity extends Activity {
 
 
         });
-
 
     }
     // Uri를 -> File로 데이터 형변환 ( 갤러리 Uri를 파일로 변환할때 사용하는 메서드이다)
@@ -288,6 +327,21 @@ public class BT_CreateActivity extends Activity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void signInAnonymously() {
+        mAuth.signInAnonymously().addOnSuccessListener(this, new  OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                // do your stuff
+            }
+        })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Log.e(TAG, "signInAnonymously:FAILURE", exception);
+                    }
+                });
     }
 
 }
