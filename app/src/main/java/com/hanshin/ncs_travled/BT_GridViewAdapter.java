@@ -19,27 +19,29 @@ public class BT_GridViewAdapter extends BaseAdapter {
     Context context;
     ArrayList<Uri> imageArrayList; // 갤러리에서 가져온 이미지 경로를 저장한 리스트
     ArrayList<Uri> videoArrayList; //갤러리에서 가져온 비디오 경로를 저장한 리스트
+    ArrayList<Uri> seeArrayList;  // 그리드뷰에서 잠깐 보여주는 리스트
 
 
 
-    public BT_GridViewAdapter(Context c, ArrayList<Uri> imageList, ArrayList<Uri> videoList){
+    public BT_GridViewAdapter(Context c, ArrayList<Uri> imageList, ArrayList<Uri> videoList, ArrayList<Uri> seeList){
         context = c;
         imageArrayList = imageList;
         videoArrayList = videoList;
+        seeArrayList = seeList;
     }
 
     public BT_GridViewAdapter(MainActivity M, ArrayList<Uri> imageList) {
-        imageArrayList = imageList;
+        seeArrayList = imageList;
     }
 
     @Override
     public int getCount() {
-        return imageArrayList.size();
+        return seeArrayList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return imageArrayList.get(position);
+        return seeArrayList.get(position);
     }
 
     @Override
@@ -57,7 +59,12 @@ public class BT_GridViewAdapter extends BaseAdapter {
         }
         ImageView image = convertView.findViewById(R.id.plus1);
 
-        image.setImageURI(imageArrayList.get(position));
+        if(String.valueOf(seeArrayList.get(position)).contains("image")){
+            image.setImageURI(seeArrayList.get(position));
+        } else if(String.valueOf(seeArrayList.get(position)).contains("vidoe")){
+            image.setImageResource(R.drawable.video);
+        }
+        
         image.setScaleType(ImageView.ScaleType.FIT_XY);
 
         image.setPadding(5,5,5,5);
@@ -85,13 +92,24 @@ public class BT_GridViewAdapter extends BaseAdapter {
             //2번일 경우 비디오를 리스트에 추가
             videoArrayList = list;
         }
+        else if(type == 3){
+            seeArrayList = list;
+        }
 
     }
     public void delete(){
-        int i = imageArrayList.size();
+        int i = seeArrayList.size();
         //삭제할 페이지가 있을 경우에만 삭제하도록 조건문 설정.
         if(i >0){
-            imageArrayList.remove(i-1);
+
+            if(String.valueOf(imageArrayList.get(i-1)).contains("image")){
+                int i1 = imageArrayList.size();
+                imageArrayList.remove(i1-1);
+            }else if(String.valueOf(videoArrayList.get(i-1)).contains("video")){
+                int i1 = videoArrayList.size();
+                videoArrayList.remove(i1-1);
+            }
+           seeArrayList.remove(i-1);
         }
     }
 

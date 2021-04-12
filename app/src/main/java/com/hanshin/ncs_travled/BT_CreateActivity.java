@@ -104,7 +104,7 @@ public class BT_CreateActivity extends Activity {
 
         //그리드뷰 + 어댑터
         GridView gridView = findViewById(R.id.gridview);
-        adapter = new BT_GridViewAdapter(this, imageList, videoList);
+        adapter = new BT_GridViewAdapter(this, imageList, videoList, seeList);
         gridView.setAdapter(adapter);
 
         //포토북생성페이지에 정보버튼안에 대화상자 속성 정의
@@ -165,6 +165,7 @@ public class BT_CreateActivity extends Activity {
 
                 adapter.add(imageList, 1);
                 adapter.add(videoList, 2);
+                adapter.add(seeList, 3);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -279,9 +280,11 @@ public class BT_CreateActivity extends Activity {
             if (imagePath.toString().contains("image")) {
                 //갤러리에서 이미지 경로 받아와서 리스트에 추가하기
                 imageList.add(imagePath);
+                seeList.add(imagePath);
             } else if (imagePath.toString().contains("video")) {
                 //갤러리에서 비디오 경로 받아와서 리스트에 추가하기
                 videoList.add(imagePath);
+                seeList.add(imagePath);
             }
 
             try {
