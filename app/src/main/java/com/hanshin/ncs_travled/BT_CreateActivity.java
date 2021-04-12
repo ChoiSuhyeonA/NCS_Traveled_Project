@@ -218,7 +218,7 @@ public class BT_CreateActivity extends Activity {
                 //비디오 리스트를 파이어베이스에 업로드
                 for (int i = 0; i < videoList.size(); i++) {
                     StorageReference videoRef = storageRef.child(area + "/" + city + "/" + title + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
-                    Uri file = Uri.fromFile(new File(String.valueOf(imageList.get(i)))); // 이미지리스트에서 내가 원하는 값을 집어넣음.
+                    Uri file =Uri.parse(String.valueOf(videoList.get(i)));// 비디오리스트에서 내가 원하는 값을 집어넣음.
                     UploadTask uploadTask = videoRef.putFile(file);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
