@@ -53,11 +53,14 @@ public class BT_CreateActivity extends Activity {
     ArrayList<Uri> imageList = new ArrayList<Uri>();
     ArrayList<Uri> videoList = new ArrayList<Uri>();
 <<<<<<< HEAD
+<<<<<<< HEAD
     ArrayList<Uri> seeList = new ArrayList<Uri>();
 
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+=======
+>>>>>>> parent of fa1532c (gallary)
 =======
 >>>>>>> parent of fa1532c (gallary)
     BT_GridViewAdapter adapter;
@@ -212,6 +215,7 @@ public class BT_CreateActivity extends Activity {
                 StorageReference storageRef = storage.getReference();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 //업로드할때 날짜를 파일명앞에 지정해서, 파일을 분류
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd.hh.mm.ss");
                 Date now = new Date();
@@ -246,10 +250,16 @@ public class BT_CreateActivity extends Activity {
                     StorageReference videoRef = storageRef.child(area+"/"+city+"/"+title+"/"+Datename+"-video"+i); //파이어베이스에 업로드할 비디오 이름 지정
 =======
                 for(int i=0; i<videoList.size(); i++){
+=======
+                for(int i=0; i<videoList.size(); i++){
+>>>>>>> parent of fa1532c (gallary)
                     StorageReference imageRef = storageRef.child("suhyeon"+i);
 
                     //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png"));
                     //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg"));
+<<<<<<< HEAD
+>>>>>>> parent of fa1532c (gallary)
+=======
 >>>>>>> parent of fa1532c (gallary)
                     Uri file  = Uri.fromFile(new File(getPath(videoList.get(i)))); // 이미지리스트에서 내가 원하는 값을 집어넣음.
                     UploadTask uploadTask = imageRef.putFile(file);
@@ -287,6 +297,23 @@ public class BT_CreateActivity extends Activity {
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                         Toast.makeText(BT_CreateActivity.this, "다운로드 성공", Toast.LENGTH_SHORT).show();
 
+<<<<<<< HEAD
+=======
+                // 다운로드 테스트
+                String fileName= "suhyeon0";
+                File fileDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES +"/suhyeon");
+                final File downloadFile = new File(fileDir, fileName);
+//                FirebaseStorage storage = FirebaseStorage.getInstance();
+//                StorageReference storageReference = storage.getReference();
+
+                //StorageReference downloadRef = storageRef.child("060036bd-145e-4fd0-ae22-f577903a1744.png");
+                StorageReference downloadRef = storageRef.child("suhyeon0");
+                downloadRef.getFile(downloadFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(BT_CreateActivity.this, "다운로드 성공", Toast.LENGTH_SHORT).show();
+
+>>>>>>> parent of fa1532c (gallary)
                         Glide.with(BT_CreateActivity.this).load(new File(downloadFile.getAbsolutePath())).into(testimage);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
