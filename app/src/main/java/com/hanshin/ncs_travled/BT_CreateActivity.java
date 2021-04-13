@@ -161,7 +161,7 @@ public class BT_CreateActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //BT_GridViewAdapter의 add메서드 실행
-
+               
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/* video/*");
                 startActivityForResult(intent, 1000);
