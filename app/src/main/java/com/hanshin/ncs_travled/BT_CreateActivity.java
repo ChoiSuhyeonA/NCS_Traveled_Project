@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.hardware.input.InputManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,7 +22,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -57,6 +60,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 
 import static android.content.ContentValues.TAG;
 
@@ -67,14 +71,13 @@ public class BT_CreateActivity extends Activity {
 
     BT_GridViewAdapter adapter;
 
-    Button ButtonPhotoBookTravelArea;
-    Button ButtonPhotoBookTravelCity;
-
-
     TabLayout tabLayout;
     public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
 
     BT_Create_Item bt_item  = new BT_Create_Item(); ; //파이어베이스 스토어에 등록할 데이터 클래스
+
+//    private View ButtonPhotoBookTravelArea;
+//    private View ButtonPhotoBookTravelCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,10 +120,13 @@ public class BT_CreateActivity extends Activity {
         Button btnPhotoBookPageDelete = findViewById(R.id.btnPhotoBookPageDelete);
         final ImageView testimage = findViewById(R.id.testimage);
 
+
         //그리드뷰 + 어댑터
         GridView gridView = findViewById(R.id.gridview);
         adapter = new BT_GridViewAdapter(this, imageList, videoList, seeList);
         gridView.setAdapter(adapter);
+
+
 
         //포토북생성페이지에 정보버튼안에 대화상자 속성 정의
         LinearLayout dialogView;
@@ -128,7 +134,7 @@ public class BT_CreateActivity extends Activity {
         btnPhotoBookInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout dialogView = (LinearLayout) View.inflate(BT_CreateActivity.this, R.layout.bt_dialog_photobookinfo, null);
+                final LinearLayout dialogView = (LinearLayout) View.inflate(BT_CreateActivity.this, R.layout.bt_dialog_photobookinfo, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(BT_CreateActivity.this);
                 dlg.setTitle(" 포토북 정보");
                 dlg.setView(dialogView);
@@ -137,16 +143,12 @@ public class BT_CreateActivity extends Activity {
                 dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // 포토북정보레이아웃 접근선언
-                        View header = getLayoutInflater().inflate(R.layout.bt_dialog_photobookinfo, null, false);
-                        // 포토북정보레이아웃 위젯 선언
-                        EditText EditPhotoBookTitle =  header.findViewById(R.id.EditPhotoBookTitle);
-                        EditText EditPhotoBookTravelDate = header.findViewById(R.id.EditPhotoBookTravelDate);
-                        EditText EditPhotoBookTravelDate2 = header.findViewById(R.id.EditPhotoBookTravelDate2);
-                        EditText EditPhotoBookTravelMember = header.findViewById(R.id.EditPhotoBookTravelMember);
-                        EditText EditPhotoBookTravelArea =header.findViewById(R.id.EditPhotoBookTravelArea);
-                        EditText EditPhotoBookTravelCity = header.findViewById(R.id.EditPhotoBookTravelCity);
-
+                        final EditText EditPhotoBookTitle =  dialogView.findViewById(R.id.EditPhotoBookTitle);
+                        final EditText EditPhotoBookTravelDate = dialogView.findViewById(R.id.EditPhotoBookTravelDate);
+                        final EditText EditPhotoBookTravelDate2 = dialogView.findViewById(R.id.EditPhotoBookTravelDate2);
+                        final EditText EditPhotoBookTravelMember = dialogView.findViewById(R.id.EditPhotoBookTravelMember);
+                        final EditText EditPhotoBookTravelArea =dialogView.findViewById(R.id.EditPhotoBookTravelArea);
+                        final EditText EditPhotoBookTravelCity = dialogView.findViewById(R.id.EditPhotoBookTravelCity);
 
                         bt_item.setPhotoBookTitle(EditPhotoBookTitle.getText().toString());
                         bt_item.setPhotoBookTravelDate(EditPhotoBookTravelDate.getText().toString());
@@ -156,14 +158,9 @@ public class BT_CreateActivity extends Activity {
                         bt_item.setPhotoBookTravelCity(EditPhotoBookTravelCity.getText().toString());
 
 
-                        Toast.makeText(BT_CreateActivity.this, bt_item.getPhotoBookTitle(), Toast.LENGTH_SHORT).show();
-
-
-
 //                        //지역선택, 정보버튼 컨텍스트 메뉴 등록
 //                        registerForContextMenu(ButtonPhotoBookTravelArea);
 //                        registerForContextMenu(ButtonPhotoBookTravelCity);
-
                     }
                 });
                 dlg.setNegativeButton("취소", null);
@@ -175,7 +172,7 @@ public class BT_CreateActivity extends Activity {
         btnPhotoBookCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout dialogView = (LinearLayout) View.inflate(BT_CreateActivity.this, R.layout.bt_dialog_photobookcover, null);
+                final LinearLayout dialogView = (LinearLayout) View.inflate(BT_CreateActivity.this, R.layout.bt_dialog_photobookcover, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(BT_CreateActivity.this);
                 dlg.setTitle(" 포토북 표지");
                 dlg.setView(dialogView);
@@ -186,6 +183,15 @@ public class BT_CreateActivity extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         //확인 버튼 누를시 이벤트 작성하기
 
+                        CheckBox bookCover1 = dialogView.findViewById(R.id.bookCover1);
+                        CheckBox bookCover2= dialogView.findViewById(R.id.bookCover2);
+                        CheckBox bookCover3 = dialogView.findViewById(R.id.bookCover3);
+                        CheckBox bookCover4 = dialogView.findViewById(R.id.bookCover4);
+
+                        if(bookCover1.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_CreateActivity.this, R.drawable.cover_spring));
+                        if(bookCover2.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_CreateActivity.this, R.drawable.cover_summer));
+                        if(bookCover3.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_CreateActivity.this, R.drawable.cover_autumn));
+                        if(bookCover4.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_CreateActivity.this, R.drawable.cover_winter));
 
                     }
                 });
@@ -203,6 +209,7 @@ public class BT_CreateActivity extends Activity {
                 intent.setType("image/* video/*");
                 startActivityForResult(intent, 1000);
 
+                //bt_그리드뷰 어댑터의 add 메서드 실행 (이미지, 비디오 리스트 전송)
                 adapter.add(imageList, 1);
                 adapter.add(videoList, 2);
                 adapter.add(seeList, 3);
@@ -233,13 +240,11 @@ public class BT_CreateActivity extends Activity {
                 Date now = new Date();
                 String Datename = formatter.format(now);
 
-                String area = "경기도";
-                String city = "수원";
-                String title = "book";
+
 
                 //이미지 리스트를 파이어베이스에 업로드
                 for (int i = 0; i < imageList.size(); i++) {
-                    StorageReference imageRef = storageRef.child(area + "/" + city + "/" + title + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
+                    StorageReference imageRef = storageRef.child(bt_item.getPhotoBookTravelArea()  + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
                     //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png")); // 파이어베이스 다운로드 경로 예시
                     //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg")); //갤러리경로 예시
 
@@ -259,7 +264,7 @@ public class BT_CreateActivity extends Activity {
                 }
                 //비디오 리스트를 파이어베이스에 업로드
                 for (int i = 0; i < videoList.size(); i++) {
-                    StorageReference videoRef = storageRef.child(area +  city + "/" + title + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
+                    StorageReference videoRef = storageRef.child(bt_item.getPhotoBookTravelArea()  + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle()  + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
                     Uri file =Uri.parse(String.valueOf(videoList.get(i)));// 비디오리스트에서 내가 원하는 값을 집어넣음.
                     UploadTask uploadTask = videoRef.putFile(file);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -300,10 +305,16 @@ public class BT_CreateActivity extends Activity {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 Map<String , Object> member = new HashMap<>();
-                member.put("Title", bt_item.getPhotoBookTitle());
-                member.put("area", "suwon");
+                member.put("title", bt_item.getPhotoBookTitle());
+                member.put("date", bt_item.getPhotoBookTravelDate());
+                member.put("date2", bt_item.getPhotoBookTravelDate2());
+                member.put("member", bt_item.getPhotoBookTravelMember());
+                member.put("area", bt_item.getPhotoBookTravelArea());
+                member.put("city", bt_item.getPhotoBookTravelCity());
+                member.put("cover", bt_item.getPhotoBookTravelCover().toString());
 
-                db.collection("test").document("test2").set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                db.collection( bt_item.getPhotoBookTravelArea()+bt_item.getPhotoBookTravelCity()).document(bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(BT_CreateActivity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();

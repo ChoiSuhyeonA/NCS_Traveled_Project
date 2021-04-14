@@ -10,6 +10,7 @@ public class BT_Create_Item {
     String photoBookTravelMember; //포토북 여행멤버
     String photoBookTravelArea; // 포토북 여행지역  ex) 경기도
     String photoBookTravelCity; // 포토북 여행도시
+    Drawable photoBookTravelCover;//포토북 커버
 
 
     public String getPhotoBookTitle() {
@@ -62,5 +63,11 @@ public class BT_Create_Item {
         this.photoBookTravelCity = photoBookTravelCity;
     }
 
+    public Drawable getPhotoBookTravelCover() {
+        return photoBookTravelCover;
+    }
 
+    public void setPhotoBookTravelCover(Drawable photoBookTravelCover) {
+        this.photoBookTravelCover = photoBookTravelCover;
+    }
 }
