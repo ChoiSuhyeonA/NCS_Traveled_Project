@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemGoyangn"
+        android:title="고양">
+    </item>
+    <item
+        android:id="@+id/itemSeoul"
+        android:title="서울">
+    </item>
+    <item
+        android:id="@+id/itemBuGwang"
+        android:title="부천광명">
+    </item>
+    <item
+        android:id="@+id/itemAnAn"
+        android:title="안산안양">
+    </item>
+    <item
+        android:id="@+id/itemSuwon"
+        android:title="수원">
+    </item>
+    <item
+        android:id="@+id/itemSuYo"
+        android:title="성남용인">
+    </item>
+
+    Button mapSelAreaBtn, mapGoyangnBtn, mapBuGwangBtn, mapSeoulBtn, mapAnAnBtn, mapSuwonBtn, mapSuYoBtn;
+
+</menu>

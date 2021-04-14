@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemSeoulGyeong"
+        android:title="서울/경기">
+    </item>
+    <item
+        android:id="@+id/itemIncheon"
+        android:title="인천">
+    </item>
+    <item
+        android:id="@+id/itemBusan"
+        android:title="부산">
+    </item>
+    <item
+        android:id="@+id/itemDaejeon"
+        android:title="대전">
+    </item>
+    <item
+        android:id="@+id/itemDaegu"
+        android:title="대구">
+    </item>
+    <item
+        android:id="@+id/itemGwangju"
+        android:title="광주">
+    </item>
+
+</menu>

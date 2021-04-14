@@ -78,11 +78,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/PhotoBookTravelArea"
             android:text="      지역 :  "/>
-        <EditText
+        <Button
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:id="@+id/EditPhotoBookTravelArea"
-            android:hint="경기도"/>
+            android:id="@+id/ButtonPhotoBookTravelArea"
+            android:text="지역선택"/>
+<!--        <EditText-->
+<!--            android:layout_width="180dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/EditPhotoBookTravelArea"-->
+<!--            android:hint="경기도"/>-->
 
     </LinearLayout>
     <LinearLayout
@@ -95,11 +100,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/PhotoBookTravelCity"
             android:text="      도시 :  "/>
-        <EditText
+        <Button
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:id="@+id/EditPhotoBookTravelCity"
-            android:hint="수원"/>
+            android:id="@+id/ButtonPhotoBookTravelCity"
+            android:text="도시선택"/>
+<!--        <EditText-->
+<!--            android:layout_width="180dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/EditPhotoBookTravelCity"-->
+<!--            android:hint="수원"/>-->
 
     </LinearLayout>
 

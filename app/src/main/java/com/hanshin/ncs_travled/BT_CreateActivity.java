@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,9 +56,6 @@ public class BT_CreateActivity extends Activity {
     ArrayList<Uri> imageList = new ArrayList<Uri>();
     ArrayList<Uri> videoList = new ArrayList<Uri>();
     ArrayList<Uri> seeList = new ArrayList<Uri>();
-
-
-
 
     BT_GridViewAdapter adapter;
 
@@ -125,6 +123,9 @@ public class BT_CreateActivity extends Activity {
                 dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        // 포토북정보레이아웃 접근선언
+                        View header = getLayoutInflater().inflate(R.layout.bt_dialog_photobookinfo, null, false);
+                        
 
 
                     }
@@ -239,8 +240,10 @@ public class BT_CreateActivity extends Activity {
                     });
                 }
 //                // 다운로드 테스트
+//                FirebaseStorage storage = FirebaseStorage.getInstance();
+//                StorageReference storageRef = storage.getReference();
 //                String fileName = "suhyeon0";
-//                File fileDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/suhyeon");
+//                File fileDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES + "area + "/" + city + "/" + title + "/" + Datename + "-image" + i");
 //                final File downloadFile = new File(fileDir, fileName);
 //
 //               FirebaseStorage storage1 = FirebaseStorage.getInstance();
@@ -257,6 +260,7 @@ public class BT_CreateActivity extends Activity {
 //                public void onFailure(@NonNull Exception e) {
 //                    Toast.makeText(BT_CreateActivity.this, "다운로드 실패", Toast.LENGTH_SHORT).show();
 //                }});
+
             }
 
         });

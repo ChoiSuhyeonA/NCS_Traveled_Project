@@ -1,7 +1,11 @@
 package com.hanshin.ncs_travled;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +14,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +124,7 @@ public class BT_GridViewAdapter extends BaseAdapter {
            seeArrayList.remove(i-1);
         }
     }
+
 
 
 }
