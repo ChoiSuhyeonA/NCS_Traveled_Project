@@ -15,7 +15,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Layout;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +35,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
@@ -44,6 +50,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,9 +67,13 @@ public class BT_CreateActivity extends Activity {
 
     BT_GridViewAdapter adapter;
 
+    Button ButtonPhotoBookTravelArea;
+    Button ButtonPhotoBookTravelCity;
+
     TabLayout tabLayout;
     public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
 
+    BT_Create_Item bt_item ; //파이어베이스 스토어에 등록할 데이터 클래스
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +137,31 @@ public class BT_CreateActivity extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         // 포토북정보레이아웃 접근선언
                         View header = getLayoutInflater().inflate(R.layout.bt_dialog_photobookinfo, null, false);
-                        
+                        // 포토북정보레이아웃 위젯 선언
+                        EditText EditPhotoBookTitle = header.findViewById(R.id.EditPhotoBookTitle);
+                        EditText EditPhotoBookTravelDate = header.findViewById(R.id.EditPhotoBookTravelDate);
+                        EditText EditPhotoBookTravelDate2 = header.findViewById(R.id.EditPhotoBookTravelDate2);
+                        EditText EditPhotoBookTravelMember = header.findViewById(R.id.EditPhotoBookTravelMember);
+                        EditText EditPhotoBookTravelArea =header.findViewById(R.id.EditPhotoBookTravelArea);
+                        EditText EditPhotoBookTravelCity = header.findViewById(R.id.EditPhotoBookTravelCity);
+
+                        bt_item = new BT_Create_Item();
+                        bt_item.setPhotoBookTitle(EditPhotoBookTitle.getText().toString());
+                        bt_item.setPhotoBookTravelDate(EditPhotoBookTravelDate.getText().toString());
+                        bt_item.setPhotoBookTravelDate2(EditPhotoBookTravelDate2.getText().toString());
+                        bt_item.setPhotoBookTravelMember(EditPhotoBookTravelMember.getText().toString());
+                        bt_item.setPhotoBookTravelArea(EditPhotoBookTravelArea.getText().toString());
+                        bt_item.setPhotoBookTravelCity(EditPhotoBookTravelCity.getText().toString());
+
+
+
+
+//                        //지역선택, 정보버튼 컨텍스트 메뉴 등록
+//                        registerForContextMenu(ButtonPhotoBookTravelArea);
+//                        registerForContextMenu(ButtonPhotoBookTravelCity);
+
+
+
 
 
                     }
@@ -188,7 +224,7 @@ public class BT_CreateActivity extends Activity {
         btnPhotoBookSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //파이어베이스 스토리지 업로드 (이미지 ,영상)
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReference();
 
@@ -196,7 +232,6 @@ public class BT_CreateActivity extends Activity {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd.hh.mm.ss");
                 Date now = new Date();
                 String Datename = formatter.format(now);
-
 
                 String area = "경기도";
                 String city = "수원";
@@ -261,9 +296,31 @@ public class BT_CreateActivity extends Activity {
 //                    Toast.makeText(BT_CreateActivity.this, "다운로드 실패", Toast.LENGTH_SHORT).show();
 //                }});
 
+                //파이어베이스 스토어 업로드 (데이터)
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                Map<String , Object> member = new HashMap<>();
+                member.put("Title", "test");
+
+                db.collection("test").add(member)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(BT_CreateActivity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(BT_CreateActivity.this, "데이터 업로드 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
             }
 
         });
+
     }
 
     // Uri를 -> File로 데이터 형변환
@@ -305,5 +362,33 @@ public class BT_CreateActivity extends Activity {
         }
     }
 
+//    //포토북 정보에서 사용하는 컨텍스트메뉴 메서드 (메뉴창을 만듭니다)
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//
+//        MenuInflater menuInflater = getMenuInflater();
+//        if( v == ButtonPhotoBookTravelArea){
+//            menu.setHeaderTitle("지역선택");
+//            menuInflater.inflate(R.menu.area, menu);
+//        }
+//        if( v== ButtonPhotoBookTravelCity){
+//            menu.setHeaderTitle("도시선택");
+//            menuInflater.inflate(R.menu.city,menu);
+//        }
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.itemSuwon:
+//                bt_item.setPhotoBookTravelCity("수원");
+//                return true;
+//            case R.id.itemSeoul:
+//                bt_item.setPhotoBookTravelArea("서울");
+//
+//        }
+//        return false;
+//    }
 }
 
