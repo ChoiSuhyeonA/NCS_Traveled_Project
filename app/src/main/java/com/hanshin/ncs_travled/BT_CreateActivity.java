@@ -70,10 +70,12 @@ public class BT_CreateActivity extends Activity {
     Button ButtonPhotoBookTravelArea;
     Button ButtonPhotoBookTravelCity;
 
+
     TabLayout tabLayout;
     public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
 
-    BT_Create_Item bt_item ; //파이어베이스 스토어에 등록할 데이터 클래스
+    BT_Create_Item bt_item  = new BT_Create_Item(); ; //파이어베이스 스토어에 등록할 데이터 클래스
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,14 +140,14 @@ public class BT_CreateActivity extends Activity {
                         // 포토북정보레이아웃 접근선언
                         View header = getLayoutInflater().inflate(R.layout.bt_dialog_photobookinfo, null, false);
                         // 포토북정보레이아웃 위젯 선언
-                        EditText EditPhotoBookTitle = header.findViewById(R.id.EditPhotoBookTitle);
+                        EditText EditPhotoBookTitle =  header.findViewById(R.id.EditPhotoBookTitle);
                         EditText EditPhotoBookTravelDate = header.findViewById(R.id.EditPhotoBookTravelDate);
                         EditText EditPhotoBookTravelDate2 = header.findViewById(R.id.EditPhotoBookTravelDate2);
                         EditText EditPhotoBookTravelMember = header.findViewById(R.id.EditPhotoBookTravelMember);
                         EditText EditPhotoBookTravelArea =header.findViewById(R.id.EditPhotoBookTravelArea);
                         EditText EditPhotoBookTravelCity = header.findViewById(R.id.EditPhotoBookTravelCity);
 
-                        bt_item = new BT_Create_Item();
+
                         bt_item.setPhotoBookTitle(EditPhotoBookTitle.getText().toString());
                         bt_item.setPhotoBookTravelDate(EditPhotoBookTravelDate.getText().toString());
                         bt_item.setPhotoBookTravelDate2(EditPhotoBookTravelDate2.getText().toString());
@@ -154,15 +156,13 @@ public class BT_CreateActivity extends Activity {
                         bt_item.setPhotoBookTravelCity(EditPhotoBookTravelCity.getText().toString());
 
 
+                        Toast.makeText(BT_CreateActivity.this, bt_item.getPhotoBookTitle(), Toast.LENGTH_SHORT).show();
+
 
 
 //                        //지역선택, 정보버튼 컨텍스트 메뉴 등록
 //                        registerForContextMenu(ButtonPhotoBookTravelArea);
 //                        registerForContextMenu(ButtonPhotoBookTravelCity);
-
-
-
-
 
                     }
                 });
@@ -259,7 +259,7 @@ public class BT_CreateActivity extends Activity {
                 }
                 //비디오 리스트를 파이어베이스에 업로드
                 for (int i = 0; i < videoList.size(); i++) {
-                    StorageReference videoRef = storageRef.child(area + "/" + city + "/" + title + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
+                    StorageReference videoRef = storageRef.child(area +  city + "/" + title + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
                     Uri file =Uri.parse(String.valueOf(videoList.get(i)));// 비디오리스트에서 내가 원하는 값을 집어넣음.
                     UploadTask uploadTask = videoRef.putFile(file);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -300,16 +300,15 @@ public class BT_CreateActivity extends Activity {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 Map<String , Object> member = new HashMap<>();
-                member.put("Title", "test");
+                member.put("Title", bt_item.getPhotoBookTitle());
+                member.put("area", "suwon");
 
-                db.collection("test").add(member)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                db.collection("test").document("test2").set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
+                    public void onSuccess(Void aVoid) {
                         Toast.makeText(BT_CreateActivity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(BT_CreateActivity.this, "데이터 업로드 실패", Toast.LENGTH_SHORT).show();
@@ -317,11 +316,13 @@ public class BT_CreateActivity extends Activity {
                 });
 
 
+
             }
 
         });
 
     }
+
 
     // Uri를 -> File로 데이터 형변환
     public String getPath(Uri uri) {
