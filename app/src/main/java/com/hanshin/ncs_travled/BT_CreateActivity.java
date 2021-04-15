@@ -98,7 +98,8 @@ public class BT_CreateActivity extends Activity {
                 } else if (pos == 1) { // 두 번째 탭 선택.
                     Toast.makeText(getApplicationContext(), "탭2", Toast.LENGTH_SHORT).show();
                 } else if (pos == 2) { // 세 번째 탭 선택.
-                    Toast.makeText(getApplicationContext(), "탭3", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(),CT_Activity.class);
+                    startActivityForResult(intent,sub);
                 }
             }
 

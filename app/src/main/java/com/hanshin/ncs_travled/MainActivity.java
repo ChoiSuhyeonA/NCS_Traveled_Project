@@ -3,6 +3,7 @@ package com.hanshin.ncs_travled;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     Button mapSelAreaBtn, mapGoyangnBtn, mapBuGwangBtn, mapSeoulBtn, mapAnAnBtn, mapSuwonBtn, mapSuYoBtn;
     ListView listview;
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), BT_CreateActivity.class);
                     startActivityForResult(intent, sub);
                 } else if (pos == 2) { // 세 번째 탭 선택.
-                    Toast.makeText(getApplicationContext(), "탭3", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(),CT_Activity.class);
+                    startActivityForResult(intent,sub);
                 }
             }
 

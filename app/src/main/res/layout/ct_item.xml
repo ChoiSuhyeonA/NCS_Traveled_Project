@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="130dp">
+    android:layout_height="120dp">
 
     <ImageView
         android:id="@+id/ct_imageView"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:layout_weight="1" />
     <LinearLayout
         android:layout_width="match_parent"
