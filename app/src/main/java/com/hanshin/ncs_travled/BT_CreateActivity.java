@@ -244,8 +244,8 @@ public class BT_CreateActivity extends Activity {
 
 
                 //이미지 리스트를 파이어베이스에 업로드
-                for (int i = 0; i < imageList.size(); i++) {
-                    StorageReference imageRef = storageRef.child(bt_item.getPhotoBookTravelArea()  + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
+                for (int i = 0; i < imageList.size(); i++) {   ///     경기도수원/ 경기도
+                    StorageReference imageRef = storageRef.child(bt_item.getPhotoBookTravelArea() + "/" + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
                     //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png")); // 파이어베이스 다운로드 경로 예시
                     //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg")); //갤러리경로 예시
 
