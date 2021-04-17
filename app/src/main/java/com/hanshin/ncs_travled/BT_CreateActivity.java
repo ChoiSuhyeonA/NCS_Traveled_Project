@@ -313,6 +313,9 @@ public class BT_CreateActivity extends Activity {
                 member.put("area", bt_item.getPhotoBookTravelArea());
                 member.put("city", bt_item.getPhotoBookTravelCity());
                 member.put("cover", bt_item.getPhotoBookTravelCover().toString());
+                member.put("contents",  bt_item.getContents());
+                member.put("contents2", bt_item.getContents2());
+                member.put("contents3", bt_item.getContents3());
 
 
                 db.collection( bt_item.getPhotoBookTravelArea()+bt_item.getPhotoBookTravelCity()).document(bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
