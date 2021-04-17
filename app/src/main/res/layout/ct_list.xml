@@ -53,7 +53,7 @@
     <ListView
         android:id="@+id/ct_listview"
         android:layout_width="390dp"
-        android:layout_height="419dp"
+        android:layout_height="510dp"
         android:layout_marginBottom="52dp"
         android:divider="#ffffff"
         android:dividerHeight="10dp"

@@ -52,6 +52,8 @@ public class CT_Activity extends Activity {
     private void init() {
         recyclerView = findViewById(R.id.ct_recycler);
 
+        recyclerView.addItemDecoration(new CT_recyclerDecoration(30)); // 아이템 간격
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
