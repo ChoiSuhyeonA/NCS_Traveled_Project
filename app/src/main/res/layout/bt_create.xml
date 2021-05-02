@@ -8,33 +8,47 @@
     android:orientation="vertical"
     tools:context=".BT_CreateActivity">
 
-    <com.google.android.material.tabs.TabLayout
+    <LinearLayout
         android:id="@+id/Htabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="411dp"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintVertical_bias="0.0">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:id="@+id/HomeBtn"
+            android:background="#00ff0000"
+            android:layout_marginTop="2dp"
+            android:drawableTop="@drawable/ic_baseline_home_24"
             android:text="Home" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Books" />
+        <Button
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:id="@+id/BookBtn"
+            android:background="#00ff0000"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:drawableTop="@drawable/ic_baseline_menu_book_24"
+            android:text="Book" />
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:id="@+id/CommunityBtn"
+            android:background="#00ff0000"
+            android:text="Community"
+            android:drawableTop="@drawable/ic_baseline_emoji_people_24"
+            android:layout_marginTop="2dp"/>
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Community" />
-    </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -109,6 +123,7 @@
         android:shadowDy="1"
         android:shadowRadius="5"
         android:text="페이지 추가"
+        android:layout_marginBottom="10dp"
         android:textSize="20dp" />
     <Button
         android:id="@+id/btnPhotoBookPageDelete"
@@ -123,6 +138,7 @@
         android:shadowDy="1"
         android:shadowRadius="5"
         android:text="페이지 삭제"
+        android:layout_marginBottom="10dp"
         android:textSize="20dp" />
 
     <Button
@@ -140,11 +156,11 @@
         android:text="저 장"
         android:textSize="20dp" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_launcher_foreground"
-        android:id="@+id/testimage"/>
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:src="@drawable/ic_launcher_foreground"-->
+<!--        android:id="@+id/testimage"/>-->
 
 
 </LinearLayout>

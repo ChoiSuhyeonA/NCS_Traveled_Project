@@ -28,36 +28,32 @@ public class HT_Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ht_main);
 
-        //////// 상단 맵
-        tabLayout = findViewById(R.id.Htabs);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        Button HomeBtn = findViewById(R.id.HomeBtn);
+        Button BookBtn = findViewById(R.id.BookBtn);
+        Button CommunityBtn = findViewById(R.id.CommunityBtn);
+
+        HomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                // TODO : tab의 상태가 선택 상태로 변경
-
-                int pos = tab.getPosition();
-                if (pos == 0) { // 첫 번째 탭 선택.
-                    Toast.makeText(getApplicationContext(), "탭1", Toast.LENGTH_SHORT).show();
-                } else if (pos == 1) { // 두 번째 탭 선택.
-                    Intent intent = new Intent(getApplicationContext(), BT_CreateActivity.class);
-                    startActivityForResult(intent, sub);
-                } else if (pos == 2) { // 세 번째 탭 선택.
-                    Intent intent = new Intent(getApplicationContext(),CT_Activity.class);
-                    startActivityForResult(intent,sub);
-                }
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
+                startActivity(intent);
             }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-
         });
+        BookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), BT_CreateActivity.class);
+                startActivity(intent);
+            }
+        });
+        CommunityBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CT_Activity.class);
+                startActivity(intent);
+            }
+        });
+
 
         mapSelAreaBtn = findViewById(R.id.homeMap_selAreaBtn);
         mapGoyangnBtn = findViewById(R.id.homeMap_goyangBtn);

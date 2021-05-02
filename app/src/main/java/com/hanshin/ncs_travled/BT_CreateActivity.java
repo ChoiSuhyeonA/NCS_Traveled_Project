@@ -84,34 +84,31 @@ public class BT_CreateActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bt_create);
 
-        tabLayout = findViewById(R.id.Htabs);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        Button HomeBtn = findViewById(R.id.HomeBtn);
+        Button BookBtn = findViewById(R.id.BookBtn);
+        Button CommunityBtn = findViewById(R.id.CommunityBtn);
+
+        HomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                // TODO : tab의 상태가 선택 상태로 변경
-
-                int pos = tab.getPosition();
-
-                if (pos == 0) { // 첫 번째 탭 선택.
-                    Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
-                    startActivityForResult(intent, sub);
-                } else if (pos == 1) { // 두 번째 탭 선택.
-                    Toast.makeText(getApplicationContext(), "탭2", Toast.LENGTH_SHORT).show();
-                } else if (pos == 2) { // 세 번째 탭 선택.
-                    Intent intent = new Intent(getApplicationContext(),CT_Activity.class);
-                    startActivityForResult(intent,sub);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
+                startActivity(intent);
             }
         });
-
+        BookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), BT_CreateActivity.class);
+                startActivity(intent);
+            }
+        });
+        CommunityBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CT_Activity.class);
+                startActivity(intent);
+            }
+        });
 
         //메인페이지 버튼의정
         Button btnPhotoBookInfo = findViewById(R.id.btnPhotoBookInfo);
@@ -119,7 +116,7 @@ public class BT_CreateActivity extends Activity {
         Button btnPhotoBookSave = findViewById(R.id.btnPhotoBookSave);
         Button btnPhotoBookPageCreate = findViewById(R.id.btnPhotoBookPageCreate);
         Button btnPhotoBookPageDelete = findViewById(R.id.btnPhotoBookPageDelete);
-        final ImageView testimage = findViewById(R.id.testimage);
+//        final ImageView testimage = findViewById(R.id.testimage);
 
 
         //그리드뷰 + 어댑터

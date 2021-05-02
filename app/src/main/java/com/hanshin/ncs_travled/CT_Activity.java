@@ -1,6 +1,7 @@
 package com.hanshin.ncs_travled;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,32 @@ public class CT_Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ct_list);
+
+        Button HomeBtn = findViewById(R.id.HomeBtn);
+        Button BookBtn = findViewById(R.id.BookBtn);
+        Button CommunityBtn = findViewById(R.id.CommunityBtn);
+
+        HomeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
+                startActivity(intent);
+            }
+        });
+        BookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), BT_CreateActivity.class);
+                startActivity(intent);
+            }
+        });
+        CommunityBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CT_Activity.class);
+                startActivity(intent);
+            }
+        });
 
         ///////////// 관리자 게시판
         init();
