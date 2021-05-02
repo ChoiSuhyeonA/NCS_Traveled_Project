@@ -33,7 +33,7 @@ public class ResultActivity extends AppCompatActivity {
     private static final String TAG =ResultActivity.class.getSimpleName();
 
     TextView name, mail;
-    Button logout, revoke;
+    Button logout, revoke, goHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class ResultActivity extends AppCompatActivity {
 
         logout = findViewById(R.id.logout);
         revoke = findViewById(R.id.revoke);
+        goHome = findViewById(R.id.goHome);
         name = findViewById(R.id.name);
         mail = findViewById(R.id.mail);
 
@@ -96,6 +97,13 @@ public class ResultActivity extends AppCompatActivity {
 
 
 
+            }
+        });
+        goHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 

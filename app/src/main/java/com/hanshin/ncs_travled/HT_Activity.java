@@ -10,8 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.tabs.TabLayout;
 
 public class HT_Activity extends Activity {
@@ -21,6 +24,9 @@ public class HT_Activity extends Activity {
     HT_ListViewAdapter adapter;
     TabLayout tabLayout;
     public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
+    //구글로그인 회원정보
+    String loginName ="";
+    String loginEmail = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +36,7 @@ public class HT_Activity extends Activity {
         Button HomeBtn = findViewById(R.id.HomeBtn);
         Button BookBtn = findViewById(R.id.BookBtn);
         Button CommunityBtn = findViewById(R.id.CommunityBtn);
-
+        //탭 화면전환 버튼
         HomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +58,16 @@ public class HT_Activity extends Activity {
                 startActivity(intent);
             }
         });
+
+        //로그인한 회원정보를 가져오는 변수
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if(signInAccount != null){
+            //회원정보 이름
+            loginName = signInAccount.getDisplayName();
+            //회원정보 이메일
+            loginEmail = signInAccount.getEmail();
+            Toast.makeText(HT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
+        }
 
 
         mapSelAreaBtn = findViewById(R.id.homeMap_selAreaBtn);

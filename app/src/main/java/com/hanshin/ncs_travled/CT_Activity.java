@@ -12,6 +12,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 public class CT_Activity extends Activity {
 
     CT_Adapter listAdapter;
@@ -19,6 +22,9 @@ public class CT_Activity extends Activity {
     CT_recyclerAdapter recyclerAdapter;
     ListView listview;
     Button writeBtn;
+    //구글로그인 회원정보
+    String loginName ="";
+    String loginEmail = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,16 @@ public class CT_Activity extends Activity {
                 startActivity(intent);
             }
         });
+
+        //로그인한 회원정보를 가져오는 변수
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if(signInAccount != null){
+            //회원정보 이름
+            loginName = signInAccount.getDisplayName();
+            //회원정보 이메일
+            loginEmail = signInAccount.getEmail();
+            Toast.makeText(CT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
+        }
 
         ///////////// 관리자 게시판
         init();

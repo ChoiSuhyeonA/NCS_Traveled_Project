@@ -17,6 +17,8 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
@@ -43,20 +45,32 @@ public class BT_Activity extends Activity {
     ArrayList<Uri> videoList = new ArrayList<Uri>();
     ArrayList<Uri> seeList = new ArrayList<Uri>();
 
-    BT_GridViewAdapter adapter;
 
+
+    BT_GridViewAdapter adapter;
     TabLayout tabLayout;
     public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
-
     BT_Create_Item bt_item  = new BT_Create_Item(); ; //파이어베이스 스토어에 등록할 데이터 클래스
 
-//    private View ButtonPhotoBookTravelArea;
-//    private View ButtonPhotoBookTravelCity;
+    //구글로그인 회원정보
+    String loginName ="";
+    String loginEmail = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bt_create);
+
+        //로그인한 회원정보를 가져오는 변수
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if(signInAccount != null){
+            //회원정보 이름
+            loginName = signInAccount.getDisplayName();
+            //회원정보 이메일
+            loginEmail = signInAccount.getEmail();
+            //회원정보를 보여줌
+            Toast.makeText(BT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
+        }
 
         Button HomeBtn = findViewById(R.id.HomeBtn);
         Button BookBtn = findViewById(R.id.BookBtn);
@@ -216,7 +230,7 @@ public class BT_Activity extends Activity {
 
                 //이미지 리스트를 파이어베이스에 업로드
                 for (int i = 0; i < imageList.size(); i++) {   ///     경기도수원/ 경기도
-                    StorageReference imageRef = storageRef.child(bt_item.getPhotoBookTravelArea() + "/" + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
+                    StorageReference imageRef = storageRef.child(loginEmail+"/"+bt_item.getPhotoBookTravelArea() + "/" + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
                     //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png")); // 파이어베이스 다운로드 경로 예시
                     //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg")); //갤러리경로 예시
 
@@ -236,7 +250,7 @@ public class BT_Activity extends Activity {
                 }
                 //비디오 리스트를 파이어베이스에 업로드
                 for (int i = 0; i < videoList.size(); i++) {
-                    StorageReference videoRef = storageRef.child(bt_item.getPhotoBookTravelArea()  + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle()  + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
+                    StorageReference videoRef = storageRef.child(loginEmail+"/"+bt_item.getPhotoBookTravelArea()  + "/" + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle()  + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
                     Uri file =Uri.parse(String.valueOf(videoList.get(i)));// 비디오리스트에서 내가 원하는 값을 집어넣음.
                     UploadTask uploadTask = videoRef.putFile(file);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -289,7 +303,8 @@ public class BT_Activity extends Activity {
                 member.put("contents3", bt_item.getContents3());
 
 
-                db.collection( bt_item.getPhotoBookTravelArea()+bt_item.getPhotoBookTravelCity()).document(bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                db.collection( loginEmail).document(bt_item.getPhotoBookTravelArea()+bt_item.getPhotoBookTravelCity()+bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
