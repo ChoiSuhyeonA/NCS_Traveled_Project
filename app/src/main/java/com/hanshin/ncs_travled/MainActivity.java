@@ -19,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -50,10 +51,11 @@ public class MainActivity extends Activity {
         super.onStart();
 
         FirebaseUser user = mAuth.getCurrentUser();
-        if(user!=null){
-            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-            startActivity(intent);
-        }
+        //로그인 정보가 있을시 바로 화면전환
+//        if(user!=null){
+//            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+//            startActivity(intent);
+//        }
     }
 
     @Override
@@ -61,6 +63,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //홈으로 이동하는 버튼이다.
         Button btn = findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,9 +81,9 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 signIn();
-
             }
         });
+
 
 
 
@@ -105,15 +108,18 @@ public class MainActivity extends Activity {
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+
+
+
+            Task<GoogleSignInAccount    > task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-              
                 firebaseAuthWithGoogle(account.getIdToken());
+                //로그인 성공시 화면전환
+                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                startActivity(intent);
             } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Toast.makeText(this,e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -137,5 +143,6 @@ public class MainActivity extends Activity {
                     }
                 });
     }
+
 
 }

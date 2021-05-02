@@ -1,54 +1,30 @@
 package com.hanshin.ncs_travled;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.hardware.input.InputManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.Layout;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,9 +38,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
-import static android.content.ContentValues.TAG;
-
-public class BT_CreateActivity extends Activity {
+public class BT_Activity extends Activity {
     ArrayList<Uri> imageList = new ArrayList<Uri>();
     ArrayList<Uri> videoList = new ArrayList<Uri>();
     ArrayList<Uri> seeList = new ArrayList<Uri>();
@@ -98,7 +72,7 @@ public class BT_CreateActivity extends Activity {
         BookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BT_CreateActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BT_Activity.class);
                 startActivity(intent);
             }
         });
@@ -132,8 +106,8 @@ public class BT_CreateActivity extends Activity {
         btnPhotoBookInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final LinearLayout dialogView = (LinearLayout) View.inflate(BT_CreateActivity.this, R.layout.bt_dialog_photobookinfo, null);
-                AlertDialog.Builder dlg = new AlertDialog.Builder(BT_CreateActivity.this);
+                final LinearLayout dialogView = (LinearLayout) View.inflate(BT_Activity.this, R.layout.bt_dialog_photobookinfo, null);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(BT_Activity.this);
                 dlg.setTitle(" 포토북 정보");
                 dlg.setView(dialogView);
                 dlg.setIcon(R.drawable.ic_baseline_info_24);
@@ -170,8 +144,8 @@ public class BT_CreateActivity extends Activity {
         btnPhotoBookCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final LinearLayout dialogView = (LinearLayout) View.inflate(BT_CreateActivity.this, R.layout.bt_dialog_photobookcover, null);
-                AlertDialog.Builder dlg = new AlertDialog.Builder(BT_CreateActivity.this);
+                final LinearLayout dialogView = (LinearLayout) View.inflate(BT_Activity.this, R.layout.bt_dialog_photobookcover, null);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(BT_Activity.this);
                 dlg.setTitle(" 포토북 표지");
                 dlg.setView(dialogView);
                 dlg.setIcon(R.drawable.ic_baseline_menu_book_24);
@@ -186,10 +160,10 @@ public class BT_CreateActivity extends Activity {
                         CheckBox bookCover3 = dialogView.findViewById(R.id.bookCover3);
                         CheckBox bookCover4 = dialogView.findViewById(R.id.bookCover4);
 
-                        if(bookCover1.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_CreateActivity.this, R.drawable.cover_spring));
-                        if(bookCover2.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_CreateActivity.this, R.drawable.cover_summer));
-                        if(bookCover3.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_CreateActivity.this, R.drawable.cover_autumn));
-                        if(bookCover4.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_CreateActivity.this, R.drawable.cover_winter));
+                        if(bookCover1.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.cover_spring));
+                        if(bookCover2.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.cover_summer));
+                        if(bookCover3.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.cover_autumn));
+                        if(bookCover4.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.cover_winter));
 
                     }
                 });
@@ -251,12 +225,12 @@ public class BT_CreateActivity extends Activity {
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(BT_CreateActivity.this, "이미지 업로드 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BT_Activity.this, "이미지 업로드 실패", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(BT_CreateActivity.this, "이미지 업로드 성공", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BT_Activity.this, "이미지 업로드 성공", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -268,12 +242,12 @@ public class BT_CreateActivity extends Activity {
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(BT_CreateActivity.this, "비디오 업로드 실패", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BT_Activity.this, "비디오 업로드 실패", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(BT_CreateActivity.this, "비디오 업로드 성공", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BT_Activity.this, "비디오 업로드 성공", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -318,12 +292,12 @@ public class BT_CreateActivity extends Activity {
                 db.collection( bt_item.getPhotoBookTravelArea()+bt_item.getPhotoBookTravelCity()).document(bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(BT_CreateActivity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(BT_CreateActivity.this, "데이터 업로드 실패", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BT_Activity.this, "데이터 업로드 실패", Toast.LENGTH_SHORT).show();
                     }
                 });
 

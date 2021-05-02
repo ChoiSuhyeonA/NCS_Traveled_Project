@@ -39,7 +39,7 @@ public class CT_Activity extends Activity {
         BookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BT_CreateActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BT_Activity.class);
                 startActivity(intent);
             }
         });

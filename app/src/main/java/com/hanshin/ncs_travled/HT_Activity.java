@@ -1,6 +1,5 @@
 package com.hanshin.ncs_travled;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
@@ -42,7 +41,7 @@ public class HT_Activity extends Activity {
         BookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BT_CreateActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BT_Activity.class);
                 startActivity(intent);
             }
         });

@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6F6F4"
     android:orientation="vertical"
-    tools:context=".BT_CreateActivity">
+    android:background="#EBF6F6"
+    tools:context=".BT_Activity">
 
     <LinearLayout
         android:id="@+id/Htabs"
         android:layout_width="411dp"
         android:layout_height="52dp"
         android:orientation="horizontal"
+        android:background="#FBFAFA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
