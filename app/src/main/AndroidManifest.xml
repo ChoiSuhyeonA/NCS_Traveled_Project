@@ -16,6 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".HT_Activity" android:label="Home"> </activity>
         <activity android:name=".BT_CreateActivity" android:label="Book"> </activity>
         <activity android:name=".CT_Activity" android:label="Community"> </activity>
     </application>

@@ -7,12 +7,57 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:536271702433:android:61382223dfce89e1b4a3e0",
+        "android_client_info": {
+          "package_name": "com.hanshin.imprintedsaga"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536271702433-k86rcdjrucs7sh62qrdhvp8hsriqb23d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hanshin.imprintedsaga",
+            "certificate_hash": "e55b2b09058320567d9ce7b9cae6d32807cab7cd"
+          }
+        },
+        {
+          "client_id": "536271702433-3bqhufcmk9ro88tsl2jummi4s9dalem2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOAZ3mX3PSVz147RImUBmcBNs9_jbldXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536271702433-3bqhufcmk9ro88tsl2jummi4s9dalem2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:536271702433:android:8a3d068ebb858255b4a3e0",
         "android_client_info": {
           "package_name": "com.hanshin.ncs_travled"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "536271702433-5paekceg9vopsedlhjb0onurkpf2mdpg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hanshin.ncs_travled",
+            "certificate_hash": "e55b2b09058320567d9ce7b9cae6d32807cab7cd"
+          }
+        },
         {
           "client_id": "536271702433-3bqhufcmk9ro88tsl2jummi4s9dalem2.apps.googleusercontent.com",
           "client_type": 3

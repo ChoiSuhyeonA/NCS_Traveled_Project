@@ -93,7 +93,7 @@ public class BT_CreateActivity extends Activity {
                 int pos = tab.getPosition();
 
                 if (pos == 0) { // 첫 번째 탭 선택.
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
                     startActivityForResult(intent, sub);
                 } else if (pos == 1) { // 두 번째 탭 선택.
                     Toast.makeText(getApplicationContext(), "탭2", Toast.LENGTH_SHORT).show();
