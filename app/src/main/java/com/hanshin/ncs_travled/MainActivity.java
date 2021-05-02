@@ -73,11 +73,12 @@ public class MainActivity extends Activity {
         //구글 로그인
         createRequest();
 
-        Button btnGoogle = findViewById(R.id.btnGoogle);
+        SignInButton btnGoogle = findViewById(R.id.btnGoogle);
         btnGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();
+
             }
         });
 
