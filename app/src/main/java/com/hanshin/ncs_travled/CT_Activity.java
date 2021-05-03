@@ -77,10 +77,10 @@ public class CT_Activity extends Activity {
         listview = findViewById(R.id.ct_listview);
         listview.setAdapter(listAdapter);
 
-        listAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_spring),"Book1","2020/03/15");
-        listAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_autumn),"Book2","2020/02/21");
-        listAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_summer),"Book3","2020/01/04");
-        listAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_winter),"Book4","2019/12/23");
+        listAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.list1),"Book1","2020/03/15");
+        listAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.list2),"Book2","2020/02/21");
+        listAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.list3),"Book3","2020/01/04");
+        listAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.list4),"Book4","2019/12/23");
 
         writeBtn = findViewById(R.id.ct_writeBtn);
         writeBtn.setOnClickListener(new View.OnClickListener() {
@@ -105,13 +105,13 @@ public class CT_Activity extends Activity {
         recyclerView.setAdapter(recyclerAdapter);
     }
     private void getData() {
-        CT_recyclerItem recyclerItem = new CT_recyclerItem(R.drawable.cover_spring,"list1","2020/02/12");
+        CT_recyclerItem recyclerItem = new CT_recyclerItem(R.drawable.jeju1,"list1","2020/02/12");
         recyclerAdapter.addItem(recyclerItem);
-        recyclerItem = new CT_recyclerItem(R.drawable.cover_autumn,"list2","2020/02/12");
+        recyclerItem = new CT_recyclerItem(R.drawable.jeju2,"list2","2020/02/12");
         recyclerAdapter.addItem(recyclerItem);
-        recyclerItem = new CT_recyclerItem(R.drawable.cover_summer,"list3","2020/02/12");
+        recyclerItem = new CT_recyclerItem(R.drawable.jeju3,"list3","2020/02/12");
         recyclerAdapter.addItem(recyclerItem);
-        recyclerItem = new CT_recyclerItem(R.drawable.cover_winter,"list4","2020/02/12");
+        recyclerItem = new CT_recyclerItem(R.drawable.jeju1,"list4","2020/02/12");
         recyclerAdapter.addItem(recyclerItem);
     }
 

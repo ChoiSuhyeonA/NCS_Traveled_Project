@@ -5,32 +5,23 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-public class ResultActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity {
     private FirebaseAuth mAuth ;
     private GoogleApiClient mGoogleApiClient;
-    private static final String TAG =ResultActivity.class.getSimpleName();
+    private static final String TAG = SettingActivity.class.getSimpleName();
 
     TextView name, mail;
     Button logout, revoke, goHome;
@@ -38,7 +29,7 @@ public class ResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result);
+        setContentView(R.layout.activity_setting);
 
         logout = findViewById(R.id.logout);
         revoke = findViewById(R.id.revoke);
@@ -62,7 +53,6 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(getApplicationContext(), "로그아웃 성공", Toast.LENGTH_SHORT).show();
-
                 Intent intent =new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
@@ -72,13 +62,13 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //경고창 보여주기
-                AlertDialog.Builder alt_bld = new AlertDialog.Builder(ResultActivity.this);
+                AlertDialog.Builder alt_bld = new AlertDialog.Builder(SettingActivity.this);
                 alt_bld.setMessage("회원탈퇴 하시겠습니까?").setCancelable(false).setPositiveButton("네", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // 네 클릭식 탈퇴하기
-                                Toast.makeText(getApplicationContext(), "회원탈퇴 성공", Toast.LENGTH_SHORT).show();
                                 mAuth.getCurrentUser().delete();
+                                Toast.makeText(getApplicationContext(), "회원탈퇴 성공", Toast.LENGTH_SHORT).show();
                                 Intent intent =new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
                             }
@@ -92,6 +82,7 @@ public class ResultActivity extends AppCompatActivity {
                 });
                 AlertDialog alert = alt_bld.create();
                 alert.setTitle("회원탈퇴");
+                alert.setIcon(R.drawable.ic_baseline_warning_24);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(255,62,79,92)));
                 alert.show();
 
@@ -102,7 +93,7 @@ public class ResultActivity extends AppCompatActivity {
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent =new Intent(getApplicationContext(), HT_Activity.class);
                 startActivity(intent);
             }
         });

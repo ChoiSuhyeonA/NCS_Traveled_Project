@@ -176,6 +176,20 @@
             app:layout_constraintVertical_bias="0.365"
             tools:ignore="MissingConstraints" />
 
+        <ImageButton
+            android:id="@+id/settingBtn"
+            android:layout_width="54dp"
+            android:layout_height="47dp"
+            android:background="#00ff0000"
+            android:src="@drawable/ic_baseline_settings_24"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.988"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.006" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView

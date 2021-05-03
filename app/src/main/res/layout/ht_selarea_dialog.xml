@@ -8,6 +8,8 @@
         <Button
             android:id="@+id/seoulGyeongSelBtn"
             android:text="서울/경기"
+            android:fontFamily="@font/maplestorybold"
+            android:background="#A7D8A7"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp" />
@@ -15,6 +17,8 @@
         <Button
             android:id="@+id/incheonSelBtn"
             android:text="인천"
+            android:fontFamily="@font/maplestorybold"
+            android:background="#A7D8A7"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"/>
@@ -22,6 +26,8 @@
         <Button
             android:id="@+id/busanSelBtn"
             android:text="부산"
+            android:background="#A7D8A7"
+            android:fontFamily="@font/maplestorybold"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"/>
@@ -33,6 +39,8 @@
         <Button
             android:id="@+id/daejeonSelBtn"
             android:text="대전"
+            android:background="#A7D8A7"
+            android:fontFamily="@font/maplestorybold"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"/>
@@ -40,6 +48,8 @@
         <Button
             android:id="@+id/daeguSelBtn"
             android:text="대구"
+            android:background="#A7D8A7"
+            android:fontFamily="@font/maplestorybold"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"/>
@@ -47,6 +57,8 @@
         <Button
             android:id="@+id/gwangjuSelBtn"
             android:text="광주"
+            android:background="#A7D8A7"
+            android:fontFamily="@font/maplestorybold"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"/>

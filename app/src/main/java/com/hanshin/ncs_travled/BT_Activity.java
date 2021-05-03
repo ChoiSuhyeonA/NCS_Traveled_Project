@@ -308,6 +308,8 @@ public class BT_Activity extends Activity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
+                        startActivity(intent);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

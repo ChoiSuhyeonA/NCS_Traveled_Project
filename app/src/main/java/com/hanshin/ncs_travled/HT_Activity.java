@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -20,13 +20,14 @@ import com.google.android.material.tabs.TabLayout;
 public class HT_Activity extends Activity {
 
     Button mapSelAreaBtn, mapGoyangnBtn, mapBuGwangBtn, mapSeoulBtn, mapAnAnBtn, mapSuwonBtn, mapSuYoBtn;
+    ImageButton settingBtn;
     ListView listview;
     HT_ListViewAdapter adapter;
     TabLayout tabLayout;
     public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
     //구글로그인 회원정보
-    String loginName ="";
-    String loginEmail = "";
+    String loginName ="-";
+    String loginEmail = "-";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class HT_Activity extends Activity {
         Button HomeBtn = findViewById(R.id.HomeBtn);
         Button BookBtn = findViewById(R.id.BookBtn);
         Button CommunityBtn = findViewById(R.id.CommunityBtn);
+        ImageButton settingBtn = findViewById(R.id.settingBtn);
         //탭 화면전환 버튼
         HomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +62,7 @@ public class HT_Activity extends Activity {
         });
 
         //로그인한 회원정보를 가져오는 변수
+
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if(signInAccount != null){
             //회원정보 이름
@@ -84,13 +87,14 @@ public class HT_Activity extends Activity {
                 // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
                 AreaDialog areaDialog = new AreaDialog(HT_Activity.this);
                 areaDialog.callFunction();
+
             }
         });
 
         mapGoyangnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "버튼테스트", Toast.LENGTH_SHORT).show();
+
             }
         });
         mapBuGwangBtn.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +128,14 @@ public class HT_Activity extends Activity {
             }
         });
 
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //환경설정페이지로 이동
+                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+                startActivity(intent);
+            }
+        });
         //////// 하단 포토북
 
         adapter = new HT_ListViewAdapter();
