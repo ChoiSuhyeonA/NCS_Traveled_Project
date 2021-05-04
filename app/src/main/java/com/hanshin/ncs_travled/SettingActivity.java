@@ -90,6 +90,7 @@ public class SettingActivity extends AppCompatActivity {
 
             }
         });
+        //홈탭으로 이동
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

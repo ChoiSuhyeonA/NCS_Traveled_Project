@@ -49,11 +49,169 @@
 
     </LinearLayout>
 
+       <!--경기 서울-->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/const1"
         android:layout_width="match_parent"
         android:layout_height="349dp"
-        android:layout_weight="1"
+        android:background="@color/cardview_dark_background"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Htabs"
+        app:layout_constraintVertical_bias="0.0"
+        tools:context=".HomeTab">
+
+        <Button
+            android:id="@+id/homeMap_const1_selAreaBtn"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="지역"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const1_goyangBtn"
+            android:layout_width="94dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="148dp"
+            android:layout_marginLeft="148dp"
+            android:layout_marginTop="64dp"
+            android:background="@drawable/buttonshape_c1_g"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="고양"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const1_seoulBtn"
+            android:layout_width="132dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/buttonshape_c1_seoul"
+            android:text="서울"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const1_bugwangBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const1_goyangBtn"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const1_bugwangBtn"
+            android:layout_width="83dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/buttonshape_c1_bg"
+            android:text="부천\n광명"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const1_goyangBtn"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const1_suwonBtn"
+            android:layout_width="96dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/buttonshape_c1_suwon"
+            android:text="수원"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.474"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const1_ananBtn"
+            app:layout_constraintVertical_bias="0.02"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const1_suyoBtn"
+            android:layout_width="72dp"
+            android:layout_height="112dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/buttonshape_c1_sy"
+            android:text="성남\n용인 "
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const1_suwonBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const1_seoulBtn"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const1_ananBtn"
+            android:layout_width="191dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/buttonshape_c1_aa"
+            android:text="안산, 안양"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.251"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const1_goyangBtn"
+            app:layout_constraintVertical_bias="0.365"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/const1_testing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="서울/경기"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.079"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.951" />
+
+        <ImageButton
+            android:id="@+id/settingBtn1"
+            android:layout_width="54dp"
+            android:layout_height="47dp"
+            android:background="#00ff0000"
+            android:src="@drawable/ic_baseline_settings_24"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.955"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.052" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout> // 서울,
+
+    <!--인천-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const2"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="349dp"
         android:background="@color/cardview_dark_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,9 +221,8 @@
         app:layout_constraintVertical_bias="0.0"
         tools:context=".HomeTab">
 
-
         <Button
-            android:id="@+id/homeMap_selAreaBtn"
+            android:id="@+id/homeMap_const2_selAreaBtn"
             android:layout_width="70dp"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
@@ -76,13 +233,159 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
         <Button
-            android:id="@+id/homeMap_goyangBtn"
+            android:id="@+id/homeMap_const2_goyangBtn"
             android:layout_width="94dp"
             android:layout_height="46dp"
             android:layout_marginStart="148dp"
             android:layout_marginLeft="148dp"
             android:layout_marginTop="64dp"
-            android:background="@drawable/buttonshape_g"
+            android:text="송도"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const2_seoulBtn"
+            android:layout_width="132dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="부평역"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const2_bugwangBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const2_goyangBtn"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const2_bugwangBtn"
+            android:layout_width="83dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="12dp"
+            android:text="동인천"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const2_goyangBtn"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const2_suwonBtn"
+            android:layout_width="96dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="12dp"
+            android:text="남동구"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.474"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const2_ananBtn"
+            app:layout_constraintVertical_bias="0.02"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const2_suyoBtn"
+            android:layout_width="72dp"
+            android:layout_height="112dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="서구 "
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const2_suwonBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const2_seoulBtn"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const2_ananBtn"
+            android:layout_width="191dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="12dp"
+            android:text="구월동"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.251"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const2_goyangBtn"
+            app:layout_constraintVertical_bias="0.365"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/const2_testing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인천"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.079"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.951" />
+        <ImageButton
+            android:id="@+id/settingBtn2"
+            android:layout_width="54dp"
+            android:layout_height="47dp"
+            android:background="#00ff0000"
+            android:src="@drawable/ic_baseline_settings_24"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.955"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.052" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout> // 인천
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const3"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="349dp"
+        android:background="@color/cardview_dark_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Htabs"
+        app:layout_constraintVertical_bias="0.0"
+        tools:context=".HomeTab">
+
+        <Button
+            android:id="@+id/homeMap_const3_selAreaBtn"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="지역"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/homeMap_const3_goyangBtn"
+            android:layout_width="94dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="148dp"
+            android:layout_marginLeft="148dp"
+            android:layout_marginTop="64dp"
             android:text="고양"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
@@ -94,41 +397,38 @@
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/homeMap_seoulBtn"
+            android:id="@+id/homeMap_const3_seoulBtn"
             android:layout_width="132dp"
             android:layout_height="56dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/buttonshape_seoul"
             android:text="서울"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/homeMap_bugwangBtn"
-            app:layout_constraintTop_toBottomOf="@+id/homeMap_goyangBtn"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const3_bugwangBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const3_goyangBtn"
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/homeMap_bugwangBtn"
+            android:id="@+id/homeMap_const3_bugwangBtn"
             android:layout_width="83dp"
             android:layout_height="55dp"
             android:layout_marginStart="100dp"
             android:layout_marginLeft="100dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/buttonshape_bg"
             android:text="부천\n광명"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/homeMap_goyangBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const3_goyangBtn"
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/homeMap_suwonBtn"
+            android:id="@+id/homeMap_const3_suwonBtn"
             android:layout_width="96dp"
             android:layout_height="59dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/buttonshape_suwon"
             android:text="수원"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
@@ -136,35 +436,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.474"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/homeMap_ananBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const3_ananBtn"
             app:layout_constraintVertical_bias="0.02"
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/homeMap_suyoBtn"
+            android:id="@+id/homeMap_const3_suyoBtn"
             android:layout_width="72dp"
             android:layout_height="112dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/buttonshape_sy"
             android:text="성남\n용인 "
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/homeMap_suwonBtn"
-            app:layout_constraintTop_toBottomOf="@+id/homeMap_seoulBtn"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const3_suwonBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const3_seoulBtn"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/homeMap_ananBtn"
+            android:id="@+id/homeMap_const3_ananBtn"
             android:layout_width="191dp"
             android:layout_height="41dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/buttonshape_aa"
             android:text="안산, 안양"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
@@ -172,12 +470,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.251"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/homeMap_goyangBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const3_goyangBtn"
             app:layout_constraintVertical_bias="0.365"
             tools:ignore="MissingConstraints" />
 
+        <TextView
+            android:id="@+id/const3_testing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="부산"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.079"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.951" />
         <ImageButton
-            android:id="@+id/settingBtn"
+            android:id="@+id/settingBtn3"
             android:layout_width="54dp"
             android:layout_height="47dp"
             android:background="#00ff0000"
@@ -185,22 +495,466 @@
             android:text="Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.988"
+            app:layout_constraintHorizontal_bias="0.955"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.006" />
+            app:layout_constraintVertical_bias="0.052" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout> // 부산
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const4"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="349dp"
+        android:background="@color/cardview_dark_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Htabs"
+        app:layout_constraintVertical_bias="0.0"
+        tools:context=".HomeTab">
+
+        <Button
+            android:id="@+id/homeMap_const4_selAreaBtn"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="지역"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/homeMap_const4_goyangBtn"
+            android:layout_width="94dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="148dp"
+            android:layout_marginLeft="148dp"
+            android:layout_marginTop="64dp"
+            android:text="고양"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const4_seoulBtn"
+            android:layout_width="132dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="서울"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const4_bugwangBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const4_goyangBtn"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const4_bugwangBtn"
+            android:layout_width="83dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="12dp"
+            android:text="부천\n광명"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const4_goyangBtn"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const4_suwonBtn"
+            android:layout_width="96dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="12dp"
+            android:text="수원"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.474"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const4_ananBtn"
+            app:layout_constraintVertical_bias="0.02"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const4_suyoBtn"
+            android:layout_width="72dp"
+            android:layout_height="112dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="성남\n용인 "
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const4_suwonBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const4_seoulBtn"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const4_ananBtn"
+            android:layout_width="191dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="12dp"
+            android:text="안산, 안양"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.251"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const4_goyangBtn"
+            app:layout_constraintVertical_bias="0.365"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/const4_testing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="대전"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.079"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.951" />
+        <ImageButton
+            android:id="@+id/settingBtn4"
+            android:layout_width="54dp"
+            android:layout_height="47dp"
+            android:background="#00ff0000"
+            android:src="@drawable/ic_baseline_settings_24"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.955"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.052" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout> // 대전
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const5"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="349dp"
+        android:background="@color/cardview_dark_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Htabs"
+        app:layout_constraintVertical_bias="0.0"
+        tools:context=".HomeTab">
+
+        <Button
+            android:id="@+id/homeMap_const5_selAreaBtn"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="지역"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/homeMap_const5_goyangBtn"
+            android:layout_width="94dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="148dp"
+            android:layout_marginLeft="148dp"
+            android:layout_marginTop="64dp"
+            android:text="고양"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const5_seoulBtn"
+            android:layout_width="132dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="서울"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const5_bugwangBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const5_goyangBtn"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const5_bugwangBtn"
+            android:layout_width="83dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="12dp"
+            android:text="부천\n광명"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const5_goyangBtn"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const5_suwonBtn"
+            android:layout_width="96dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="12dp"
+            android:text="수원"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.474"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const5_ananBtn"
+            app:layout_constraintVertical_bias="0.02"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const5_suyoBtn"
+            android:layout_width="72dp"
+            android:layout_height="112dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="성남\n용인 "
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const5_suwonBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const5_seoulBtn"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const5_ananBtn"
+            android:layout_width="191dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="12dp"
+            android:text="안산, 안양"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.251"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const5_goyangBtn"
+            app:layout_constraintVertical_bias="0.365"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/const5_testing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="대구"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.079"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.951" />
+        <ImageButton
+            android:id="@+id/settingBtn5"
+            android:layout_width="54dp"
+            android:layout_height="47dp"
+            android:background="#00ff0000"
+            android:src="@drawable/ic_baseline_settings_24"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.955"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.052" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout> // 대구
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const6"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="349dp"
+        android:background="@color/cardview_dark_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Htabs"
+        app:layout_constraintVertical_bias="0.0"
+        tools:context=".HomeTab">
+
+        <Button
+            android:id="@+id/homeMap_const6_selAreaBtn"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="지역"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/homeMap_const6_goyangBtn"
+            android:layout_width="94dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="148dp"
+            android:layout_marginLeft="148dp"
+            android:layout_marginTop="64dp"
+            android:text="고양"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const6_seoulBtn"
+            android:layout_width="132dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="서울"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const6_bugwangBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const6_goyangBtn"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const6_bugwangBtn"
+            android:layout_width="83dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="12dp"
+            android:text="부천\n광명"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const6_goyangBtn"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const6_suwonBtn"
+            android:layout_width="96dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="12dp"
+            android:text="수원"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.474"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const6_ananBtn"
+            app:layout_constraintVertical_bias="0.02"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const6_suyoBtn"
+            android:layout_width="72dp"
+            android:layout_height="112dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:text="성남\n용인 "
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/homeMap_const6_suwonBtn"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const6_seoulBtn"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/homeMap_const6_ananBtn"
+            android:layout_width="191dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="12dp"
+            android:text="안산, 안양"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.251"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeMap_const6_goyangBtn"
+            app:layout_constraintVertical_bias="0.365"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/const6_testing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="광주"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.079"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.951" />
+        <ImageButton
+            android:id="@+id/settingBtn6"
+            android:layout_width="54dp"
+            android:layout_height="47dp"
+            android:background="#00ff0000"
+            android:src="@drawable/ic_baseline_settings_24"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.955"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.052" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout> // 광주
+
+
 
     <ListView
         android:id="@+id/listview1"
-        android:layout_width="409dp"
-        android:layout_height="269dp"
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
+        app:layout_constraintTop_toBottomOf="@+id/Htabs"
+        app:layout_constraintVertical_bias="0.975" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

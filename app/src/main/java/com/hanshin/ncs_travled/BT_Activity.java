@@ -68,8 +68,7 @@ public class BT_Activity extends Activity {
             loginName = signInAccount.getDisplayName();
             //회원정보 이메일
             loginEmail = signInAccount.getEmail();
-            //회원정보를 보여줌
-            Toast.makeText(BT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
+
         }
 
         Button HomeBtn = findViewById(R.id.HomeBtn);

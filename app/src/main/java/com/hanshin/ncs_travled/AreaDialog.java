@@ -2,6 +2,7 @@ package com.hanshin.ncs_travled;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.Layout;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -9,6 +10,15 @@ import android.widget.Button;
 public class AreaDialog {
 
     private Context context;
+    private  CustomDialogListener customDialogListener;
+
+    public void setDialogListener(CustomDialogListener customDialogListener){
+        this.customDialogListener = customDialogListener;
+    }
+
+    interface CustomDialogListener{
+        void onAreaClicked(String name);
+    }
 
     public AreaDialog(Context context) {
         this.context = context;
@@ -39,36 +49,42 @@ public class AreaDialog {
         seoulGyeongButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                customDialogListener.onAreaClicked(seoulGyeongButton.getText().toString());
                 dlg.dismiss();
             }
         });
         incheonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                customDialogListener.onAreaClicked(incheonButton.getText().toString());
                 dlg.dismiss();
             }
         });
         busanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                customDialogListener.onAreaClicked(busanButton.getText().toString());
                 dlg.dismiss();
             }
         });
         daejeonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                customDialogListener.onAreaClicked(daejeonButton.getText().toString());
                 dlg.dismiss();
             }
         });
         daeguButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                customDialogListener.onAreaClicked(daeguButton.getText().toString());
                 dlg.dismiss();
             }
         });
         gwangjuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                customDialogListener.onAreaClicked(gwangjuButton.getText().toString());
                 dlg.dismiss();
             }
         });

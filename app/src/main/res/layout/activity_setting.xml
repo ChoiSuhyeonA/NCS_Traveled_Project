@@ -47,61 +47,63 @@
         app:layout_constraintVertical_bias="0.424" />
 
     <Button
-        android:id="@+id/logout"
+        android:id="@+id/goHome"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:text="로그아웃"
-        android:textSize="25dp"
+        android:background="#E2EEF6"
+        android:fontFamily="@font/binggraebold"
         android:shadowColor="#0890FB"
         android:shadowDx="0"
         android:shadowDy="1"
         android:shadowRadius="5"
-        android:fontFamily="@font/binggraebold"
-        android:background="#E2EEF6"
+        android:text="홈탭으로 "
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.535" />
+        app:layout_constraintVertical_bias="0.521" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:background="#E2EEF6"
+        android:fontFamily="@font/binggraebold"
+        android:shadowColor="#0890FB"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowRadius="5"
+        android:text="로그아웃"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.642" />
 
     <Button
         android:id="@+id/revoke"
         android:layout_width="200dp"
         android:layout_height="60dp"
+        android:background="#E2EEF6"
+        android:fontFamily="@font/binggraebold"
+        android:shadowColor="#0890FB"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowRadius="5"
         android:text="회원탈퇴"
         android:textSize="25dp"
-        android:shadowColor="#0890FB"
-        android:shadowDx="0"
-        android:shadowDy="1"
-        android:shadowRadius="5"
-        android:fontFamily="@font/binggraebold"
-        android:background="#E2EEF6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.649" />
+        app:layout_constraintVertical_bias="0.761" />
 
-    <Button
-        android:id="@+id/goHome"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:text="메인페이지로"
-        android:textSize="25dp"
-        android:shadowColor="#0890FB"
-        android:shadowDx="0"
-        android:shadowDy="1"
-        android:shadowRadius="5"
-        android:fontFamily="@font/binggraebold"
-        android:background="#E2EEF6"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.767" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

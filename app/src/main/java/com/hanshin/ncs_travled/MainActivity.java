@@ -53,15 +53,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //홈으로 이동하는 버튼이다.
-        Button btn = findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
-                startActivity(intent);
-            }
-        });
         mAuth = FirebaseAuth.getInstance();
         //구글 로그인
         createRequest();

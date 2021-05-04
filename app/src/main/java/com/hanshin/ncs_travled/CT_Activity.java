@@ -64,7 +64,6 @@ public class CT_Activity extends Activity {
             loginName = signInAccount.getDisplayName();
             //회원정보 이메일
             loginEmail = signInAccount.getEmail();
-            Toast.makeText(CT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
         }
 
         ///////////// 관리자 게시판
