@@ -41,6 +41,9 @@ public class HT_Activity extends Activity {
         Button BookBtn = findViewById(R.id.BookBtn);
         Button CommunityBtn = findViewById(R.id.CommunityBtn);
 
+        loginName ="-";
+        loginEmail = "-";
+
         //탭 화면전환 버튼
         HomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +76,7 @@ public class HT_Activity extends Activity {
             //회원정보 이메일
             loginEmail = signInAccount.getEmail();
             Toast.makeText(HT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
-        } 
+        }
 
         selArea[0] = findViewById(R.id.homeMap_const1_selAreaBtn);
         selArea[1] = findViewById(R.id.homeMap_const2_selAreaBtn);
@@ -232,10 +235,10 @@ public class HT_Activity extends Activity {
         listview = findViewById(R.id.listview1);
         listview.setAdapter(adapter);
 
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_spring), "Book1", "수원", "AAA", "2020/03/15");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_autumn), "Book2", "서울", "BBB", "2020/02/21");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_summer), "Book3", "고양", "CCC", "2020/01/04");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.cover_winter), "Book4", "광명", "DDD", "2019/12/23");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage9), "Book1", "수원", "AAA", "2020/03/15");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage11), "Book2", "서울", "BBB", "2020/02/21");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage10), "Book3", "고양", "CCC", "2020/01/04");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage12), "Book4", "광명", "DDD", "2019/12/23");
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -43,6 +43,7 @@ import androidx.core.content.ContextCompat;
 public class BT_Activity extends Activity {
     ArrayList<Uri> imageList = new ArrayList<Uri>();
     ArrayList<Uri> videoList = new ArrayList<Uri>();
+    //리스트에 출력될 자료 (실제 x)
     ArrayList<Uri> seeList = new ArrayList<Uri>();
 
 
@@ -172,12 +173,19 @@ public class BT_Activity extends Activity {
                         CheckBox bookCover2= dialogView.findViewById(R.id.bookCover2);
                         CheckBox bookCover3 = dialogView.findViewById(R.id.bookCover3);
                         CheckBox bookCover4 = dialogView.findViewById(R.id.bookCover4);
+                        CheckBox bookCover5 = dialogView.findViewById(R.id.bookCover5);
+                        CheckBox bookCover6 = dialogView.findViewById(R.id.bookCover6);
+                        CheckBox bookCover7 = dialogView.findViewById(R.id.bookCover7);
+                        CheckBox bookCover8 = dialogView.findViewById(R.id.bookCover8);
 
-                        if(bookCover1.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.cover_spring));
-                        if(bookCover2.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.cover_summer));
-                        if(bookCover3.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.cover_autumn));
-                        if(bookCover4.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.cover_winter));
-
+                        if(bookCover1.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage1));
+                        if(bookCover2.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage2));
+                        if(bookCover3.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage3));
+                        if(bookCover4.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage4));
+                        if(bookCover5.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage5));
+                        if(bookCover6.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage6));
+                        if(bookCover7.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage7));
+                        if(bookCover8.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage8));
                     }
                 });
                 dlg.setNegativeButton("취소", null);
@@ -303,7 +311,7 @@ public class BT_Activity extends Activity {
 
 
 
-                db.collection( loginEmail).document(bt_item.getPhotoBookTravelArea()+bt_item.getPhotoBookTravelCity()+bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+                db.collection(loginEmail).document(bt_item.getPhotoBookTravelArea()+bt_item.getPhotoBookTravelCity()+bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
