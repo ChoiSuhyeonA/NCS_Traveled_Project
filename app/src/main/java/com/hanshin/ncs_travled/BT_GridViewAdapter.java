@@ -63,7 +63,6 @@ public class BT_GridViewAdapter extends BaseAdapter  {
         final int pos = position;
         final Context context = parent.getContext();
 
-
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -71,14 +70,6 @@ public class BT_GridViewAdapter extends BaseAdapter  {
         }
         ImageView image = convertView.findViewById(R.id.plus1);
 
-        TextView text = convertView.findViewById(R.id.bt_ListContentTV);
-
-
-        if(BT_Activity.contents.get(position).contains("-")){
-            text.setText("글 작성 x");
-        }else{
-            text.setText("글 작성 o");
-        }
 
 
         if(String.valueOf(seeArrayList.get(position)).contains("video")){
@@ -87,11 +78,8 @@ public class BT_GridViewAdapter extends BaseAdapter  {
             image.setImageURI(seeArrayList.get(position));
         }
 
-
         image.setScaleType(ImageView.ScaleType.FIT_XY);
         image.setPadding(3,5,3,5);
-
-
 
         return  convertView;
     }
@@ -119,8 +107,6 @@ public class BT_GridViewAdapter extends BaseAdapter  {
                 int i1 = imageArrayList.size();
                 if (i1 > 0) {
                     imageArrayList.remove(i1 - 1);
-                    BT_Activity.contents1.remove(i1 - 1);
-                    BT_Activity.contents.remove(i1 - 1);
                 }
                 seeArrayList.remove(i - 1);
                 //비디오일 경우
@@ -128,8 +114,6 @@ public class BT_GridViewAdapter extends BaseAdapter  {
                 int i1 = videoArrayList.size();
                 if (i1 > 0) {
                     videoArrayList.remove(i1 - 1);
-                    BT_Activity.contents2.remove(i1 - 1);
-                    BT_Activity.contents.remove(i1 - 1);
                 }
                 seeArrayList.remove(i - 1);
             }

@@ -235,10 +235,10 @@ public class HT_Activity extends Activity {
         listview = findViewById(R.id.listview1);
         listview.setAdapter(adapter);
 
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage9), "Book1", "수원", "AAA", "2020/03/15");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage11), "Book2", "서울", "BBB", "2020/02/21");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage10), "Book3", "고양", "CCC", "2020/01/04");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage12), "Book4", "광명", "DDD", "2019/12/23");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), "Book1", "수원", "AAA", "2020/03/15");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage3), "Book2", "서울", "BBB", "2020/02/21");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage2), "Book3", "고양", "CCC", "2020/01/04");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage4), "Book4", "광명", "DDD", "2019/12/23");
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
