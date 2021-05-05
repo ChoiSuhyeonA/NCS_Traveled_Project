@@ -18,7 +18,7 @@
         android:layout_marginLeft="10dp"
         android:background="#2B70B5"
         android:fontFamily="@font/maplestorybold"
-        android:text="글 작성 클릭 "
+        android:text="글 작성 x "
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="18dp"

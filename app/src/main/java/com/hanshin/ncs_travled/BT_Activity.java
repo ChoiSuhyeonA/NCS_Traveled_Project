@@ -64,17 +64,25 @@ public class BT_Activity extends Activity {
 
     //리스트뷰에서 이미지 & 영상의 내용을 입력하기
     //이미지 컨텐츠
-    ArrayList<String> contents1 = new ArrayList<String>();
+    static ArrayList<String> contents1 = new ArrayList<String>();
     //비디오 컨텐츠
-    ArrayList<String> contents2= new ArrayList<String>();
+    static ArrayList<String> contents2= new ArrayList<String>();
+    //컨트츠에 출력될 자료 (실제 x)
+    static ArrayList<String> contents= new ArrayList<String>();
 
-
+    //계산을 하기 위한 변수
+    int a1;
+    int a2;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bt_create);
+        //컨테츠 ArrayList 초기화
+        contents1.clear();
+        contents2.clear();
+        contents.clear();
 
         //로그인한 회원정보를 가져오는 변수
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
@@ -143,12 +151,25 @@ public class BT_Activity extends Activity {
                         //리스트 데이터가 비디오면
                         if(String.valueOf(seeList.get(position)).contains("video")){
                             //비디오 컨텐츠 저장
-                            contents2.add(listContent.getText().toString());
+                            a2=0;
+                            for( a1=0; a1<position; a1++){
+                                if(seeList.get(a1).toString().contains("image")){
+                                    a2++;
+                                }
+                            }
+                            contents2.set(position-a2, listContent.getText().toString());
                         } else if(String.valueOf(seeList.get(position)).contains("image")){
                             //이미지 컨텐츠 저장
-                            contents1.set(position,listContent.getText().toString());
+                            a2= 0;
+                            for( a1=0; a1<position; a1++){
+                                if(seeList.get(a1).toString().contains("video")){
+                                    a2++;
+                                }
+                            }
+                            contents1.set(position-a2,listContent.getText().toString());
                         }
-
+                        contents.set(position, listContent.getText().toString());
+                        adapter.notifyDataSetChanged();
                     }
                 });
                 dlg.setNegativeButton("취소", null);
@@ -163,6 +184,7 @@ public class BT_Activity extends Activity {
         btnPhotoBookInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                adapter.notifyDataSetChanged();
                 final LinearLayout dialogView = (LinearLayout) View.inflate(BT_Activity.this, R.layout.bt_dialog_photobookinfo, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(BT_Activity.this);
                 dlg.setTitle(" 포토북 정보");
@@ -201,6 +223,7 @@ public class BT_Activity extends Activity {
         btnPhotoBookCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                adapter.notifyDataSetChanged();
                 final LinearLayout dialogView = (LinearLayout) View.inflate(BT_Activity.this, R.layout.bt_dialog_photobookcover, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(BT_Activity.this);
                 dlg.setTitle(" 포토북 표지");
@@ -251,8 +274,7 @@ public class BT_Activity extends Activity {
                 adapter.add(seeList, 3);
                 adapter.notifyDataSetChanged();
 
-                //컨텐츠 추가하기
-                contents1.add("-");
+
 
             }
         });
@@ -261,25 +283,6 @@ public class BT_Activity extends Activity {
             @Override
             public void onClick(View v) {
                 //BT_GridViewAdapter의 delete메서드 실행
-                int i = seeList.size();
-                //삭제할 페이지가 있을 경우에만 삭제하도록 조건문 설정.
-                if(i >0){
-                    //삭제를 누르면 컨텐츠도 삭제할 수 있도록 설정.
-                    //리스트 데이터가 비디오면
-                    if(String.valueOf(seeList.get(i-1)).contains("video")){
-                        int i1 = contents2.size();
-                        if(i1>0){
-                            //비디오 컨텐츠 삭제
-                            contents2.remove(i1-1);
-                        }
-                    } else if(String.valueOf(seeList.get(i-1)).contains("image")){
-                        int i1 = contents1.size();
-                        if(i1>0){
-                            //이미지 컨텐츠 삭제
-                            contents1.remove(i1-1);
-                        }
-                    }
-                }
                 adapter.delete();
                 //삭제한 내용 보여주기
                 adapter.notifyDataSetChanged();
@@ -299,45 +302,45 @@ public class BT_Activity extends Activity {
                 Date now = new Date();
                 String Datename = formatter.format(now);
 
+                //저장하기전에 포토북 내용잘 작성했는지 확인하기
 
+                    //이미지 리스트를 파이어베이스에 업로드
+                    for (int i = 0; i < imageList.size(); i++) {   ///     이메일/지역/도시/포토북명으로 데이터 저장
+                        StorageReference imageRef = storageRef.child(loginEmail+"/"+bt_item.getPhotoBookTravelArea() + "/" + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
+                        //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png")); // 파이어베이스 다운로드 경로 예시
+                        //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg")); //갤러리경로 예시
 
-                //이미지 리스트를 파이어베이스에 업로드
-                for (int i = 0; i < imageList.size(); i++) {   ///     이메일/지역/도시/포토북명으로 데이터 저장
-                    StorageReference imageRef = storageRef.child(loginEmail+"/"+bt_item.getPhotoBookTravelArea() + "/" + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
-                    //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png")); // 파이어베이스 다운로드 경로 예시
-                    //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg")); //갤러리경로 예시
-
-                    Uri file = Uri.parse(String.valueOf(imageList.get(i)));
-                    UploadTask uploadTask = imageRef.putFile(file);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(BT_Activity.this, "이미지 업로드 실패", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(BT_Activity.this, "이미지 업로드 성공", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                //비디오 리스트를 파이어베이스에 업로드
-                for (int i = 0; i < videoList.size(); i++) {      ///     이메일/지역/도시/포토북명으로 데이터 저장
-                    StorageReference videoRef = storageRef.child(loginEmail+"/"+bt_item.getPhotoBookTravelArea()  + "/" + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle()  + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
-                    Uri file =Uri.parse(String.valueOf(videoList.get(i)));// 비디오리스트에서 내가 원하는 값을 집어넣음.
-                    UploadTask uploadTask = videoRef.putFile(file);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(BT_Activity.this, "비디오 업로드 실패", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(BT_Activity.this, "비디오 업로드 성공", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+                        Uri file = Uri.parse(String.valueOf(imageList.get(i)));
+                        UploadTask uploadTask = imageRef.putFile(file);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(BT_Activity.this, "이미지 업로드 실패", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(BT_Activity.this, "이미지 업로드 성공", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    //비디오 리스트를 파이어베이스에 업로드
+                    for (int i = 0; i < videoList.size(); i++) {      ///     이메일/지역/도시/포토북명으로 데이터 저장
+                        StorageReference videoRef = storageRef.child(loginEmail+"/"+bt_item.getPhotoBookTravelArea()  + "/" + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle()  + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
+                        Uri file =Uri.parse(String.valueOf(videoList.get(i)));// 비디오리스트에서 내가 원하는 값을 집어넣음.
+                        UploadTask uploadTask = videoRef.putFile(file);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(BT_Activity.this, "비디오 업로드 실패", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(BT_Activity.this, "비디오 업로드 성공", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
 //                // 다운로드 테스트
 //                FirebaseStorage storage = FirebaseStorage.getInstance();
 //                StorageReference storageRef = storage.getReference();
@@ -360,45 +363,41 @@ public class BT_Activity extends Activity {
 //                    Toast.makeText(BT_CreateActivity.this, "다운로드 실패", Toast.LENGTH_SHORT).show();
 //                }});
 
-                //파이어베이스 스토어 업로드 (데이터)
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    //파이어베이스 스토어 업로드 (데이터)
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                    bt_item.setContents(contents1);
+                    bt_item.setContents2(contents2);
+
+                    Map<String , Object> member = new HashMap<>();
+                    member.put("title", bt_item.getPhotoBookTitle());
+                    member.put("date", bt_item.getPhotoBookTravelDate());
+                    member.put("date2", bt_item.getPhotoBookTravelDate2());
+                    member.put("member", bt_item.getPhotoBookTravelMember());
+                    member.put("area", bt_item.getPhotoBookTravelArea());
+                    member.put("city", bt_item.getPhotoBookTravelCity());
+                    member.put("cover", bt_item.getPhotoBookTravelCover().toString());
+                    member.put("contents",  bt_item.getContents());
+                    member.put("contents2", bt_item.getContents2());
+
+                    // 파이어스토어 ( 이메일명/ 지역 / 도시 /포토북명으로 데이터 분류)
+                    db.collection(loginEmail).document(bt_item.getPhotoBookTravelArea()).collection(bt_item.getPhotoBookTravelCity()).document(bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
+                            startActivity(intent);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(BT_Activity.this, "데이터 업로드 실패", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
 
 
-
-                bt_item.setContents(contents1);
-                bt_item.setContents2(contents2);
-
-                Map<String , Object> member = new HashMap<>();
-                member.put("title", bt_item.getPhotoBookTitle());
-                member.put("date", bt_item.getPhotoBookTravelDate());
-                member.put("date2", bt_item.getPhotoBookTravelDate2());
-                member.put("member", bt_item.getPhotoBookTravelMember());
-                member.put("area", bt_item.getPhotoBookTravelArea());
-                member.put("city", bt_item.getPhotoBookTravelCity());
-                member.put("cover", bt_item.getPhotoBookTravelCover().toString());
-                member.put("contents",  bt_item.getContents());
-                member.put("contents2", bt_item.getContents2());
-
-
-
-                // 파이어스토어 ( 이메일명/ 지역 / 도시 /포토북명으로 데이터 분류)
-                db.collection(loginEmail).document(bt_item.getPhotoBookTravelArea()).collection(bt_item.getPhotoBookTravelCity()).document(bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
-                        startActivity(intent);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(BT_Activity.this, "데이터 업로드 실패", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-
-            }
 
         });
 
@@ -430,10 +429,14 @@ public class BT_Activity extends Activity {
                 //갤러리에서 이미지 경로 받아와서 리스트에 추가하기
                 imageList.add(imagePath);
                 seeList.add(imagePath);
+               contents1.add("-");
+               contents.add("-");
             } else if (imagePath.toString().contains("video")) {
                 //갤러리에서 비디오 경로 받아와서 리스트에 추가하기
                 videoList.add(imagePath);
                 seeList.add(imagePath);
+                contents2.add("-");
+                contents.add("-");
             }
 
             try {
