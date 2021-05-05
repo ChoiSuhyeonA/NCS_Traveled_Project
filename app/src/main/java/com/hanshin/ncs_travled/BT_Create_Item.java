@@ -2,11 +2,13 @@ package com.hanshin.ncs_travled;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 
+import java.util.ArrayList;
+
 
 public class BT_Create_Item {
-    String contents[]; //포토북 내용 (이미지 내용)
-    String contents2[]; // 포토북 내용(비디오 내용)
-    String contents3[]; // 포토북 내용 (음성 내용)
+
+    ArrayList<String> contents; //포토북 내용 (이미지 내용)
+    ArrayList<String> contents2; // 포토북 내용(비디오 내용)
     String user;//사용자
     String photoBookTitle; // 포토북 제목
     String photoBookTravelDate; //포토북 여행시작일
@@ -16,29 +18,22 @@ public class BT_Create_Item {
     String photoBookTravelCity; // 포토북 여행도시
     Drawable photoBookTravelCover;//포토북 커버
 
-    public String[] getContents() {
+    public ArrayList<String> getContents() {
         return contents;
     }
 
-    public void setContents(String[] contents) {
+    public void setContents(ArrayList<String> contents) {
         this.contents = contents;
     }
 
-    public String[] getContents2() {
+    public ArrayList<String> getContents2() {
         return contents2;
     }
 
-    public void setContents2(String[] contents2) {
+    public void setContents2(ArrayList<String> contents2) {
         this.contents2 = contents2;
     }
 
-    public String[] getContents3() {
-        return contents3;
-    }
-
-    public void setContents3(String[] contents3) {
-        this.contents3 = contents3;
-    }
 
     public String getUser() {
         return user;

@@ -1,5 +1,6 @@
 package com.hanshin.ncs_travled;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,22 +13,30 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BT_GridViewAdapter extends BaseAdapter {
+public class BT_GridViewAdapter extends BaseAdapter  {
 
     Context context;
     ArrayList<Uri> imageArrayList; // 갤러리에서 가져온 이미지 경로를 저장한 리스트
     ArrayList<Uri> videoArrayList; //갤러리에서 가져온 비디오 경로를 저장한 리스트
     ArrayList<Uri> seeArrayList;  // 그리드뷰에서 잠깐 보여주는 리스트
+
+    //리스트뷰에서 이미지 & 영상의 내용을 입력하기
+    ArrayList<String> contents1;
+    ArrayList<String> contents2;
+
+
 
 
 
@@ -76,16 +85,9 @@ public class BT_GridViewAdapter extends BaseAdapter {
 
         image.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        image.setPadding(5,5,5,5);
+        image.setPadding(3,5,3,5);
 
-        //이미지뷰 클릭할 때 이벤트 작성
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context.getApplicationContext(),"버튼테스트",Toast.LENGTH_SHORT).show();
 
-            }
-        });
 
         return  convertView;
     }
@@ -108,13 +110,15 @@ public class BT_GridViewAdapter extends BaseAdapter {
     }
     public void delete(){
         int i = seeArrayList.size();
-        //삭제할 페이지가 있을 경우에만 삭제하도록 조건문 설정.
+        //        //삭제할 페이지가 있을 경우에만 삭제하도록 조건문 설정.
         if(i >0){
+            //이미지일 경우
             if(String.valueOf(seeArrayList.get(i-1)).contains("image")){
                 int i1 = imageArrayList.size();
                 if(i1>0){
                     imageArrayList.remove(i1-1);
                 }
+             //비디오일 경우
             }else if(String.valueOf(seeArrayList.get(i-1)).contains("video")){
                 int i1 = videoArrayList.size();
                 if(i1>0){

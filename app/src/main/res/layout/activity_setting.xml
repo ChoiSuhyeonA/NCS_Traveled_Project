@@ -31,20 +31,20 @@
         android:id="@+id/mail"
         android:layout_width="228dp"
         android:layout_height="29dp"
+        android:fontFamily="@font/binggraebold"
         android:gravity="center"
-        android:text="mail"
-        android:textSize="25dp"
         android:shadowColor="#0890FB"
         android:shadowDx="0"
         android:shadowDy="1"
         android:shadowRadius="5"
-        android:fontFamily="@font/binggraebold"
+        android:text="mail"
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.424" />
+        app:layout_constraintVertical_bias="0.39" />
 
     <Button
         android:id="@+id/goHome"
@@ -63,7 +63,7 @@
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <Button
         android:id="@+id/logout"
@@ -82,7 +82,7 @@
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.642" />
+        app:layout_constraintVertical_bias="0.631" />
 
     <Button
         android:id="@+id/revoke"
@@ -101,9 +101,7 @@
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.761" />
-
-
+        app:layout_constraintVertical_bias="0.764" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

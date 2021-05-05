@@ -1,15 +1,20 @@
 package com.hanshin.ncs_travled;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -51,11 +56,20 @@ public class BT_Activity extends Activity {
     BT_GridViewAdapter adapter;
     TabLayout tabLayout;
     public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
-    BT_Create_Item bt_item  = new BT_Create_Item(); ; //파이어베이스 스토어에 등록할 데이터 클래스
+    static BT_Create_Item bt_item  = new BT_Create_Item(); ; //파이어베이스 스토어에 등록할 데이터 클래스
 
     //구글로그인 회원정보
     String loginName ="";
     String loginEmail = "";
+
+    //리스트뷰에서 이미지 & 영상의 내용을 입력하기
+    //이미지 컨텐츠
+    ArrayList<String> contents1 = new ArrayList<String>();
+    //비디오 컨텐츠
+    ArrayList<String> contents2= new ArrayList<String>();
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +112,7 @@ public class BT_Activity extends Activity {
             }
         });
 
-        //메인페이지 버튼의정
+        //메인페이지 버튼의정보
         Button btnPhotoBookInfo = findViewById(R.id.btnPhotoBookInfo);
         Button btnPhotoBookCover = findViewById(R.id.btnPhotoBookCover);
         Button btnPhotoBookSave = findViewById(R.id.btnPhotoBookSave);
@@ -111,7 +125,36 @@ public class BT_Activity extends Activity {
         GridView gridView = findViewById(R.id.gridview);
         adapter = new BT_GridViewAdapter(this, imageList, videoList, seeList);
         gridView.setAdapter(adapter);
+        //그리드뷰를 아이템을 클릭했을 때 리스너 발생.
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View view, final int position, long id) {
+                final View  dialogView =(LinearLayout)  View.inflate(com.hanshin.ncs_travled.BT_Activity.this,  R.layout.bt_dialog_list, null);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(com.hanshin.ncs_travled.BT_Activity.this);
 
+                dlg.setTitle("내용을 입력하세요");
+                dlg.setView(dialogView);
+                dlg.setIcon(R.drawable.ic_baseline_content_paste_24);
+                dlg.setPositiveButton("저장", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText listContent =dialogView.findViewById(R.id.listContent);
+
+                        //리스트 데이터가 비디오면
+                        if(String.valueOf(seeList.get(position)).contains("video")){
+                            //비디오 컨텐츠 저장
+                            contents2.add(listContent.getText().toString());
+                        } else if(String.valueOf(seeList.get(position)).contains("image")){
+                            //이미지 컨텐츠 저장
+                            contents1.set(position,listContent.getText().toString());
+                        }
+
+                    }
+                });
+                dlg.setNegativeButton("취소", null);
+                dlg.show();
+            }
+        });
 
 
         //포토북생성페이지에 정보버튼안에 대화상자 속성 정의
@@ -207,6 +250,10 @@ public class BT_Activity extends Activity {
                 adapter.add(videoList, 2);
                 adapter.add(seeList, 3);
                 adapter.notifyDataSetChanged();
+
+                //컨텐츠 추가하기
+                contents1.add("-");
+
             }
         });
         //포토북생성페이지에 페이지 삭제 버튼을 클릭할 때 이벤트 작성
@@ -214,6 +261,25 @@ public class BT_Activity extends Activity {
             @Override
             public void onClick(View v) {
                 //BT_GridViewAdapter의 delete메서드 실행
+                int i = seeList.size();
+                //삭제할 페이지가 있을 경우에만 삭제하도록 조건문 설정.
+                if(i >0){
+                    //삭제를 누르면 컨텐츠도 삭제할 수 있도록 설정.
+                    //리스트 데이터가 비디오면
+                    if(String.valueOf(seeList.get(i-1)).contains("video")){
+                        int i1 = contents2.size();
+                        if(i1>0){
+                            //비디오 컨텐츠 삭제
+                            contents2.remove(i1-1);
+                        }
+                    } else if(String.valueOf(seeList.get(i-1)).contains("image")){
+                        int i1 = contents1.size();
+                        if(i1>0){
+                            //이미지 컨텐츠 삭제
+                            contents1.remove(i1-1);
+                        }
+                    }
+                }
                 adapter.delete();
                 //삭제한 내용 보여주기
                 adapter.notifyDataSetChanged();
@@ -236,7 +302,7 @@ public class BT_Activity extends Activity {
 
 
                 //이미지 리스트를 파이어베이스에 업로드
-                for (int i = 0; i < imageList.size(); i++) {   ///     경기도수원/ 경기도
+                for (int i = 0; i < imageList.size(); i++) {   ///     이메일/지역/도시/포토북명으로 데이터 저장
                     StorageReference imageRef = storageRef.child(loginEmail+"/"+bt_item.getPhotoBookTravelArea() + "/" + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
                     //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png")); // 파이어베이스 다운로드 경로 예시
                     //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg")); //갤러리경로 예시
@@ -256,7 +322,7 @@ public class BT_Activity extends Activity {
                     });
                 }
                 //비디오 리스트를 파이어베이스에 업로드
-                for (int i = 0; i < videoList.size(); i++) {
+                for (int i = 0; i < videoList.size(); i++) {      ///     이메일/지역/도시/포토북명으로 데이터 저장
                     StorageReference videoRef = storageRef.child(loginEmail+"/"+bt_item.getPhotoBookTravelArea()  + "/" + bt_item.getPhotoBookTravelCity() + "/" + bt_item.getPhotoBookTitle()  + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
                     Uri file =Uri.parse(String.valueOf(videoList.get(i)));// 비디오리스트에서 내가 원하는 값을 집어넣음.
                     UploadTask uploadTask = videoRef.putFile(file);
@@ -297,6 +363,11 @@ public class BT_Activity extends Activity {
                 //파이어베이스 스토어 업로드 (데이터)
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+
+
+                bt_item.setContents(contents1);
+                bt_item.setContents2(contents2);
+
                 Map<String , Object> member = new HashMap<>();
                 member.put("title", bt_item.getPhotoBookTitle());
                 member.put("date", bt_item.getPhotoBookTravelDate());
@@ -307,11 +378,11 @@ public class BT_Activity extends Activity {
                 member.put("cover", bt_item.getPhotoBookTravelCover().toString());
                 member.put("contents",  bt_item.getContents());
                 member.put("contents2", bt_item.getContents2());
-                member.put("contents3", bt_item.getContents3());
 
 
 
-                db.collection(loginEmail).document(bt_item.getPhotoBookTravelArea()+bt_item.getPhotoBookTravelCity()+bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+                // 파이어스토어 ( 이메일명/ 지역 / 도시 /포토북명으로 데이터 분류)
+                db.collection(loginEmail).document(bt_item.getPhotoBookTravelArea()).collection(bt_item.getPhotoBookTravelCity()).document(bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
@@ -353,6 +424,7 @@ public class BT_Activity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000) {
             Uri imagePath = data.getData();
+            //어댑터 최신화
             adapter.notifyDataSetChanged();
             if (imagePath.toString().contains("image")) {
                 //갤러리에서 이미지 경로 받아와서 리스트에 추가하기
@@ -372,6 +444,8 @@ public class BT_Activity extends Activity {
             }
         }
     }
+
+
 
 //    //포토북 정보에서 사용하는 컨텍스트메뉴 메서드 (메뉴창을 만듭니다)
 //    @Override
