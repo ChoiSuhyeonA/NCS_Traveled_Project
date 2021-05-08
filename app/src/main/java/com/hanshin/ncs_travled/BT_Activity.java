@@ -89,6 +89,7 @@ public class BT_Activity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
                 startActivity(intent);
+                finish();
             }
         });
         BookBtn.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +97,7 @@ public class BT_Activity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), BT_Activity.class);
                 startActivity(intent);
+                finish();
             }
         });
         CommunityBtn.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +105,7 @@ public class BT_Activity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CT_Activity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
