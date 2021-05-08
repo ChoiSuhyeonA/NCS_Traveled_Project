@@ -9,6 +9,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import androidx.core.content.ContextCompat;
 
@@ -17,11 +21,27 @@ public class HT_CallBookList extends Activity {
     Button closeBtn;
     HT_ListViewAdapter adapter;
     ListView books_lv;
-    TextView area;
+    TextView areaTv;
+
+    //구글로그인 회원정보
+    String loginName ="-";
+    String loginEmail = "-";
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ht_call_booklist);
+
+        //로그인한 회원정보를 가져오는 변수
+        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if(signInAccount != null){
+            //회원정보 이름
+            loginName = signInAccount.getDisplayName();
+            //회원정보 이메일
+            loginEmail = signInAccount.getEmail();
+            Toast.makeText(
+                    HT_CallBookList.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
+        }
 
         closeBtn = findViewById(R.id.close_btn);
         closeBtn.setOnClickListener(new View.OnClickListener() {
@@ -32,10 +52,12 @@ public class HT_CallBookList extends Activity {
         });
 
         Intent getIntent = getIntent();
-        String place = getIntent.getStringExtra("nameOfArea");
-        place.replaceAll("", " ");
-        area = findViewById(R.id.areaName_tv);
-        area.setText(place);
+
+        String area = getIntent.getStringExtra("nameOfArea");
+        String city = getIntent.getStringExtra("nameOfCity");
+        city.replaceAll("", " ");
+        areaTv = findViewById(R.id.areaName_tv);
+        areaTv.setText(area);
 
         adapter = new HT_ListViewAdapter();
         books_lv = findViewById(R.id.books_lv);

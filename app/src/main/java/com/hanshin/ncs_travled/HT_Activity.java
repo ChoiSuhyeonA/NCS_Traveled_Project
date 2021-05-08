@@ -21,7 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 public class HT_Activity extends Activity {
     ConstraintLayout const1,const2,const3,const4,const5,const6;
     Button selArea[] = new Button[6] ;
-    Button selBooklist[] = new Button[38];
+    Button selBooklist[] = new Button[44];
 
     ImageButton settingBtn[] = new ImageButton[6];
     ListView listview;
@@ -31,6 +31,9 @@ public class HT_Activity extends Activity {
     //구글로그인 회원정보
     String loginName ="-";
     String loginEmail = "-";
+    String areaPush;
+
+    String aa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,6 @@ public class HT_Activity extends Activity {
         });
 
         //로그인한 회원정보를 가져오는 변수
-
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if(signInAccount != null){
             //회원정보 이름
@@ -79,6 +81,93 @@ public class HT_Activity extends Activity {
             //회원정보 이메일
             loginEmail = signInAccount.getEmail();
             Toast.makeText(HT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
+        }
+
+        const1 = findViewById(R.id.const1);
+        const2 = findViewById(R.id.const2);
+        const3 = findViewById(R.id.const3);
+        const4 = findViewById(R.id.const4);
+        const5 = findViewById(R.id.const5);
+        const6 = findViewById(R.id.const6);
+
+        selArea[0] = findViewById(R.id.homeMap_const1_selAreaBtn);
+        selArea[1] = findViewById(R.id.homeMap_const2_selAreaBtn);
+        selArea[2] = findViewById(R.id.homeMap_const3_selAreaBtn);
+        selArea[3] = findViewById(R.id.homeMap_const4_selAreaBtn);
+        selArea[4] = findViewById(R.id.homeMap_const5_selAreaBtn);
+        selArea[5] = findViewById(R.id.homeMap_const6_selAreaBtn);
+
+        for(int i=0;i<6;i++){ //지역선택 버튼 리스너 등록
+            selArea[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
+                    AreaDialog areaDialog = new AreaDialog(HT_Activity.this);
+                    areaDialog.callFunction();
+                    areaDialog.setDialogListener(new AreaDialog.CustomDialogListener(){
+                        @Override
+                        public void onAreaClicked(String name) {
+                            switch (name){
+                                case "서울/경기":
+                                    const1.setVisibility(View.VISIBLE);
+                                    const2.setVisibility(View.GONE);
+                                    const3.setVisibility(View.GONE);
+                                    const4.setVisibility(View.GONE);
+                                    const5.setVisibility(View.GONE);
+                                    const6.setVisibility(View.GONE);
+                                    aa = "서울,경기";
+
+                                    break;
+                                case "인천":
+                                    const1.setVisibility(View.GONE);
+                                    const2.setVisibility(View.VISIBLE);
+                                    const3.setVisibility(View.GONE);
+                                    const4.setVisibility(View.GONE);
+                                    const5.setVisibility(View.GONE);
+                                    const6.setVisibility(View.GONE);
+                                    aa = "인천";
+                                    break;
+                                case "부산":
+                                    const1.setVisibility(View.GONE);
+                                    const2.setVisibility(View.GONE);
+                                    const3.setVisibility(View.VISIBLE);
+                                    const4.setVisibility(View.GONE);
+                                    const5.setVisibility(View.GONE);
+                                    const6.setVisibility(View.GONE);
+                                    aa = "부산";
+                                    break;
+                                case "대전":
+                                    const1.setVisibility(View.GONE);
+                                    const2.setVisibility(View.GONE);
+                                    const3.setVisibility(View.GONE);
+                                    const4.setVisibility(View.VISIBLE);
+                                    const5.setVisibility(View.GONE);
+                                    const6.setVisibility(View.GONE);
+                                    aa = "대전";
+                                    break;
+                                case "대구":
+                                    const1.setVisibility(View.GONE);
+                                    const2.setVisibility(View.GONE);
+                                    const3.setVisibility(View.GONE);
+                                    const4.setVisibility(View.GONE);
+                                    const5.setVisibility(View.VISIBLE);
+                                    const6.setVisibility(View.GONE);
+                                    aa = "대구";
+                                    break;
+                                case "광주":
+                                    const1.setVisibility(View.GONE);
+                                    const2.setVisibility(View.GONE);
+                                    const3.setVisibility(View.GONE);
+                                    const4.setVisibility(View.GONE);
+                                    const5.setVisibility(View.GONE);
+                                    const6.setVisibility(View.VISIBLE);
+                                    aa = "광주";
+                                    break;
+                            }
+                        }
+                    });
+                }
+            });
         }
 
         //각 버튼 위치
@@ -120,6 +209,12 @@ public class HT_Activity extends Activity {
         selBooklist[35] = findViewById(R.id.homeMap_const6_gwangBtn);
         selBooklist[36] = findViewById(R.id.homeMap_const6_namBtn);
         selBooklist[37] = findViewById(R.id.homeMap_const6_seosaBtn);
+        selBooklist[38] = findViewById(R.id.homeMap_const1_selAreaBtn);
+        selBooklist[39] = findViewById(R.id.homeMap_const2_selAreaBtn);
+        selBooklist[40] = findViewById(R.id.homeMap_const3_selAreaBtn);
+        selBooklist[41] = findViewById(R.id.homeMap_const4_selAreaBtn);
+        selBooklist[42] = findViewById(R.id.homeMap_const5_selAreaBtn);
+        selBooklist[43] = findViewById(R.id.homeMap_const6_selAreaBtn);
 
         for(int i=0;i<selBooklist.length;i++){ // 각 지역별 포토북 리스트 불러오는 리스너 등록
             final int num = i;
@@ -127,166 +222,13 @@ public class HT_Activity extends Activity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(), HT_CallBookList.class);
-                    intent.putExtra("nameOfArea",selBooklist[num].getText());
+                    intent.putExtra("nameOfArea",aa);
+                    intent.putExtra("nameOfCity",selBooklist[num].getText());
                     startActivityForResult(intent, sub);
                     Toast.makeText(getApplicationContext(), selBooklist[num].getText(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
-
-        selArea[0] = findViewById(R.id.homeMap_const1_selAreaBtn);
-        selArea[1] = findViewById(R.id.homeMap_const2_selAreaBtn);
-        selArea[2] = findViewById(R.id.homeMap_const3_selAreaBtn);
-        selArea[3] = findViewById(R.id.homeMap_const4_selAreaBtn);
-        selArea[4] = findViewById(R.id.homeMap_const5_selAreaBtn);
-        selArea[5] = findViewById(R.id.homeMap_const6_selAreaBtn);
-
-        for(int i=0;i<6;i++){ //지역선택 버튼 리스너 등록
-            selArea[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
-                    AreaDialog areaDialog = new AreaDialog(HT_Activity.this);
-                    areaDialog.callFunction();
-                    areaDialog.setDialogListener(new AreaDialog.CustomDialogListener(){
-                        @Override
-                        public void onAreaClicked(String name) {
-                            switch (name){
-                                case "서울/경기":
-                                    const1.setVisibility(View.VISIBLE);
-                                    const2.setVisibility(View.GONE);
-                                    const3.setVisibility(View.GONE);
-                                    const4.setVisibility(View.GONE);
-                                    const5.setVisibility(View.GONE);
-                                    const6.setVisibility(View.GONE);
-                                    break;
-                                case "인천":
-                                    const1.setVisibility(View.GONE);
-                                    const2.setVisibility(View.VISIBLE);
-                                    const3.setVisibility(View.GONE);
-                                    const4.setVisibility(View.GONE);
-                                    const5.setVisibility(View.GONE);
-                                    const6.setVisibility(View.GONE);
-                                    break;
-                                case "부산":
-                                    const1.setVisibility(View.GONE);
-                                    const2.setVisibility(View.GONE);
-                                    const3.setVisibility(View.VISIBLE);
-                                    const4.setVisibility(View.GONE);
-                                    const5.setVisibility(View.GONE);
-                                    const6.setVisibility(View.GONE);
-                                    break;
-                                case "대전":
-                                    const1.setVisibility(View.GONE);
-                                    const2.setVisibility(View.GONE);
-                                    const3.setVisibility(View.GONE);
-                                    const4.setVisibility(View.VISIBLE);
-                                    const5.setVisibility(View.GONE);
-                                    const6.setVisibility(View.GONE);
-                                    break;
-                                case "대구":
-                                    const1.setVisibility(View.GONE);
-                                    const2.setVisibility(View.GONE);
-                                    const3.setVisibility(View.GONE);
-                                    const4.setVisibility(View.GONE);
-                                    const5.setVisibility(View.VISIBLE);
-                                    const6.setVisibility(View.GONE);
-                                    break;
-                                case "광주":
-                                    const1.setVisibility(View.GONE);
-                                    const2.setVisibility(View.GONE);
-                                    const3.setVisibility(View.GONE);
-                                    const4.setVisibility(View.GONE);
-                                    const5.setVisibility(View.GONE);
-                                    const6.setVisibility(View.VISIBLE);
-                                    break;
-                            }
-                        }
-                    });
-                }
-            });
-        }
-
-
-
-        const1 = findViewById(R.id.const1);
-        const2 = findViewById(R.id.const2);
-        const3 = findViewById(R.id.const3);
-        const4 = findViewById(R.id.const4);
-        const5 = findViewById(R.id.const5);
-        const6 = findViewById(R.id.const6);
-        selArea[0] = findViewById(R.id.homeMap_const1_selAreaBtn);
-        selArea[1] = findViewById(R.id.homeMap_const2_selAreaBtn);
-        selArea[2] = findViewById(R.id.homeMap_const3_selAreaBtn);
-        selArea[3] = findViewById(R.id.homeMap_const4_selAreaBtn);
-        selArea[4] = findViewById(R.id.homeMap_const5_selAreaBtn);
-        selArea[5] = findViewById(R.id.homeMap_const6_selAreaBtn);
-        for(int i=0;i<6;i++){ //지역선택 버튼 리스너 등록
-            selArea[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
-                    AreaDialog areaDialog = new AreaDialog(HT_Activity.this);
-                    areaDialog.callFunction();
-                    areaDialog.setDialogListener(new AreaDialog.CustomDialogListener(){
-                        @Override
-                        public void onAreaClicked(String name) {
-                            switch (name){
-                                case "서울/경기":
-                                    const1.setVisibility(View.VISIBLE);
-                                    const2.setVisibility(View.GONE);
-                                    const3.setVisibility(View.GONE);
-                                    const4.setVisibility(View.GONE);
-                                    const5.setVisibility(View.GONE);
-                                    const6.setVisibility(View.GONE);
-                                    break;
-                                case "인천":
-                                    const1.setVisibility(View.GONE);
-                                    const2.setVisibility(View.VISIBLE);
-                                    const3.setVisibility(View.GONE);
-                                    const4.setVisibility(View.GONE);
-                                    const5.setVisibility(View.GONE);
-                                    const6.setVisibility(View.GONE);
-                                    break;
-                                case "부산":
-                                    const1.setVisibility(View.GONE);
-                                    const2.setVisibility(View.GONE);
-                                    const3.setVisibility(View.VISIBLE);
-                                    const4.setVisibility(View.GONE);
-                                    const5.setVisibility(View.GONE);
-                                    const6.setVisibility(View.GONE);
-                                    break;
-                                case "대전":
-                                    const1.setVisibility(View.GONE);
-                                    const2.setVisibility(View.GONE);
-                                    const3.setVisibility(View.GONE);
-                                    const4.setVisibility(View.VISIBLE);
-                                    const5.setVisibility(View.GONE);
-                                    const6.setVisibility(View.GONE);
-                                    break;
-                                case "대구":
-                                    const1.setVisibility(View.GONE);
-                                    const2.setVisibility(View.GONE);
-                                    const3.setVisibility(View.GONE);
-                                    const4.setVisibility(View.GONE);
-                                    const5.setVisibility(View.VISIBLE);
-                                    const6.setVisibility(View.GONE);
-                                    break;
-                                case "광주":
-                                    const1.setVisibility(View.GONE);
-                                    const2.setVisibility(View.GONE);
-                                    const3.setVisibility(View.GONE);
-                                    const4.setVisibility(View.GONE);
-                                    const5.setVisibility(View.GONE);
-                                    const6.setVisibility(View.VISIBLE);
-                                    break;
-                            }
-                        }
-                    });
-                }
-            });
-        }
-
 
 
         //세팅버튼 등록

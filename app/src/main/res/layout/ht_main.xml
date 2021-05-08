@@ -178,7 +178,7 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/const1_testing"
+            android:id="@+id/const1_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="서울/경기"
@@ -334,7 +334,7 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/const2_testing"
+            android:id="@+id/const2_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="인천"
@@ -509,7 +509,7 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/const3_testing"
+            android:id="@+id/const3_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="부산"
@@ -668,7 +668,7 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/const4_testing"
+            android:id="@+id/const4_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="대전"
@@ -844,7 +844,7 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/const5_testing"
+            android:id="@+id/const5_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="대구"
@@ -1005,7 +1005,7 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/const6_testing"
+            android:id="@+id/const6_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="광주"
