@@ -162,11 +162,15 @@ public class HT_CallBookList extends Activity {
                         //document.getData() or document.getId() 등등 여러 방법으로
                         //데이터를 가져올 수 있다.
                           item = document.toObject(BT_Create_Item.class);
+                          //필드의 포토북 제목명을 가져와서 ArrayList에 저장
                           bookTitle.add(item.getTitle());
-
                     }
-                    Toast.makeText(HT_CallBookList.this, String.valueOf(bookTitle.size()), Toast.LENGTH_SHORT).show();
-                  
+                    //필드에 포토북이 몇개 있는지 확인해서 출력.
+                    Toast.makeText(HT_CallBookList.this, "포토북 개수:" +String.valueOf(bookTitle.size()), Toast.LENGTH_SHORT).show();
+                    //파이어베이스에 저장된 포토북 제목을 모두 출력
+                    for(int i=0; i<bookTitle.size(); i++){
+                        Toast.makeText(HT_CallBookList.this, " 포토북 제목:"+ bookTitle.get(i), Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else{
                     Toast.makeText(HT_CallBookList.this, "로딩실패", Toast.LENGTH_SHORT).show();
