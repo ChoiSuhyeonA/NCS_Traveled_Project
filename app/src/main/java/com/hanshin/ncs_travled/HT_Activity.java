@@ -83,7 +83,7 @@ public class HT_Activity extends Activity {
             loginName = signInAccount.getDisplayName();
             //회원정보 이메일
             loginEmail = signInAccount.getEmail();
-            Toast.makeText(HT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
+
         }
 
         //각 버튼 위치
@@ -200,7 +200,7 @@ public class HT_Activity extends Activity {
                                     const4.setVisibility(View.GONE);
                                     const5.setVisibility(View.GONE);
                                     const6.setVisibility(View.GONE);
-                                    area="서울/경기";
+                                    area="서울,경기";
                                     break;
                                 case "인천":
                                     const1.setVisibility(View.GONE);

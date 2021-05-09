@@ -147,12 +147,12 @@ public class BT_Activity extends Activity {
                         final EditText EditPhotoBookTravelArea =dialogView.findViewById(R.id.EditPhotoBookTravelArea);
                         final EditText EditPhotoBookTravelCity = dialogView.findViewById(R.id.EditPhotoBookTravelCity);
 
-                        bt_item.setPhotoBookTitle(EditPhotoBookTitle.getText().toString());
-                        bt_item.setPhotoBookTravelDate(EditPhotoBookTravelDate.getText().toString());
-                        bt_item.setPhotoBookTravelDate2(EditPhotoBookTravelDate2.getText().toString());
-                        bt_item.setPhotoBookTravelMember(EditPhotoBookTravelMember.getText().toString());
-                        bt_item.setPhotoBookTravelArea(EditPhotoBookTravelArea.getText().toString());
-                        bt_item.setPhotoBookTravelCity(EditPhotoBookTravelCity.getText().toString());
+                        bt_item.setTitle(EditPhotoBookTitle.getText().toString());
+                        bt_item.setDate(EditPhotoBookTravelDate.getText().toString());
+                        bt_item.setDate2(EditPhotoBookTravelDate2.getText().toString());
+                        bt_item.setMember(EditPhotoBookTravelMember.getText().toString());
+                        bt_item.setArea(EditPhotoBookTravelArea.getText().toString());
+                        bt_item.setCity(EditPhotoBookTravelCity.getText().toString());
 
 
 //                        //지역선택, 정보버튼 컨텍스트 메뉴 등록
@@ -187,10 +187,10 @@ public class BT_Activity extends Activity {
                         CheckBox bookCover4 = dialogView.findViewById(R.id.bookCover4);
 
 
-                        if(bookCover1.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage1));
-                        if(bookCover2.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage2));
-                        if(bookCover3.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage3));
-                        if(bookCover4.isChecked()) bt_item.setPhotoBookTravelCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage4));
+                        if(bookCover1.isChecked()) bt_item.setCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage1));
+                        if(bookCover2.isChecked()) bt_item.setCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage2));
+                        if(bookCover3.isChecked()) bt_item.setCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage3));
+                        if(bookCover4.isChecked()) bt_item.setCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage4));
 
                     }
                 });
@@ -246,7 +246,7 @@ public class BT_Activity extends Activity {
 
                     //이미지 리스트를 파이어베이스에 업로드
                     for (int i = 0; i < imageList.size(); i++) {   ///     이메일/지역/도시/포토북명으로 데이터 저장
-                        StorageReference imageRef = storageRef.child(loginEmail+"/"+bt_item.getPhotoBookTravelArea().trim() + "/" + bt_item.getPhotoBookTravelCity().trim() + "/" + bt_item.getPhotoBookTitle().trim() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
+                        StorageReference imageRef = storageRef.child(loginEmail+"/"+bt_item.getArea().trim() + "/" + bt_item.getCity().trim() + "/" + bt_item.getTitle().trim() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
                         //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png")); // 파이어베이스 다운로드 경로 예시
                         //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg")); //갤러리경로 예시
 
@@ -266,7 +266,7 @@ public class BT_Activity extends Activity {
                     }
                     //비디오 리스트를 파이어베이스에 업로드
                     for (int i = 0; i < videoList.size(); i++) {      ///     이메일/지역/도시/포토북명으로 데이터 저장
-                        StorageReference videoRef = storageRef.child(loginEmail+"/"+bt_item.getPhotoBookTravelArea().trim()  + "/" + bt_item.getPhotoBookTravelCity().trim() + "/" + bt_item.getPhotoBookTitle().trim()  + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
+                        StorageReference videoRef = storageRef.child(loginEmail+"/"+bt_item.getArea().trim()  + "/" + bt_item.getCity().trim() + "/" + bt_item.getTitle().trim()  + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
                         Uri file =Uri.parse(String.valueOf(videoList.get(i)));// 비디오리스트에서 내가 원하는 값을 집어넣음.
                         UploadTask uploadTask = videoRef.putFile(file);
                         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -309,18 +309,18 @@ public class BT_Activity extends Activity {
 
 
                     Map<String , Object> member = new HashMap<>();
-                    member.put("title", bt_item.getPhotoBookTitle().trim());
-                    member.put("date", bt_item.getPhotoBookTravelDate());
-                    member.put("date2", bt_item.getPhotoBookTravelDate2());
-                    member.put("member", bt_item.getPhotoBookTravelMember());
-                    member.put("area", bt_item.getPhotoBookTravelArea().trim());
-                    member.put("city", bt_item.getPhotoBookTravelCity().trim());
-                    member.put("cover", bt_item.getPhotoBookTravelCover().toString());
+                    member.put("title", bt_item.getTitle().trim());
+                    member.put("date", bt_item.getDate());
+                    member.put("date2", bt_item.getDate2());
+                    member.put("member", bt_item.getMember());
+                    member.put("area", bt_item.getArea().trim());
+                    member.put("city", bt_item.getCity().trim());
+                    member.put("cover", bt_item.getCover().toString());
                     member.put("contents",  bt_item.getContents());
                     member.put("contents2", bt_item.getContents2());
 
                     // 파이어스토어 ( 이메일명/ 지역 / 도시 /포토북명으로 데이터 분류)
-                    db.collection(loginEmail).document(bt_item.getPhotoBookTravelArea()).collection(bt_item.getPhotoBookTravelCity()).document(bt_item.getPhotoBookTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    db.collection(loginEmail).document(bt_item.getArea()).collection(bt_item.getCity()).document(bt_item.getTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();

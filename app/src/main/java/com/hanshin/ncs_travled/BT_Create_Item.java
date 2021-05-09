@@ -10,13 +10,13 @@ public class BT_Create_Item {
     ArrayList<String> contents; //포토북 내용 (이미지 내용)
     ArrayList<String> contents2; // 포토북 내용(비디오 내용)
     String user;//사용자
-    String photoBookTitle; // 포토북 제목
-    String photoBookTravelDate; //포토북 여행시작일
-    String photoBookTravelDate2; // 포토북 여행종료일
-    String photoBookTravelMember; //포토북 여행멤버
-    String photoBookTravelArea; // 포토북 여행지역  ex) 경기도
-    String photoBookTravelCity; // 포토북 여행도시
-    Drawable photoBookTravelCover;//포토북 커버
+    String title; // 포토북 제목
+    String date; //포토북 여행시작일
+    String date2; // 포토북 여행종료일
+    String member; //포토북 여행멤버
+    String area; // 포토북 여행지역  ex) 경기도
+    String city; // 포토북 여행도시
+    Drawable cover;//포토북 커버
 
     public ArrayList<String> getContents() {
         return contents;
@@ -34,7 +34,6 @@ public class BT_Create_Item {
         this.contents2 = contents2;
     }
 
-
     public String getUser() {
         return user;
     }
@@ -43,59 +42,59 @@ public class BT_Create_Item {
         this.user = user;
     }
 
-    public String getPhotoBookTitle() {
-        return photoBookTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setPhotoBookTitle(String photoBookTitle) {
-        this.photoBookTitle = photoBookTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getPhotoBookTravelDate() {
-        return photoBookTravelDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setPhotoBookTravelDate(String photoBookTravelDate) {
-        this.photoBookTravelDate = photoBookTravelDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getPhotoBookTravelDate2() {
-        return photoBookTravelDate2;
+    public String getDate2() {
+        return date2;
     }
 
-    public void setPhotoBookTravelDate2(String photoBookTravelDate2) {
-        this.photoBookTravelDate2 = photoBookTravelDate2;
+    public void setDate2(String date2) {
+        this.date2 = date2;
     }
 
-    public String getPhotoBookTravelMember() {
-        return photoBookTravelMember;
+    public String getMember() {
+        return member;
     }
 
-    public void setPhotoBookTravelMember(String photoBookTravelMember) {
-        this.photoBookTravelMember = photoBookTravelMember;
+    public void setMember(String member) {
+        this.member = member;
     }
 
-    public String getPhotoBookTravelArea() {
-        return photoBookTravelArea;
+    public String getArea() {
+        return area;
     }
 
-    public void setPhotoBookTravelArea(String photoBookTravelArea) {
-        this.photoBookTravelArea = photoBookTravelArea;
+    public void setArea(String area) {
+        this.area = area;
     }
 
-    public String getPhotoBookTravelCity() {
-        return photoBookTravelCity;
+    public String getCity() {
+        return city;
     }
 
-    public void setPhotoBookTravelCity(String photoBookTravelCity) {
-        this.photoBookTravelCity = photoBookTravelCity;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public Drawable getPhotoBookTravelCover() {
-        return photoBookTravelCover;
+    public Drawable getCover() {
+        return cover;
     }
 
-    public void setPhotoBookTravelCover(Drawable photoBookTravelCover) {
-        this.photoBookTravelCover = photoBookTravelCover;
+    public void setCover(Drawable cover) {
+        this.cover = cover;
     }
 }
