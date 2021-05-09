@@ -187,10 +187,10 @@ public class BT_Activity extends Activity {
                         CheckBox bookCover4 = dialogView.findViewById(R.id.bookCover4);
 
 
-                        if(bookCover1.isChecked()) bt_item.setCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage1));
-                        if(bookCover2.isChecked()) bt_item.setCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage2));
-                        if(bookCover3.isChecked()) bt_item.setCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage3));
-                        if(bookCover4.isChecked()) bt_item.setCover(ContextCompat.getDrawable(BT_Activity.this, R.drawable.bookcoverimage4));
+                        if(bookCover1.isChecked()) bt_item.setCover("1");
+                        if(bookCover2.isChecked()) bt_item.setCover("2");
+                        if(bookCover3.isChecked()) bt_item.setCover("3");
+                        if(bookCover4.isChecked()) bt_item.setCover("4");
 
                     }
                 });

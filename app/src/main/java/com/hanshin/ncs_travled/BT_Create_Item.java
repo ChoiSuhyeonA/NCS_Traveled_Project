@@ -16,7 +16,7 @@ public class BT_Create_Item {
     String member; //포토북 여행멤버
     String area; // 포토북 여행지역  ex) 경기도
     String city; // 포토북 여행도시
-    Drawable cover;//포토북 커버
+    String cover;//포토북 커버
 
     public ArrayList<String> getContents() {
         return contents;
@@ -90,11 +90,11 @@ public class BT_Create_Item {
         this.city = city;
     }
 
-    public Drawable getCover() {
+    public String getCover() {
         return cover;
     }
 
-    public void setCover(Drawable cover) {
+    public void setCover(String cover) {
         this.cover = cover;
     }
 }

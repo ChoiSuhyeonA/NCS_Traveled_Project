@@ -3,6 +3,7 @@ package com.hanshin.ncs_travled;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,7 +43,9 @@ public class HT_CallBookList extends Activity {
     String area;
     String city;
 
-    ArrayList<String> title;
+    BT_Create_Item item  = new BT_Create_Item();
+    ArrayList<String> bookTitle = new ArrayList<String>();
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +58,6 @@ public class HT_CallBookList extends Activity {
             loginName = signInAccount.getDisplayName();
             //회원정보 이메일
             loginEmail = signInAccount.getEmail();
-            Toast.makeText(
-                    HT_CallBookList.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
         }
 
         closeBtn = findViewById(R.id.close_btn);
@@ -139,7 +141,7 @@ public class HT_CallBookList extends Activity {
 
 //        //파이어베이스 데이터 정보가져오기 오류발생
 //        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("loginEmail").document("area").collection("city").document("수현북")
+//        db.collection(loginEmail).document(area).collection(city).document("수현북")
 //                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 //            @Override
 //            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -149,6 +151,36 @@ public class HT_CallBookList extends Activity {
 //                areaTv.setText(item.getTitle());
 //            }
 //        });
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(loginEmail).document(area).collection(city).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    //컬렉션 아래에 있는 모든 정보를 가져온다.
+
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        //document.getData() or document.getId() 등등 여러 방법으로
+                        //데이터를 가져올 수 있다.
+                          item = document.toObject(BT_Create_Item.class);
+                          bookTitle.add(item.getTitle());
+
+                    }
+                    Toast.makeText(HT_CallBookList.this, String.valueOf(bookTitle.size()), Toast.LENGTH_SHORT).show();
+                  
+                }
+                else{
+                    Toast.makeText(HT_CallBookList.this, "로딩실패", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(HT_CallBookList.this, "데이터 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         //리스트를 뿌려
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), "Book1", "수원", "AAA", "2020/03/15");
