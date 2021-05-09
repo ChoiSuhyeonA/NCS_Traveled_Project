@@ -43,8 +43,15 @@ public class HT_CallBookList extends Activity {
     String area;
     String city;
 
+    //파이어베이스
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     BT_Create_Item item  = new BT_Create_Item();
-    ArrayList<String> bookTitle = new ArrayList<String>();
+
+    ArrayList<String> title = new ArrayList<String>();
+    ArrayList<String> cover = new ArrayList<String>();
+    ArrayList<String> member = new ArrayList<String>();
+    ArrayList<String> date = new ArrayList<String>();
+    ArrayList<String> date2 = new ArrayList<String>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +158,8 @@ public class HT_CallBookList extends Activity {
 //                areaTv.setText(item.getTitle());
 //            }
 //        });
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //지역에 등록된 모든 포토북 이름정보 찾아오기
         db.collection(loginEmail).document(area).collection(city).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -163,26 +171,45 @@ public class HT_CallBookList extends Activity {
                         //데이터를 가져올 수 있다.
                           item = document.toObject(BT_Create_Item.class);
                           //필드의 포토북 제목명을 가져와서 ArrayList에 저장
-                          bookTitle.add(item.getTitle());
+                          title.add(item.getTitle());
                     }
                     //필드에 포토북이 몇개 있는지 확인해서 출력.
-                    Toast.makeText(HT_CallBookList.this, "포토북 개수:" +String.valueOf(bookTitle.size()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HT_CallBookList.this, "포토북 개수:" +String.valueOf(title.size()), Toast.LENGTH_SHORT).show();
                     //파이어베이스에 저장된 포토북 제목을 모두 출력
-                    for(int i=0; i<bookTitle.size(); i++){
-                        Toast.makeText(HT_CallBookList.this, " 포토북 제목:"+ bookTitle.get(i), Toast.LENGTH_SHORT).show();
+                    for(int i=0; i<title.size(); i++){
+                        Toast.makeText(HT_CallBookList.this, " 포토북 제목:"+ title.get(i), Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
                     Toast.makeText(HT_CallBookList.this, "로딩실패", Toast.LENGTH_SHORT).show();
                 }
             }
-
+         //에러가 발생됐을 경우.
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(HT_CallBookList.this, "데이터 정보가 없습니다.", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        //각 포토북의 정보를 Arraylist에 저장.
+        for(int i=0; i<title.size(); i++){
+            db.collection(loginEmail).document(area).collection(city).document(title.get(i)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    DocumentSnapshot document = task.getResult();
+                    item = document.toObject(BT_Create_Item.class);
+                    //포토북의 내용들을 리스트에 저장
+                    cover.add(item.getCover());
+                    date.add(item.getDate());
+                    date2.add(item.getDate2());
+                    member.add(item.getMember());
+                }
+            });
+        }
+
+
 
 
 
@@ -214,4 +241,5 @@ public class HT_CallBookList extends Activity {
             }
         });
     }
+
 }
