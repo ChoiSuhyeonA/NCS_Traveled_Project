@@ -80,10 +80,8 @@ public class BT_Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bt_create);
-        //컨테츠 ArrayList 초기화
-        contents1.clear();
-        contents2.clear();
-        contents.clear();
+
+
 
         //로그인한 회원정보를 가져오는 변수
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
@@ -172,6 +170,7 @@ public class BT_Activity extends Activity {
                                 }
                             }
                             contents1.set(position-a2,listContent.getText().toString());
+
                         }
                         contents.set(position, listContent.getText().toString());
                         adapter.notifyDataSetChanged();
@@ -281,8 +280,6 @@ public class BT_Activity extends Activity {
                 adapter.add(seeList, 3);
                 adapter.notifyDataSetChanged();
 
-
-
             }
         });
         //포토북생성페이지에 페이지 삭제 버튼을 클릭할 때 이벤트 작성
@@ -330,6 +327,7 @@ public class BT_Activity extends Activity {
                                 Toast.makeText(BT_Activity.this, "이미지 업로드 성공", Toast.LENGTH_SHORT).show();
                             }
                         });
+
                     }
                     //비디오 리스트를 파이어베이스에 업로드
                     for (int i = 0; i < videoList.size(); i++) {      ///     이메일/지역/도시/포토북명으로 데이터 저장
@@ -347,6 +345,7 @@ public class BT_Activity extends Activity {
                                 Toast.makeText(BT_Activity.this, "비디오 업로드 성공", Toast.LENGTH_SHORT).show();
                             }
                         });
+
                     }
 //                // 다운로드 테스트
 //                FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -373,9 +372,10 @@ public class BT_Activity extends Activity {
                     //파이어베이스 스토어 업로드 (데이터)
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+                    bt_item.setContents(contents1);
+                    bt_item.setContents2(contents2);
 
-
-                    Map<String , Object> member = new HashMap<>();
+                Map<String , Object> member = new HashMap<>();
                     member.put("title", bt_item.getTitle().trim());
                     member.put("date", bt_item.getDate());
                     member.put("date2", bt_item.getDate2());
@@ -386,6 +386,7 @@ public class BT_Activity extends Activity {
                     member.put("contents",  bt_item.getContents());
                     member.put("contents2", bt_item.getContents2());
 
+
                     // 파이어스토어 ( 이메일명/ 지역 / 도시 /포토북명으로 데이터 분류)
                     db.collection(loginEmail).document(bt_item.getArea().trim()).collection(bt_item.getCity().trim()).document(bt_item.getTitle().trim()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -393,6 +394,11 @@ public class BT_Activity extends Activity {
                             Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
                             startActivity(intent);
+
+                            //컨테츠 ArrayList 초기화
+                            contents1.clear();
+                            contents2.clear();
+                            contents.clear();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
