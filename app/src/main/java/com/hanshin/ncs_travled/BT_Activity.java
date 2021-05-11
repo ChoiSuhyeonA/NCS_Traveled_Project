@@ -63,12 +63,27 @@ public class BT_Activity extends Activity {
     String loginEmail = "";
 
 
+    //리스트뷰에서 이미지 & 영상의 내용을 입력하기
+    //이미지 컨텐츠
+    static ArrayList<String> contents1 = new ArrayList<String>();
+    //비디오 컨텐츠
+    static ArrayList<String> contents2= new ArrayList<String>();
+    //컨트츠에 출력될 자료 (실제 x)
+    static ArrayList<String> contents= new ArrayList<String>();
+
+    //계산을 하기 위한 변수
+    int a1;
+    int a2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bt_create);
         //컨테츠 ArrayList 초기화
+        contents1.clear();
+        contents2.clear();
+        contents.clear();
 
         //로그인한 회원정보를 가져오는 변수
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
@@ -122,6 +137,50 @@ public class BT_Activity extends Activity {
         GridView gridView = findViewById(R.id.gridview);
         adapter = new BT_GridViewAdapter(this, imageList, videoList, seeList);
         gridView.setAdapter(adapter);
+
+        //그리드뷰를 아이템을 클릭했을 때 리스너 발생.
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View view, final int position, long id) {
+                final View  dialogView =(LinearLayout)  View.inflate(com.hanshin.ncs_travled.BT_Activity.this,  R.layout.bt_dialog_list, null);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(com.hanshin.ncs_travled.BT_Activity.this);
+
+                dlg.setTitle("내용을 입력하세요");
+                dlg.setView(dialogView);
+                dlg.setIcon(R.drawable.ic_baseline_content_paste_24);
+                dlg.setPositiveButton("저장", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText listContent =dialogView.findViewById(R.id.listContent);
+
+                        //리스트 데이터가 비디오면
+                        if(String.valueOf(seeList.get(position)).contains("video")){
+                            //비디오 컨텐츠 저장
+                            a2=0;
+                            for( a1=0; a1<position; a1++){
+                                if(seeList.get(a1).toString().contains("image")){
+                                    a2++;
+                                }
+                            }
+                            contents2.set(position-a2, listContent.getText().toString());
+                        } else if(String.valueOf(seeList.get(position)).contains("image")){
+                            //이미지 컨텐츠 저장
+                            a2= 0;
+                            for( a1=0; a1<position; a1++){
+                                if(seeList.get(a1).toString().contains("video")){
+                                    a2++;
+                                }
+                            }
+                            contents1.set(position-a2,listContent.getText().toString());
+                        }
+                        contents.set(position, listContent.getText().toString());
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                dlg.setNegativeButton("취소", null);
+                dlg.show();
+            }
+        });
 
 
         //포토북생성페이지에 정보버튼안에 대화상자 속성 정의
@@ -185,12 +244,20 @@ public class BT_Activity extends Activity {
                         CheckBox bookCover2= dialogView.findViewById(R.id.bookCover2);
                         CheckBox bookCover3 = dialogView.findViewById(R.id.bookCover3);
                         CheckBox bookCover4 = dialogView.findViewById(R.id.bookCover4);
+                        CheckBox bookCover5 = dialogView.findViewById(R.id.bookCover5);
+                        CheckBox bookCover6 = dialogView.findViewById(R.id.bookCover6);
+                        CheckBox bookCover7 = dialogView.findViewById(R.id.bookCover7);
+                        CheckBox bookCover8 = dialogView.findViewById(R.id.bookCover8);
 
 
                         if(bookCover1.isChecked()) bt_item.setCover("1");
                         if(bookCover2.isChecked()) bt_item.setCover("2");
                         if(bookCover3.isChecked()) bt_item.setCover("3");
                         if(bookCover4.isChecked()) bt_item.setCover("4");
+                        if(bookCover5.isChecked()) bt_item.setCover("5");
+                        if(bookCover6.isChecked()) bt_item.setCover("6");
+                        if(bookCover7.isChecked()) bt_item.setCover("7");
+                        if(bookCover8.isChecked()) bt_item.setCover("8");
 
                     }
                 });
@@ -315,12 +382,12 @@ public class BT_Activity extends Activity {
                     member.put("member", bt_item.getMember());
                     member.put("area", bt_item.getArea().trim());
                     member.put("city", bt_item.getCity().trim());
-                    member.put("cover", bt_item.getCover().toString());
+                    member.put("cover", bt_item.getCover());
                     member.put("contents",  bt_item.getContents());
                     member.put("contents2", bt_item.getContents2());
 
                     // 파이어스토어 ( 이메일명/ 지역 / 도시 /포토북명으로 데이터 분류)
-                    db.collection(loginEmail).document(bt_item.getArea()).collection(bt_item.getCity()).document(bt_item.getTitle()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    db.collection(loginEmail).document(bt_item.getArea().trim()).collection(bt_item.getCity().trim()).document(bt_item.getTitle().trim()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
@@ -368,11 +435,15 @@ public class BT_Activity extends Activity {
                 //갤러리에서 이미지 경로 받아와서 리스트에 추가하기
                 imageList.add(imagePath);
                 seeList.add(imagePath);
+                contents1.add("-");
+                contents.add("-");
 
             } else if (imagePath.toString().contains("video")) {
                 //갤러리에서 비디오 경로 받아와서 리스트에 추가하기
                 videoList.add(imagePath);
                 seeList.add(imagePath);
+                contents2.add("-");
+                contents.add("-");
 
             }
 
