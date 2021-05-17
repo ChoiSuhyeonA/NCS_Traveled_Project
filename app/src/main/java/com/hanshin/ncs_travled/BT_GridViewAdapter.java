@@ -40,12 +40,7 @@ public class BT_GridViewAdapter extends BaseAdapter  {
         imageArrayList = imageList;
         videoArrayList = videoList;
         seeArrayList = seeList;
-
-
     }
-
-
-
 
     @Override
     public int getCount() {
