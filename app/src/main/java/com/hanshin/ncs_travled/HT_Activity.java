@@ -83,7 +83,7 @@ public class HT_Activity extends Activity {
             loginName = signInAccount.getDisplayName();
             //회원정보 이메일
             loginEmail = signInAccount.getEmail();
-
+            Toast.makeText(HT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
         }
 
         //각 버튼 위치

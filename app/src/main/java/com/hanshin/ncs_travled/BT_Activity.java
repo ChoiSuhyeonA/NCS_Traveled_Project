@@ -90,6 +90,7 @@ public class BT_Activity extends Activity {
             loginName = signInAccount.getDisplayName();
             //회원정보 이메일
             loginEmail = signInAccount.getEmail();
+            Toast.makeText(BT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -404,6 +405,7 @@ public class BT_Activity extends Activity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(BT_Activity.this, "데이터 업로드 실패", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
                         }
                     });
 

@@ -188,6 +188,7 @@ public class HT_CallBookList extends Activity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
                 Toast.makeText(HT_CallBookList.this, "데이터 정보가 없습니다.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -213,19 +214,8 @@ public class HT_CallBookList extends Activity {
 
 
 
-        //리스트를 뿌려
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), "Book1", "수원", "AAA", "2020/03/15");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage2), "Book2", "서울", "BBB", "2020/02/21");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage3), "Book3", "고양", "CCC", "2020/01/04");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage4), "Book4", "광명", "DDD", "2019/12/23");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), "Book5", "수원", "AAA", "2020/03/15");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage2), "Book6", "서울", "BBB", "2020/02/21");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage3), "Book7", "고양", "CCC", "2020/01/04");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage4), "Book8", "광명", "DDD", "2019/12/23");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), "Book9", "수원", "AAA", "2020/03/15");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage2), "Book10", "서울", "BBB", "2020/02/21");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage3), "Book11", "고양", "CCC", "2020/01/04");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage4), "Book12", "광명", "DDD", "2019/12/23");
+        //리스트를 뿌려줌
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), "book_test", "수원", "AAA", "2020/03/15");
 
         books_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
