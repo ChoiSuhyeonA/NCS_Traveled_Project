@@ -85,11 +85,14 @@ public class CT_Activity extends Activity {
         listAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.list3),"Book3","2020/01/04");
         listAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.list4),"Book4","2019/12/23");
 
+        //글쓰기 버튼 클릭
         writeBtn = findViewById(R.id.ct_writeBtn);
         writeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"글 쓰기 버튼",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"글 쓰기 버튼",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), CT_Create.class);
+                startActivity(intent);
             }
         });
 

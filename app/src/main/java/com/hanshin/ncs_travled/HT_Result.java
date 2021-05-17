@@ -2,18 +2,23 @@ package com.hanshin.ncs_travled;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -36,7 +41,11 @@ public class HT_Result extends Activity {
     Button closeBtn;
     TextView titleTv;
     GridView books_gv;
+    
+    //대화상자에 보여줄 위젯
     ImageView img ;
+    EditText text;
+    
     HT_GridViewAdapter adapter;
 
     //구글로그인 회원정보
@@ -163,6 +172,26 @@ public class HT_Result extends Activity {
 
         adapter.add(imageList, videoList);
         adapter.notifyDataSetChanged();
+
+        books_gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
+                final View dialogView = (LinearLayout) View.inflate(com.hanshin.ncs_travled.HT_Result.this, R.layout.ht_dialog_list, null);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(com.hanshin.ncs_travled.HT_Result.this);
+                
+                img = dialogView.findViewById(R.id.ht_dialog_image);
+                text = dialogView.findViewById(R.id.ResultlistContent);
+
+                Glide.with(getApplicationContext()).load(imageList.get(position)).into(img);
+                img.setScaleType(ImageView.ScaleType.FIT_XY);
+                text.setText(contents.get(position));
+                
+
+                dlg.setView(dialogView);
+                dlg.setNegativeButton("취소", null);
+                dlg.show();
+            }
+        });
     }
 
 }

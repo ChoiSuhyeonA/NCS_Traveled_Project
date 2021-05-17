@@ -17,10 +17,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".HT_Activity" android:label="Home"> </activity>
-        <activity android:name=".BT_Activity" android:label="Book"> </activity>
-        <activity android:name=".CT_Activity" android:label="Community"> </activity>
         <activity android:name=".HT_CallBookList" android:label="CallBooks"> </activity>
         <activity android:name=".HT_Result" android:label="Gallery"> </activity>
+        <activity android:name=".BT_Activity" android:label="Book"> </activity>
+        <activity android:name=".CT_Activity" android:label="Community"> </activity>
+        <activity android:name=".CT_Create" android:label="Community"> </activity>
         <activity android:name=".SettingActivity" android:label="google login"> </activity>
     </application>
 

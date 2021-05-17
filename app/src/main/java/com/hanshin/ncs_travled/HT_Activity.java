@@ -1,5 +1,6 @@
 package com.hanshin.ncs_travled;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
@@ -16,7 +17,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class HT_Activity extends Activity {
     //레이아웃버
@@ -29,8 +38,9 @@ public class HT_Activity extends Activity {
     ImageButton settingBtn[] = new ImageButton[6];
     ListView listview;
     HT_ListViewAdapter adapter;
-    TabLayout tabLayout;
-    public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
+
+    public static final int sub = 1000; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
+    public static final int sub1 = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
     //구글로그인 회원정보
     String loginName ="-";
     String loginEmail = "-";
@@ -38,10 +48,33 @@ public class HT_Activity extends Activity {
     //현재 지역 선
     String area="서울,경기";
 
+    //파이어베이스
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    BT_Create_Item item  = new BT_Create_Item();
+
+
+    static  ArrayList<String> areaList = new ArrayList<String>();
+    static  ArrayList<String> cityList = new ArrayList<String>();
+    static ArrayList<String> title = new ArrayList<String>();
+    static ArrayList<String> cover = new ArrayList<String>();
+    static ArrayList<String> member = new ArrayList<String>();
+    static ArrayList<String> date = new ArrayList<String>();
+    static ArrayList<String> date2 = new ArrayList<String>();
+    //이미지 컨텐츠
+    static ArrayList<ArrayList<String>> contents1 = new ArrayList<ArrayList<String>>();
+    //비디오 컨텐츠
+    static ArrayList<ArrayList<String>> contents2= new ArrayList<ArrayList<String>>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ht_main);
+
+        title.clear();
+        cover.clear();
+        member.clear();
+        date.clear();
+        date2.clear();
 
         Button HomeBtn = findViewById(R.id.HomeBtn);
         Button BookBtn = findViewById(R.id.BookBtn);
@@ -255,16 +288,77 @@ public class HT_Activity extends Activity {
         }
 
 
+
+
+
+        //지역에 등록된 모든 포토북 이름정보 찾아오기
+        db.collection(loginEmail).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    //컬렉션 아래에 있는 모든 정보를 가져온다.
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        item = document.toObject(BT_Create_Item.class);
+                        //필드의 모든포토북 데이타를 가져와서 ArrayList에 저장
+                        areaList.add(item.getArea());
+                        cityList.add(item.getCity());
+                        cover.add(item.getCover());
+                        date.add(item.getDate());
+                        date2.add(item.getDate2());
+                        member.add(item.getMember());
+                        contents1.add(item.getContents());
+                        contents2.add(item.getContents2());
+
+                    }
+                    dataAdd();
+                }
+                else{
+                    Toast.makeText(HT_Activity.this, "로딩실패", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(HT_Activity.this, "로딩실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+    }
+
+    //하단 리스트뷰에 데이터 추가하기
+    private void dataAdd() {
         //////// 하단 포토북
-
         adapter = new HT_ListViewAdapter();
-
         listview = findViewById(R.id.listview1);
         listview.setAdapter(adapter);
 
+
+        for(int i=0; i<areaList.size(); i++){
+            if(cover.get(i).equals("1"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), title.get(i), cityList.get(i), member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("2"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage2), title.get(i), cityList.get(i), member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("3"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage3), title.get(i), cityList.get(i), member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("4"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage4), title.get(i), cityList.get(i), member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("5"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage5), title.get(i), cityList.get(i), member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("6"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage6), title.get(i), cityList.get(i), member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("7"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage7), title.get(i), cityList.get(i), member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("8"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage8), title.get(i), cityList.get(i), member.get(i), date.get(i)+" ~ "+ date2.get(i));
+        }
+        adapter.notifyDataSetChanged();
+
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), "Book1", "수원", "AAA", "2020/03/15");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage3), "Book2", "서울", "BBB", "2020/02/21");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage2), "Book3", "고양", "CCC", "2020/01/04");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage2), "Book2", "서울", "BBB", "2020/02/21");
+        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage3), "Book3", "고양", "CCC", "2020/01/04");
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage4), "Book4", "광명", "DDD", "2019/12/23");
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -35,6 +35,6 @@
 
     </com.google.android.gms.common.SignInButton>
 
-  \
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
