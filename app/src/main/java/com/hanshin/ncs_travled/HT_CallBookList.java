@@ -47,12 +47,11 @@ public class HT_CallBookList extends Activity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     BT_Create_Item item  = new BT_Create_Item();
 
-    ArrayList<String> title = new ArrayList<String>();
-    ArrayList<String> cover = new ArrayList<String>();
-    ArrayList<String> member = new ArrayList<String>();
-    ArrayList<String> date = new ArrayList<String>();
-    ArrayList<String> date2 = new ArrayList<String>();
-
+     static ArrayList<String> title = new ArrayList<String>();
+     static ArrayList<String> cover = new ArrayList<String>();
+     static ArrayList<String> member = new ArrayList<String>();
+     static ArrayList<String> date = new ArrayList<String>();
+     static ArrayList<String> date2 = new ArrayList<String>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -194,6 +193,8 @@ public class HT_CallBookList extends Activity {
         });
 
 
+
+
         //각 포토북의 정보를 Arraylist에 저장.
         for(int i=0; i<title.size(); i++){
             db.collection(loginEmail).document(area).collection(city).document(title.get(i)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -212,11 +213,11 @@ public class HT_CallBookList extends Activity {
 
 
 
+        for(int i=0; i<title.size(); i++){
+            adapter.addItem(ContextCompat.getDrawable(HT_CallBookList.this, R.drawable.bookcoverimage1), title.get(i), city, member.get(i), date.get(i));
+        }
 
-
-        //리스트를 뿌려줌
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), "book_test", "수원", "AAA", "2020/03/15");
-
+        //리스트 아이템을 클릭했을때 이벤트 작성
         books_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
