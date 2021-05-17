@@ -87,7 +87,7 @@
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:id="@+id/EditPhotoBookTravelArea"
-            android:hint="경기도"/>
+            android:hint="서울,경기"/>
 
     </LinearLayout>
     <LinearLayout
