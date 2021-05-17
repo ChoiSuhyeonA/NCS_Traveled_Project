@@ -2,6 +2,7 @@ package com.hanshin.ncs_travled;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,15 +48,27 @@ public class HT_CallBookList extends Activity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     BT_Create_Item item  = new BT_Create_Item();
 
+    public static final int sub = 1002; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
+
      static ArrayList<String> title = new ArrayList<String>();
      static ArrayList<String> cover = new ArrayList<String>();
      static ArrayList<String> member = new ArrayList<String>();
      static ArrayList<String> date = new ArrayList<String>();
      static ArrayList<String> date2 = new ArrayList<String>();
+    //이미지 컨텐츠
+    static ArrayList<ArrayList<String>> contents1 = new ArrayList<ArrayList<String>>();
+    //비디오 컨텐츠
+    static ArrayList<ArrayList<String>> contents2= new ArrayList<ArrayList<String>>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ht_call_booklist);
+
+        title.clear();
+        cover.clear();
+        member.clear();
+        date.clear();
+        date2.clear();
 
         //로그인한 회원정보를 가져오는 변수
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
@@ -140,10 +153,6 @@ public class HT_CallBookList extends Activity {
         areaTv = findViewById(R.id.areaName_tv);
         areaTv.setText(area+" - "+city);
 
-        adapter = new HT_ListViewAdapter();
-        books_lv = findViewById(R.id.books_lv);
-        books_lv.setAdapter(adapter);
-
 
 //        //파이어베이스 데이터 정보가져오기 오류발생
 //        FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -173,11 +182,11 @@ public class HT_CallBookList extends Activity {
                           title.add(item.getTitle());
                     }
                     //필드에 포토북이 몇개 있는지 확인해서 출력.
-                    Toast.makeText(HT_CallBookList.this, "포토북 개수:" +String.valueOf(title.size()), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(HT_CallBookList.this, "포토북 개수:" +String.valueOf(title.size()), Toast.LENGTH_SHORT).show();
                     //파이어베이스에 저장된 포토북 제목을 모두 출력
-                    for(int i=0; i<title.size(); i++){
-                        Toast.makeText(HT_CallBookList.this, " 포토북 제목:"+ title.get(i), Toast.LENGTH_SHORT).show();
-                    }
+//                    for(int i=0; i<title.size(); i++){
+//                        Toast.makeText(HT_CallBookList.this, " 포토북 제목:"+ title.get(i), Toast.LENGTH_SHORT).show();
+//                    }
                     dataAdd();
                 }
                 else{
@@ -192,15 +201,73 @@ public class HT_CallBookList extends Activity {
                 Toast.makeText(HT_CallBookList.this, "데이터 정보가 없습니다.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void dataAdd() {
+        //각 포토북의 정보를 Arraylist에 저장
+
+        for(int i=0; i<title.size(); i++){
+            db.collection(loginEmail).document(area).collection(city).document(title.get(i)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    DocumentSnapshot document = task.getResult();
+                    item = document.toObject(BT_Create_Item.class);
+                    //포토북의 내용들을 리스트에 저장
+                    cover.add(item.getCover());
+                    date.add(item.getDate());
+                    date2.add(item.getDate2());
+                    member.add(item.getMember());
+                    contents1.add(item.getContents());
+                    contents2.add(item.getContents2());
+                    //실행순서 제어하기
+                    listAdd();
+                }
+            });
+
+        }
+      
+    }
+
+    private void listAdd() {
+        adapter = new HT_ListViewAdapter();
+        books_lv = findViewById(R.id.books_lv);
+        books_lv.setAdapter(adapter);
 
 
-
-
+        for(int i=0; i<member.size(); i++){
+            if(cover.get(i).equals("1"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), title.get(i), city, member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("2"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage2), title.get(i), city, member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("3"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage3), title.get(i), city, member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("4"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage4), title.get(i), city, member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("5"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage5), title.get(i), city, member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("6"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage6), title.get(i), city, member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("7"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage7), title.get(i), city, member.get(i), date.get(i)+" ~ "+ date2.get(i));
+            if(cover.get(i).equals("8"))
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage8), title.get(i), city, member.get(i), date.get(i)+" ~ "+ date2.get(i));
+        }
+        adapter.notifyDataSetChanged();
 
         //리스트 아이템을 클릭했을때 이벤트 작성
         books_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
+
+                Intent intent = new Intent(getApplicationContext(), HT_Result.class);
+                intent.putExtra("nameOfArea",area);
+                intent.putExtra("nameOfCity",city);
+                intent.putExtra("nameOfTitle",title.get(position));
+                intent.putExtra("nameOfContents1",contents1.get(position));
+                intent.putExtra("nameOfContents2",contents2.get(position));
+
+                startActivityForResult(intent, sub);
+
                 // get item
                 HT_Listview_Item item = (HT_Listview_Item) parent.getItemAtPosition(position);
                 String titleStr = item.getTitle();
@@ -213,36 +280,6 @@ public class HT_CallBookList extends Activity {
         });
     }
 
-    private void dataAdd() {
-        //각 포토북의 정보를 Arraylist에 저장
-        for(int i=0; i<title.size(); i++){
-            db.collection(loginEmail).document(area).collection(city).document(title.get(i)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    DocumentSnapshot document = task.getResult();
-                    item = document.toObject(BT_Create_Item.class);
-                    //포토북의 내용들을 리스트에 저장
-                    cover.add(item.getCover());
-                    date.add(item.getDate());
-                    date2.add(item.getDate2());
-                    member.add(item.getMember());
-                    listAdd();
-                }
-            });
-        }
-    }
 
-    private void listAdd() {
-        Toast.makeText(HT_CallBookList.this, "커버:"+ cover.get(0), Toast.LENGTH_SHORT).show();
-        Toast.makeText(HT_CallBookList.this, "날짜1:"+ date.get(0), Toast.LENGTH_SHORT).show();
-        Toast.makeText(HT_CallBookList.this, "날짜1:"+ date2.get(0), Toast.LENGTH_SHORT).show();
-        Toast.makeText(HT_CallBookList.this, "멤버:"+ member.get(0), Toast.LENGTH_SHORT).show();
-        Toast.makeText(HT_CallBookList.this, "제목:"+ title.get(0), Toast.LENGTH_SHORT).show();
-
-
-        for(int i=0; i<title.size(); i++){
-            adapter.addItem(ContextCompat.getDrawable(HT_CallBookList.this, R.drawable.bookcoverimage1), title.get(i), city, member.get(i), date.get(i));
-        }
-    }
 
 }
