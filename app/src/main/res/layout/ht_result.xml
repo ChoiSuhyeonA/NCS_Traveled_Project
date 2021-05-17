@@ -36,17 +36,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/result"
-        android:layout_width="98dp"
-        android:layout_height="47dp"
-        android:background="#BCABE4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.948"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001" />
 
     <GridView
         android:id="@+id/books_gv"

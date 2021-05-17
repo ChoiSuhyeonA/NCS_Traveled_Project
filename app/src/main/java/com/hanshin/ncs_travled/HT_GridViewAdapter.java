@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 public class HT_GridViewAdapter extends BaseAdapter {
-    
+
     Context context;
     ArrayList<Uri> imageList;
     ArrayList<Uri> videoList;
@@ -26,21 +26,22 @@ public class HT_GridViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return imageList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return imageList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        final int pos = position;
         final Context context = parent.getContext();
 
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
@@ -51,7 +52,7 @@ public class HT_GridViewAdapter extends BaseAdapter {
         ImageView image = convertView.findViewById(R.id.plus1);
 
         image.setScaleType(ImageView.ScaleType.FIT_XY);
-        image.setPadding(3,5,3,5);
+        image.setPadding(0,5,0,5);
 
         Glide.with(context).load(imageList.get(position)).into(image);
 

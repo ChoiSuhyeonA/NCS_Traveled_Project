@@ -104,8 +104,7 @@ public class HT_Result extends Activity {
         books_gv = findViewById(R.id.books_gv);
 
 
-        //이미뷰테스트
-        img = findViewById(R.id.result);
+
        // 이미지 + 비디오 파일 다운로드
         StorageReference storageReference = storage.getReference();
         StorageReference storageRef = storageReference.child((loginEmail+"/"+area + "/" + city + "/" + title ));
@@ -116,16 +115,13 @@ public class HT_Result extends Activity {
                     item.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            if(uri.toString().contains("image")){
+                            if(uri.toString().contains("png") || uri.toString().contains("image")){
                                 imageList.add(uri);
                             }
-                            if(uri.toString().contains("mp4")){
+                            if(uri.toString().contains("mp4") || uri.toString().contains("video")){
                                 videoList.add(uri);
                             }
                             listAdd();
-                            // 이미지 파일 출력
-                            //  Glide.with(getApplicationContext()).load(imageList.get(1)).into(img);
-
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -138,9 +134,9 @@ public class HT_Result extends Activity {
         });
 
 
-//        img = findViewById(R.id.result);
+
 //        StorageReference storageReference = storage.getReference();
-//        StorageReference imageRef = storageReference.child("p6.png");
+//        StorageReference imageRef = storageReference.child("경로명");
 //        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 //            @Override
 //            public void onSuccess(Uri uri) {

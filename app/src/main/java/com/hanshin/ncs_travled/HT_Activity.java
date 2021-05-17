@@ -141,7 +141,7 @@ public class HT_Activity extends Activity {
                     intent.putExtra("nameOfArea",area);
                     intent.putExtra("nameOfCity",selBooklist[num].getText());
                     startActivityForResult(intent, sub);
-                    Toast.makeText(getApplicationContext(), selBooklist[num].getText(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), selBooklist[num].getText(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
