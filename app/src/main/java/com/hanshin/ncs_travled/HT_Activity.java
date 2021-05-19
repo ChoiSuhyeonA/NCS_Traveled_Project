@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -70,6 +71,8 @@ public class HT_Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ht_main);
 
+        areaList.clear();
+        cityList.clear();
         title.clear();
         cover.clear();
         member.clear();
@@ -116,7 +119,7 @@ public class HT_Activity extends Activity {
             loginName = signInAccount.getDisplayName();
             //회원정보 이메일
             loginEmail = signInAccount.getEmail();
-            Toast.makeText(HT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(HT_Activity.this, loginName+" "+loginEmail, Toast.LENGTH_SHORT).show();
         }
 
         //각 버튼 위치
@@ -234,6 +237,7 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.GONE);
                                     const6.setVisibility(View.GONE);
                                     area="서울,경기";
+                                    firebaseData();
                                     break;
                                 case "인천":
                                     const1.setVisibility(View.GONE);
@@ -243,6 +247,7 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.GONE);
                                     const6.setVisibility(View.GONE);
                                     area="인천";
+                                    firebaseData();
                                     break;
                                 case "부산":
                                     const1.setVisibility(View.GONE);
@@ -252,6 +257,7 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.GONE);
                                     const6.setVisibility(View.GONE);
                                     area="부산";
+                                    firebaseData();
                                     break;
                                 case "대전":
                                     const1.setVisibility(View.GONE);
@@ -261,6 +267,7 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.GONE);
                                     const6.setVisibility(View.GONE);
                                     area="대전";
+                                    firebaseData();
                                     break;
                                 case "대구":
                                     const1.setVisibility(View.GONE);
@@ -270,6 +277,7 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.VISIBLE);
                                     const6.setVisibility(View.GONE);
                                     area="대구";
+                                    firebaseData();
                                     break;
                                 case "광주":
                                     const1.setVisibility(View.GONE);
@@ -279,6 +287,7 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.GONE);
                                     const6.setVisibility(View.VISIBLE);
                                     area="광주";
+                                    firebaseData();
                                     break;
                             }
                         }
@@ -286,31 +295,32 @@ public class HT_Activity extends Activity {
                 }
             });
         }
+        //파이어베이스 데이타 가져오기
+        firebaseData();
+    }
 
-
-
-
-
+    private void firebaseData() {
         //지역에 등록된 모든 포토북 이름정보 찾아오기
-        db.collection(loginEmail).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        db.collection(loginEmail).document("info").collection(area).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
+                    final BackgroundThreads2 thread = new BackgroundThreads2();
                     //컬렉션 아래에 있는 모든 정보를 가져온다.
+
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         item = document.toObject(BT_Create_Item.class);
                         //필드의 모든포토북 데이타를 가져와서 ArrayList에 저장
-                        areaList.add(item.getArea());
                         cityList.add(item.getCity());
-                        cover.add(item.getCover());
-                        date.add(item.getDate());
-                        date2.add(item.getDate2());
-                        member.add(item.getMember());
-                        contents1.add(item.getContents());
-                        contents2.add(item.getContents2());
-
+                        title.add(item.getTitle());
                     }
-                    dataAdd();
+                    thread.run();
+                    Toast.makeText(HT_Activity.this, String.valueOf(cityList.size()), Toast.LENGTH_SHORT).show();
+                    if(cityList.size()>0){
+                        dataCollect();
+                    }
+
                 }
                 else{
                     Toast.makeText(HT_Activity.this, "로딩실패", Toast.LENGTH_SHORT).show();
@@ -323,9 +333,30 @@ public class HT_Activity extends Activity {
             }
         });
 
+    }
 
 
-
+    private void dataCollect() {
+        final BackgroundThreads2 thread = new BackgroundThreads2();
+        for(int i=0; i<cityList.size(); i++){
+            db.collection(loginEmail).document(area).collection(cityList.get(i)).document(title.get(i)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    DocumentSnapshot document = task.getResult();
+                    item = document.toObject(BT_Create_Item.class);
+                    //포토북의 내용들을 리스트에 저장
+                    cover.add(item.getCover());
+                    date.add(item.getDate());
+                    date2.add(item.getDate2());
+                    member.add(item.getMember());
+                    contents1.add(item.getContents());
+                    contents2.add(item.getContents2());
+                    //실행순서 제어하기
+                    dataAdd();
+                }
+            });
+            thread.run();
+        }
     }
 
     //하단 리스트뷰에 데이터 추가하기
@@ -356,10 +387,10 @@ public class HT_Activity extends Activity {
         }
         adapter.notifyDataSetChanged();
 
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), "Book1", "수원", "AAA", "2020/03/15");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage2), "Book2", "서울", "BBB", "2020/02/21");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage3), "Book3", "고양", "CCC", "2020/01/04");
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage4), "Book4", "광명", "DDD", "2019/12/23");
+//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), "Book1", "수원", "AAA", "2020/03/15");
+//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage2), "Book2", "서울", "BBB", "2020/02/21");
+//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage3), "Book3", "고양", "CCC", "2020/01/04");
+//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage4), "Book4", "광명", "DDD", "2019/12/23");
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -377,4 +408,13 @@ public class HT_Activity extends Activity {
     }
 
 
+}
+//대기 시간을 할 수 있도록 하는 클래스
+class BackgroundThreads2 extends  Thread{
+    public  void run(){
+        try{
+            Thread.sleep(100);
+        }catch (Exception e){
+        }
+    }
 }

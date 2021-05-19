@@ -27,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -410,13 +412,7 @@ public class BT_Activity extends Activity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
-                        startActivity(intent);
 
-                        //컨테츠 ArrayList 초기화
-                        contents1.clear();
-                        contents2.clear();
-                        contents.clear();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -426,6 +422,18 @@ public class BT_Activity extends Activity {
                     }
                 });
 
+                db.collection(loginEmail).document("info").collection(bt_item.getArea()).document().set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //컨테츠 ArrayList 초기화
+                        contents1.clear();
+                        contents2.clear();
+                        contents.clear();
+                        Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
             }
 
 

@@ -205,7 +205,7 @@ public class HT_CallBookList extends Activity {
 
     private void dataAdd() {
         //각 포토북의 정보를 Arraylist에 저장
-
+        final BackgroundThread thread = new BackgroundThread();
         for(int i=0; i<title.size(); i++){
             db.collection(loginEmail).document(area).collection(city).document(title.get(i)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -223,7 +223,7 @@ public class HT_CallBookList extends Activity {
                     listAdd();
                 }
             });
-
+            thread.run();
         }
       
     }
@@ -282,4 +282,13 @@ public class HT_CallBookList extends Activity {
 
 
 
+}
+//대기 시간을 할 수 있도록 하는 클래스
+class BackgroundThreads1 extends  Thread{
+    public  void run(){
+        try{
+            Thread.sleep(100);
+        }catch (Exception e){
+        }
+    }
 }
