@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 class CT_Adapter extends BaseAdapter{
@@ -46,7 +48,8 @@ class CT_Adapter extends BaseAdapter{
         CT_Create_Item listViewItem = CT_Create_Item.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        iconImageView.setImageURI(listViewItem.getCover());
+
+        Glide.with(context).load(listViewItem.getCover()).into(iconImageView);
         titleTextView.setText(listViewItem.getTitle());
         dateTextView.setText(listViewItem.getDate());
 

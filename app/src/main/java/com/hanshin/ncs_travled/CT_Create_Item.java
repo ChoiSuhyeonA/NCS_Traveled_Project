@@ -9,6 +9,7 @@ public class CT_Create_Item {
     String title;
     String contents;
     String date;
+    String realDate;
     Uri cover;
 
     public String getPageNumber() {
@@ -57,6 +58,14 @@ public class CT_Create_Item {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getRealDate() {
+        return realDate;
+    }
+
+    public void setRealDate(String realDate) {
+        this.realDate = realDate;
     }
 
     public Uri getCover() {

@@ -112,7 +112,7 @@ public class HT_Result extends Activity {
         //그리드뷰
         books_gv = findViewById(R.id.books_gv);
 
-
+        final BackgroundThread thread = new BackgroundThread();
 
        // 이미지 + 비디오 파일 다운로드
         StorageReference storageReference = storage.getReference();
@@ -138,6 +138,7 @@ public class HT_Result extends Activity {
                             Toast.makeText(HT_Result.this, "데이터 다운로드 실패", Toast.LENGTH_SHORT).show();
                         }
                     });
+                    thread.run();
                 }
             }
         });
@@ -196,3 +197,12 @@ public class HT_Result extends Activity {
 
 }
 
+//대기 시간을 할 수 있도록 하는 클래스
+class BackgroundThreads extends  Thread{
+    public  void run(){
+        try{
+            Thread.sleep(300);
+        }catch (Exception e){
+        }
+    }
+}

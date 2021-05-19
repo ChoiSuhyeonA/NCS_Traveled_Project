@@ -36,6 +36,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.hanshin.ncs_travled.CT_Activity.listAdapter;
+
 public class CT_Create extends Activity {
     Button ct_close_btn, ct_SaveBtn;
     ImageButton ct_createImage;
@@ -75,7 +77,7 @@ public class CT_Create extends Activity {
         //업로드할때 날짜를 폴더명뒤에 지정해서, 파일을 분류
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd.hh.mm.ss");
         Date now = new Date();
-        String Datename = formatter.format(now);
+        final String Datename = formatter.format(now);
         //커뮤니티 게시글을 분류
         pageNumber = loginEmail+"|"+Datename;
 
@@ -103,13 +105,19 @@ public class CT_Create extends Activity {
             @Override
             public void onClick(View v) {
                 //제목 + 내용 정보를 UI를 통해서 가져온다.
-                ct_item.setTitle(String.valueOf(ct_createTitle.getText()));
-                ct_item.setContents(String.valueOf(ct_createContent.getText()));
-                ct_item.setDate(String.valueOf(ct_createDate.getText()));
-                ct_item.setEmail(loginEmail);
-                ct_item.setName(loginName);
-                ct_item.setPageNumber(pageNumber);
-                dataUpload();
+                if(image==null){
+                    Toast.makeText(CT_Create.this, "이미지를 선택해주세요", Toast.LENGTH_SHORT).show();
+                }else{
+                    ct_item.setTitle(String.valueOf(ct_createTitle.getText()));
+                    ct_item.setContents(String.valueOf(ct_createContent.getText()));
+                    ct_item.setDate(String.valueOf(ct_createDate.getText()));
+                    ct_item.setEmail(loginEmail);
+                    ct_item.setName(loginName);
+                    ct_item.setPageNumber(pageNumber);
+                    ct_item.setRealDate(Datename);
+                    dataUpload();
+                }
+
             }
         });
     }
@@ -124,6 +132,7 @@ public class CT_Create extends Activity {
         community.put("title", ct_item.getTitle());
         community.put("contents", ct_item.getContents());
         community.put("pageNumber", ct_item.getPageNumber());
+        community.put("realDate", ct_item.getRealDate());
 
         //파이어베이스 스토어 업로드 (데이터)
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -131,8 +140,8 @@ public class CT_Create extends Activity {
         db.collection("community").document().set(community).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                listAdapter.notifyDataSetChanged();
                 Toast.makeText(CT_Create.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
-                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -142,22 +151,26 @@ public class CT_Create extends Activity {
             }
         });
 
+
         //파이어스토리지 업로드
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         //이미지 리스트를 파이어베이스에 업로드
 
-            StorageReference imageRef = storageRef.child("community" +"/" + loginEmail + "/" + pageNumber ); //파이어베이스에 업로드할 이미지 이름 지정
+          StorageReference imageRef = storageRef.child("community" +"/" + loginEmail + "/" + pageNumber ); //파이어베이스에 업로드할 이미지 이름 지정
             UploadTask uploadTask = imageRef.putFile(image);
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Toast.makeText(CT_Create.this, "이미지 업로드 성공", Toast.LENGTH_SHORT).show();
+                    listAdapter.notifyDataSetChanged();
+                    Intent intent = new Intent(getApplicationContext(), CT_Activity.class);
+                    startActivity(intent);
+                    finish();
                 }
             });
 
-        Intent intent = new Intent(getApplicationContext(), CT_Activity.class);
-        startActivity(intent);
+
     }
 
     //갤러리 생성하기 필요한 메서드

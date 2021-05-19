@@ -53,9 +53,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ct_recycler"
-        android:layout_width="323dp"
-        android:layout_height="82dp"
-        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
         android:divider="#ffffff"
         android:dividerHeight="10dp"
         android:orientation="horizontal"
@@ -66,12 +66,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Htabs"
         app:layout_constraintVertical_bias="0.0" />
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="85dp"-->
+<!--        android:background="@drawable/jeju2"-->
+<!--        android:scaleType="fitXY"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/ct_listview"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.476"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/Htabs"-->
+<!--        app:layout_constraintVertical_bias="0.0"/>-->
 
 
     <ListView
         android:id="@+id/ct_listview"
         android:layout_width="395dp"
-        android:layout_height="504dp"
+        android:layout_height="464dp"
         android:layout_marginBottom="60dp"
         android:background="#FBFFF7"
         android:divider="#ffffff"
