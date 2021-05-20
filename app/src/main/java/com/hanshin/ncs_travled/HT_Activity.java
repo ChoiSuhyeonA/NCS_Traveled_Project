@@ -45,7 +45,7 @@ public class HT_Activity extends Activity {
     //구글로그인 회원정보
     String loginName ="-";
     String loginEmail = "-";
-    String areaPush;
+
     //현재 지역 선
     String area="서울,경기";
 
@@ -53,6 +53,8 @@ public class HT_Activity extends Activity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     BT_Create_Item item  = new BT_Create_Item();
 
+    int cc =0;
+    final BackgroundThreads2 thread = new BackgroundThreads2();
 
     static  ArrayList<String> areaList = new ArrayList<String>();
     static  ArrayList<String> cityList = new ArrayList<String>();
@@ -78,6 +80,8 @@ public class HT_Activity extends Activity {
         member.clear();
         date.clear();
         date2.clear();
+        contents1.clear();
+        contents2.clear();
 
         Button HomeBtn = findViewById(R.id.HomeBtn);
         Button BookBtn = findViewById(R.id.BookBtn);
@@ -237,6 +241,8 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.GONE);
                                     const6.setVisibility(View.GONE);
                                     area="서울,경기";
+
+                                    dataInitialization();
                                     firebaseData();
                                     break;
                                 case "인천":
@@ -247,6 +253,7 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.GONE);
                                     const6.setVisibility(View.GONE);
                                     area="인천";
+                                    dataInitialization();
                                     firebaseData();
                                     break;
                                 case "부산":
@@ -257,6 +264,7 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.GONE);
                                     const6.setVisibility(View.GONE);
                                     area="부산";
+                                    dataInitialization();
                                     firebaseData();
                                     break;
                                 case "대전":
@@ -267,6 +275,7 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.GONE);
                                     const6.setVisibility(View.GONE);
                                     area="대전";
+                                    dataInitialization();
                                     firebaseData();
                                     break;
                                 case "대구":
@@ -277,6 +286,7 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.VISIBLE);
                                     const6.setVisibility(View.GONE);
                                     area="대구";
+                                    dataInitialization();
                                     firebaseData();
                                     break;
                                 case "광주":
@@ -287,6 +297,7 @@ public class HT_Activity extends Activity {
                                     const5.setVisibility(View.GONE);
                                     const6.setVisibility(View.VISIBLE);
                                     area="광주";
+                                    dataInitialization();
                                     firebaseData();
                                     break;
                             }
@@ -299,14 +310,31 @@ public class HT_Activity extends Activity {
         firebaseData();
     }
 
+    //데이타 초기화
+    private void dataInitialization() {
+        //리스트뷰 초기화
+        adapter = new HT_ListViewAdapter();
+        listview = findViewById(R.id.listview1);
+        listview.setAdapter(adapter);
+        //포토북 데이타 초기화
+        areaList.clear();
+        cityList.clear();
+        title.clear();
+        cover.clear();
+        member.clear();
+        date.clear();
+        date2.clear();
+        contents1.clear();
+        contents2.clear();
+    }
+
     private void firebaseData() {
         //지역에 등록된 모든 포토북 이름정보 찾아오기
-
         db.collection(loginEmail).document("info").collection(area).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    final BackgroundThreads2 thread = new BackgroundThreads2();
+
                     //컬렉션 아래에 있는 모든 정보를 가져온다.
 
                     for (QueryDocumentSnapshot document : task.getResult()) {
@@ -314,9 +342,10 @@ public class HT_Activity extends Activity {
                         //필드의 모든포토북 데이타를 가져와서 ArrayList에 저장
                         cityList.add(item.getCity());
                         title.add(item.getTitle());
+                        cc++;
                     }
                     thread.run();
-                    Toast.makeText(HT_Activity.this, String.valueOf(cityList.size()), Toast.LENGTH_SHORT).show();
+
                     if(cityList.size()>0){
                         dataCollect();
                     }
@@ -338,6 +367,8 @@ public class HT_Activity extends Activity {
 
     private void dataCollect() {
         final BackgroundThreads2 thread = new BackgroundThreads2();
+
+
         for(int i=0; i<cityList.size(); i++){
             db.collection(loginEmail).document(area).collection(cityList.get(i)).document(title.get(i)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -357,6 +388,7 @@ public class HT_Activity extends Activity {
             });
             thread.run();
         }
+
     }
 
     //하단 리스트뷰에 데이터 추가하기
@@ -366,8 +398,9 @@ public class HT_Activity extends Activity {
         listview = findViewById(R.id.listview1);
         listview.setAdapter(adapter);
 
+        Toast.makeText(HT_Activity.this, area+":"+" 포토북 개수"+ String.valueOf(cover.size()), Toast.LENGTH_SHORT).show();
 
-        for(int i=0; i<areaList.size(); i++){
+        for(int i=0; i<cover.size(); i++){
             if(cover.get(i).equals("1"))
                 adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), title.get(i), cityList.get(i), member.get(i), date.get(i)+" ~ "+ date2.get(i));
             if(cover.get(i).equals("2"))
@@ -387,15 +420,21 @@ public class HT_Activity extends Activity {
         }
         adapter.notifyDataSetChanged();
 
-//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), "Book1", "수원", "AAA", "2020/03/15");
-//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage2), "Book2", "서울", "BBB", "2020/02/21");
-//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage3), "Book3", "고양", "CCC", "2020/01/04");
-//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage4), "Book4", "광명", "DDD", "2019/12/23");
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
+
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // get item
+                Intent intent = new Intent(getApplicationContext(), HT_Result.class);
+                intent.putExtra("nameOfArea",area);
+                intent.putExtra("nameOfCity",cityList.get(position));
+                intent.putExtra("nameOfTitle",title.get(position));
+                intent.putExtra("nameOfContents1",contents1.get(position));
+                intent.putExtra("nameOfContents2",contents2.get(position));
+
+                startActivityForResult(intent, sub);
+
+
                 HT_Listview_Item item = (HT_Listview_Item) parent.getItemAtPosition(position);
                 String titleStr = item.getTitle();
                 String placeStr = item.getPlace();

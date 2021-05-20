@@ -422,7 +422,7 @@ public class BT_Activity extends Activity {
                     }
                 });
 
-                db.collection(loginEmail).document("info").collection(bt_item.getArea()).document().set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+                db.collection(loginEmail).document("info").collection(bt_item.getArea().trim()).document().set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         //컨테츠 ArrayList 초기화
