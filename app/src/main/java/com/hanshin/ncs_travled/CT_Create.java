@@ -97,6 +97,8 @@ public class CT_Create extends Activity {
         ct_close_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CT_Activity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -107,7 +109,15 @@ public class CT_Create extends Activity {
                 //제목 + 내용 정보를 UI를 통해서 가져온다.
                 if(image==null){
                     Toast.makeText(CT_Create.this, "이미지를 선택해주세요", Toast.LENGTH_SHORT).show();
-                }else{
+                }else if(String.valueOf(ct_createTitle.getText()).equals("")){
+                    Toast.makeText(CT_Create.this, "제목을 입력해주세요", Toast.LENGTH_SHORT).show();
+                }else if(String.valueOf(ct_createContent.getText()).equals("")){
+                    Toast.makeText(CT_Create.this, "내용을 입력해주세요", Toast.LENGTH_SHORT).show();
+                }else if(String.valueOf(ct_createDate.getText()).equals("")){
+                    Toast.makeText(CT_Create.this, "날짜를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }
+                
+                else{
                     ct_item.setTitle(String.valueOf(ct_createTitle.getText()));
                     ct_item.setContents(String.valueOf(ct_createContent.getText()));
                     ct_item.setDate(String.valueOf(ct_createDate.getText()));
@@ -162,8 +172,9 @@ public class CT_Create extends Activity {
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(CT_Create.this, "이미지 업로드 성공", Toast.LENGTH_SHORT).show();
                     listAdapter.notifyDataSetChanged();
+                    //업로드 성공할시 데이타 초기화
+                    ct_item = new CT_Create_Item();
                     Intent intent = new Intent(getApplicationContext(), CT_Activity.class);
                     startActivity(intent);
                     finish();

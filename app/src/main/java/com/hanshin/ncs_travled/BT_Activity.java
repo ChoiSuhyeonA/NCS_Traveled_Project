@@ -57,7 +57,7 @@ public class BT_Activity extends Activity {
     BT_GridViewAdapter adapter;
     TabLayout tabLayout;
     public static final int sub = 1001; /*다른 액티비티를 띄우기 위한 요청코드(상수)*/
-    static BT_Create_Item bt_item = new BT_Create_Item();
+    static BT_Create_Item bt_item ;
     ; //파이어베이스 스토어에 등록할 데이터 클래스
 
     //구글로그인 회원정보
@@ -83,6 +83,8 @@ public class BT_Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bt_create);
 
+        bt_item = new BT_Create_Item();
+
 
         //로그인한 회원정보를 가져오는 변수
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
@@ -91,7 +93,7 @@ public class BT_Activity extends Activity {
             loginName = signInAccount.getDisplayName();
             //회원정보 이메일
             loginEmail = signInAccount.getEmail();
-            Toast.makeText(BT_Activity.this, loginName + " " + loginEmail, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(BT_Activity.this, loginName + " " + loginEmail, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -299,56 +301,90 @@ public class BT_Activity extends Activity {
         btnPhotoBookSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //파이어베이스 스토리지 업로드 (이미지 ,영상)
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReference();
+                bt_item.setContents(contents1);
+                bt_item.setContents2(contents2);
 
-                //업로드할때 날짜를 파일명앞에 지정해서, 파일을 분류
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd.hh.mm.ss");
-                Date now = new Date();
-                String Datename = formatter.format(now);
+                if(bt_item.getTitle()==null || bt_item.getTitle().equals("") ){
+                    Toast.makeText(BT_Activity.this, "포토북 제목을 입력해주세요", Toast.LENGTH_SHORT).show();
 
-                //저장하기전에 포토북 내용잘 작성했는지 확인하기
-
-                //이미지 리스트를 파이어베이스에 업로드
-                for (int i = 0; i < imageList.size(); i++) {   ///     이메일/지역/도시/포토북명으로 데이터 저장
-                    StorageReference imageRef = storageRef.child(loginEmail + "/" + bt_item.getArea().trim() + "/" + bt_item.getCity().trim() + "/" + bt_item.getTitle().trim() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
-                    //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png")); // 파이어베이스 다운로드 경로 예시
-                    //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg")); //갤러리경로 예시
-
-                    Uri file = Uri.parse(String.valueOf(imageList.get(i)));
-                    UploadTask uploadTask = imageRef.putFile(file);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(BT_Activity.this, "이미지 업로드 실패", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(BT_Activity.this, "이미지 업로드 성공", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
+                }else if(bt_item.getArea().equals("")){
+                    Toast.makeText(BT_Activity.this, "포토북 지역을 입력해주세요", Toast.LENGTH_SHORT).show();
+                }else if(bt_item.getCity().equals("")){
+                    Toast.makeText(BT_Activity.this, "포토북 도시를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }else if(bt_item.getDate().equals("")){
+                    Toast.makeText(BT_Activity.this, "포토북 날짜1를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }else if(bt_item.getDate2().equals("")){
+                    Toast.makeText(BT_Activity.this, "포토북 날짜2를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }else if(bt_item.getMember().equals("")){
+                    Toast.makeText(BT_Activity.this, "포토북 멤버를 입력해주세요", Toast.LENGTH_SHORT).show();
                 }
-                //비디오 리스트를 파이어베이스에 업로드
-                for (int i = 0; i < videoList.size(); i++) {      ///     이메일/지역/도시/포토북명으로 데이터 저장
-                    StorageReference videoRef = storageRef.child(loginEmail + "/" + bt_item.getArea().trim() + "/" + bt_item.getCity().trim() + "/" + bt_item.getTitle().trim() + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
-                    Uri file = Uri.parse(String.valueOf(videoList.get(i)));// 비디오리스트에서 내가 원하는 값을 집어넣음.
-                    UploadTask uploadTask = videoRef.putFile(file);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(BT_Activity.this, "비디오 업로드 실패", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(BT_Activity.this, "비디오 업로드 성공", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
+                else if(bt_item.getCover() ==null ) {
+                    Toast.makeText(BT_Activity.this, "포토북 표지를 선택해주세요", Toast.LENGTH_SHORT).show();
                 }
+                else{
+                    Map<String, Object> member = new HashMap<>();
+                    member.put("title", bt_item.getTitle().trim());
+                    member.put("area", bt_item.getArea().trim());
+                    member.put("city", bt_item.getCity().trim());
+                    member.put("date", bt_item.getDate());
+                    member.put("date2", bt_item.getDate2());
+                    member.put("member", bt_item.getMember());
+                    member.put("cover", bt_item.getCover());
+                    member.put("contents", bt_item.getContents());
+                    member.put("contents2", bt_item.getContents2());
+
+
+
+                    //파이어베이스 스토리지 업로드 (이미지 ,영상)
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                    StorageReference storageRef = storage.getReference();
+
+                    //업로드할때 날짜를 파일명앞에 지정해서, 파일을 분류
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd.hh.mm.ss");
+                    Date now = new Date();
+                    String Datename = formatter.format(now);
+
+                    //저장하기전에 포토북 내용잘 작성했는지 확인하기
+
+                    //이미지 리스트를 파이어베이스에 업로드
+                    for (int i = 0; i < imageList.size(); i++) {   ///     이메일/지역/도시/포토북명으로 데이터 저장
+                        StorageReference imageRef = storageRef.child(loginEmail + "/" + bt_item.getArea().trim() + "/" + bt_item.getCity().trim() + "/" + bt_item.getTitle().trim() + "/" + Datename + "-image" + i); //파이어베이스에 업로드할 이미지 이름 지정
+                        //  Uri file  = Uri.fromFile(new File("/sdcard/Android/data/com.hanshin.ncs_travled/files/Pictures/p.png")); // 파이어베이스 다운로드 경로 예시
+                        //    Uri file  = Uri.fromFile(new File("/sdcard/Download/fashion.jpg")); //갤러리경로 예시
+
+                        Uri file = Uri.parse(String.valueOf(imageList.get(i)));
+                        UploadTask uploadTask = imageRef.putFile(file);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(BT_Activity.this, "이미지 업로드 실패", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(BT_Activity.this, "이미지 업로드 성공", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                    //비디오 리스트를 파이어베이스에 업로드
+                    for (int i = 0; i < videoList.size(); i++) {      ///     이메일/지역/도시/포토북명으로 데이터 저장
+                        StorageReference videoRef = storageRef.child(loginEmail + "/" + bt_item.getArea().trim() + "/" + bt_item.getCity().trim() + "/" + bt_item.getTitle().trim() + "/" + Datename + "-video" + i); //파이어베이스에 업로드할 비디오 이름 지정
+                        Uri file = Uri.parse(String.valueOf(videoList.get(i)));// 비디오리스트에서 내가 원하는 값을 집어넣음.
+                        UploadTask uploadTask = videoRef.putFile(file);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(BT_Activity.this, "비디오 업로드 실패", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(BT_Activity.this, "비디오 업로드 성공", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
 //                // 다운로드 테스트 (파일명으로)
 //                FirebaseStorage storage = FirebaseStorage.getInstance();
 //                StorageReference storageRef = storage.getReference();
@@ -389,51 +425,39 @@ public class BT_Activity extends Activity {
 //                    }
 //                });
 
-                //파이어베이스 스토어 업로드 (데이터)
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    //파이어베이스 스토어 업로드 (데이터)
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                bt_item.setContents(contents1);
-                bt_item.setContents2(contents2);
+                    // 파이어스토어 ( 이메일명/ 지역 / 도시 /포토북명으로 데이터 분류)
+                    db.collection(loginEmail).document(bt_item.getArea().trim()).collection(bt_item.getCity().trim()).document(bt_item.getTitle().trim()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
 
-                Map<String, Object> member = new HashMap<>();
-                member.put("title", bt_item.getTitle().trim());
-                member.put("date", bt_item.getDate());
-                member.put("date2", bt_item.getDate2());
-                member.put("member", bt_item.getMember());
-                member.put("area", bt_item.getArea().trim());
-                member.put("city", bt_item.getCity().trim());
-                member.put("cover", bt_item.getCover());
-                member.put("contents", bt_item.getContents());
-                member.put("contents2", bt_item.getContents2());
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(BT_Activity.this, "데이터 업로드 실패", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                    });
+
+                    db.collection(loginEmail).document("info").collection(bt_item.getArea().trim()).document().set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            //컨테츠 ArrayList 초기화
+                            contents1.clear();
+                            contents2.clear();
+                            contents.clear();
+                            Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
 
 
-                // 파이어스토어 ( 이메일명/ 지역 / 도시 /포토북명으로 데이터 분류)
-                db.collection(loginEmail).document(bt_item.getArea().trim()).collection(bt_item.getCity().trim()).document(bt_item.getTitle().trim()).set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(BT_Activity.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(BT_Activity.this, "데이터 업로드 실패", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                });
-
-                db.collection(loginEmail).document("info").collection(bt_item.getArea().trim()).document().set(member).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        //컨테츠 ArrayList 초기화
-                        contents1.clear();
-                        contents2.clear();
-                        contents.clear();
-                        Intent intent = new Intent(getApplicationContext(), HT_Activity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
             }
 
 

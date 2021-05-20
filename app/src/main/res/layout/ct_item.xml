@@ -30,7 +30,7 @@
             android:id="@+id/ct_date"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="170dp"
+            android:layout_marginLeft="180dp"
             android:text="Date"
             android:textColor="#FFFFFF"
             android:textSize="16dp" />

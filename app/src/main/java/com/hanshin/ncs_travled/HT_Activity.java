@@ -398,8 +398,6 @@ public class HT_Activity extends Activity {
         listview = findViewById(R.id.listview1);
         listview.setAdapter(adapter);
 
-        Toast.makeText(HT_Activity.this, area+":"+" 포토북 개수"+ String.valueOf(cover.size()), Toast.LENGTH_SHORT).show();
-
         for(int i=0; i<cover.size(); i++){
             if(cover.get(i).equals("1"))
                 adapter.addItem(ContextCompat.getDrawable(this, R.drawable.bookcoverimage1), title.get(i), cityList.get(i), member.get(i), date.get(i)+" ~ "+ date2.get(i));
