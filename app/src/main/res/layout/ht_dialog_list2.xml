@@ -8,7 +8,7 @@
     <VideoView
         android:id="@+id/ht_dialog_video"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:src="@drawable/plus"

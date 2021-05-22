@@ -4,30 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="350dp">
 
-        <VideoView
-            android:id="@+id/ht_dialog_video"
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/plus"
-            android:layout_marginTop="20dp"
-            android:visibility="invisible"
-            />
-        <ImageView
+    <ImageView
             android:id="@+id/ht_dialog_image"
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:src="@drawable/plus"
-            android:layout_marginTop="20dp"
-            />
-    </FrameLayout>
+            android:layout_marginTop="20dp" />
+
 
 
     <EditText

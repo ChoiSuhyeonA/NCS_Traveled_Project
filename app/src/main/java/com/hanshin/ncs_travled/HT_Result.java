@@ -48,7 +48,7 @@ public class HT_Result extends Activity {
     //대화상자에 보여줄 위젯
     ImageView img ;
     VideoView video;
-    EditText text;
+    EditText text, text2;
     
     HT_GridViewAdapter adapter;
 
@@ -199,12 +199,18 @@ public class HT_Result extends Activity {
         books_gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
+                //이미지 대화상자
                 final View dialogView = (LinearLayout) View.inflate(com.hanshin.ncs_travled.HT_Result.this, R.layout.ht_dialog_list, null);
+                //비디오 대화상자
+                final View dialogView2 = (LinearLayout) View.inflate(com.hanshin.ncs_travled.HT_Result.this, R.layout.ht_dialog_list2, null);
+
                 AlertDialog.Builder dlg = new AlertDialog.Builder(com.hanshin.ncs_travled.HT_Result.this);
-                
+                //이미지 대화상자
                 img = dialogView.findViewById(R.id.ht_dialog_image);
-                video = dialogView.findViewById(R.id.ht_dialog_video);
                 text = dialogView.findViewById(R.id.ResultlistContent);
+                //비디오 대화상자
+                video = dialogView2.findViewById(R.id.ht_dialog_video);
+                text2  = dialogView2.findViewById(R.id.ResultlistContent2);
 
                 if(seeList.get(position).toString().contains("png") || seeList.get(position).toString().contains("jpeg")|| seeList.get(position).toString().contains("image")){
                     a2 = 0;
@@ -216,8 +222,8 @@ public class HT_Result extends Activity {
                     Glide.with(getApplicationContext()).load(seeList.get(position)).into(img);
                     img.setScaleType(ImageView.ScaleType.FIT_XY);
                     text.setText(contents.get(position-a2));
-                    video.setVisibility(View.INVISIBLE);
-                    img.setVisibility(View.VISIBLE);
+
+                    dlg.setView(dialogView);
                 }else if(seeList.get(position).toString().contains("mp4") || seeList.get(position).toString().contains("video")){
                     a2 = 0;
                     for (a1 = 0; a1 < position; a1++) {
@@ -228,17 +234,12 @@ public class HT_Result extends Activity {
                     controller.setAnchorView(video);
                     video.setMediaController(controller); //미디어 제어 버튼부 세팅
                     video.setVideoURI(seeList.get(position));
-
-
-                    text.setText(contents2.get(position-a2));
-                    video.setVisibility(View.VISIBLE);
-                    img.setVisibility(View.INVISIBLE);
+                    video.start();
+                    text2.setText(contents2.get(position-a2));
+                    
+                    dlg.setView(dialogView2);
                 }
 
-
-                
-
-                dlg.setView(dialogView);
                 dlg.setNegativeButton("취소", null);
                 dlg.show();
             }
