@@ -3,6 +3,7 @@ package com.hanshin.ncs_travled;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,8 +15,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -44,10 +47,12 @@ public class HT_Result extends Activity {
     
     //대화상자에 보여줄 위젯
     ImageView img ;
+    VideoView video;
     EditText text;
     
     HT_GridViewAdapter adapter;
 
+    MediaController controller;
     //구글로그인 회원정보
     String loginName = "-";
     String loginEmail = "-";
@@ -57,6 +62,10 @@ public class HT_Result extends Activity {
     String city;
     String title;
 
+    //계산을 하기 위한 변수
+    int a1;
+    int a2;
+
     //파이어베이스
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -65,6 +74,7 @@ public class HT_Result extends Activity {
     //이미지 파일+ 비디오 파일
     ArrayList<Uri> imageList = new ArrayList<Uri>();
     ArrayList<Uri> videoList = new ArrayList<Uri>();
+    ArrayList<Uri> seeList = new ArrayList<Uri>();
 
     //이미지 내용 + 비디오 내용
     ArrayList<String> contents;
@@ -76,7 +86,14 @@ public class HT_Result extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ht_result);
 
+        if(videoList!=null){
+            videoList.clear();
+        }
         imageList.clear();
+        seeList.clear();
+
+        //동영상 재생할 수 있는 컨트롤러
+        controller = new MediaController(this);
 
         //로그인한 회원정보를 가져오는 변수
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
@@ -126,9 +143,11 @@ public class HT_Result extends Activity {
                         public void onSuccess(Uri uri) {
                             if(uri.toString().contains("png") || uri.toString().contains("image")){
                                 imageList.add(uri);
+                                seeList.add(uri);
                             }
                             if(uri.toString().contains("mp4") || uri.toString().contains("video")){
                                 videoList.add(uri);
+                                seeList.add(uri);
                             }
                             listAdd();
                         }
@@ -142,6 +161,9 @@ public class HT_Result extends Activity {
                 }
             }
         });
+
+
+
 
 
 
@@ -168,10 +190,10 @@ public class HT_Result extends Activity {
     }
     //그리드뷰에 데이터 출력
     private void listAdd() {
-        adapter = new HT_GridViewAdapter(this,imageList,videoList);
+        adapter = new HT_GridViewAdapter(this,imageList,videoList, seeList);
         books_gv.setAdapter(adapter);
 
-        adapter.add(imageList, videoList);
+        adapter.add(imageList, videoList, seeList);
         adapter.notifyDataSetChanged();
 
         books_gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -181,11 +203,39 @@ public class HT_Result extends Activity {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(com.hanshin.ncs_travled.HT_Result.this);
                 
                 img = dialogView.findViewById(R.id.ht_dialog_image);
+                video = dialogView.findViewById(R.id.ht_dialog_video);
                 text = dialogView.findViewById(R.id.ResultlistContent);
 
-                Glide.with(getApplicationContext()).load(imageList.get(position)).into(img);
-                img.setScaleType(ImageView.ScaleType.FIT_XY);
-                text.setText(contents.get(position));
+                if(seeList.get(position).toString().contains("png") || seeList.get(position).toString().contains("jpeg")|| seeList.get(position).toString().contains("image")){
+                    a2 = 0;
+                    for (a1 = 0; a1 < position; a1++) {
+                        if (seeList.get(a1).toString().contains("mp4") || seeList.get(a1).toString().contains("video")) {
+                            a2++;
+                        }
+                    }
+                    Glide.with(getApplicationContext()).load(seeList.get(position)).into(img);
+                    img.setScaleType(ImageView.ScaleType.FIT_XY);
+                    text.setText(contents.get(position-a2));
+                    video.setVisibility(View.INVISIBLE);
+                    img.setVisibility(View.VISIBLE);
+                }else if(seeList.get(position).toString().contains("mp4") || seeList.get(position).toString().contains("video")){
+                    a2 = 0;
+                    for (a1 = 0; a1 < position; a1++) {
+                        if (seeList.get(a1).toString().contains("png") || seeList.get(a1).toString().contains("jpeg")|| seeList.get(a1).toString().contains("image")) {
+                            a2++;
+                        }
+                    }
+                    controller.setAnchorView(video);
+                    video.setMediaController(controller); //미디어 제어 버튼부 세팅
+                    video.setVideoURI(seeList.get(position));
+
+
+                    text.setText(contents2.get(position-a2));
+                    video.setVisibility(View.VISIBLE);
+                    img.setVisibility(View.INVISIBLE);
+                }
+
+
                 
 
                 dlg.setView(dialogView);
@@ -194,6 +244,7 @@ public class HT_Result extends Activity {
             }
         });
     }
+
 
 }
 
