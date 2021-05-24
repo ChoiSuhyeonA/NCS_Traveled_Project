@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="지역선택하기"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:fontFamily="@font/maplestorybold"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:id="@+id/areaSel">
+        <RadioButton
+            android:id="@+id/seoulSel"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="서울,경기" />
+        <RadioButton
+            android:id="@+id/incheonSel"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="인천" />
+        <RadioButton
+            android:id="@+id/gwangjuSel"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="광주" />
+        <RadioButton
+            android:id="@+id/daeguSel"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="대전" />
+        <RadioButton
+            android:id="@+id/daejeonSel"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="대구" />
+        <RadioButton
+            android:id="@+id/busanSel"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="부산" />
+    </RadioGroup>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="도시선택하기"
+        android:textSize="20dp"
+        android:fontFamily="@font/maplestorybold"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:id="@+id/bt_const1">
+        <RadioButton
+            android:id="@+id/const1_goyangBtn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="고양" />
+        <RadioButton
+            android:id="@+id/const1_seoulBtn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="서울" />
+        <RadioButton
+            android:id="@+id/const1_bugwangBtn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="부천,광명" />
+        <RadioButton
+            android:id="@+id/const1_suwonBtn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="수원" />
+        <RadioButton
+            android:id="@+id/const1_suyoBtn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="성남,용인" />
+        <RadioButton
+            android:id="@+id/const1_ananBtn"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="안산,안양" />
+    </RadioGroup>
+
+</LinearLayout>

@@ -236,7 +236,7 @@ public class HT_Result extends Activity {
                     video.setVideoURI(seeList.get(position));
                     video.start();
                     text2.setText(contents2.get(position-a2));
-                    
+
                     dlg.setView(dialogView2);
                 }
 
