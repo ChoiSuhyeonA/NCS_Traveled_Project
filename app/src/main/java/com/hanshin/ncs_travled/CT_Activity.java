@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -220,9 +221,9 @@ public class CT_Activity extends Activity {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(CT_Activity.this);
 
                 ImageView dlg_img = dialogView.findViewById(R.id.ct_dialog_createImage);
-                EditText dlg_date = (EditText) dialogView.findViewById(R.id.ct_dialog_createDate);
-                EditText dlg_title = (EditText) dialogView.findViewById(R.id.ct_dialog_createTitle);
-                EditText dlg_contents = (EditText) dialogView.findViewById(R.id.ct_dialog_createContent);
+                TextView dlg_date = (TextView) dialogView.findViewById(R.id.ct_dialog_createDate);
+                TextView dlg_title = (TextView) dialogView.findViewById(R.id.ct_dialog_createTitle);
+                TextView dlg_contents = (TextView) dialogView.findViewById(R.id.ct_dialog_createContent);
 
                 Glide.with(getApplicationContext()).load(image.get(position)).into(dlg_img);
                 dlg_img.setScaleType(ImageView.ScaleType.FIT_XY);
