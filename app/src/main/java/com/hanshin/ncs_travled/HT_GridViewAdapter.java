@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -21,6 +22,9 @@ public class HT_GridViewAdapter extends BaseAdapter {
     ArrayList<Uri> imageList;
     ArrayList<Uri> videoList;
     ArrayList<Uri> seeList = new ArrayList<Uri>();
+
+    int videoNumber=1;
+    int imageNumber=0;
 
     public HT_GridViewAdapter(Context c, ArrayList<Uri> imageList, ArrayList<Uri> videoList,  ArrayList<Uri> seeList) {
         context = c;
@@ -53,15 +57,25 @@ public class HT_GridViewAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.gallery, parent, false);
+
         }
-        ImageView image = convertView.findViewById(R.id.plus1);
 
         if(seeList.get(position).toString().contains("png") || seeList.get(position).toString().contains("jpeg")|| seeList.get(position).toString().contains("image")){
+            ImageView image = convertView.findViewById(R.id.plus1);
+            TextView text = convertView.findViewById(R.id.ht_ListTitle);
             Glide.with(context).load(seeList.get(position)).into(image);
+            text.setText("이미지 #"+  String.valueOf(imageNumber));
             image.setScaleType(ImageView.ScaleType.FIT_XY);
             image.setPadding(0,5,0,5);
+            imageNumber++;
         }else if(seeList.get(position).toString().contains("mp4") || seeList.get(position).toString().contains("video")){
-          image.setImageResource(R.drawable.video);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView =inflater.inflate(R.layout.gallery2, parent, false);
+            ImageView videoImage = convertView.findViewById(R.id.plus2);
+            TextView text = convertView.findViewById(R.id.ht_ListTitle2);
+            videoImage.setImageResource(R.drawable.video);
+            text.setText("비디오 #"+String.valueOf(videoNumber));
+            videoNumber++;
         }
 
         return convertView;

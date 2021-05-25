@@ -13,11 +13,11 @@
         android:id="@+id/plus1"/>
     <TextView
         android:id="@+id/bt_ListContentTV"
-        android:layout_width="160dp"
-        android:layout_height="25dp"
         android:layout_marginLeft="10dp"
         android:background="#2B70B5"
         android:fontFamily="@font/maplestorybold"
+        android:layout_width="160dp"
+        android:layout_height="25dp"
         android:text="글 작성 x "
         android:textAlignment="center"
         android:textColor="#ffffff"
