@@ -253,7 +253,7 @@ public class HT_Result extends Activity {
 class BackgroundThreads extends  Thread{
     public  void run(){
         try{
-            Thread.sleep(300);
+            Thread.sleep(200);
         }catch (Exception e){
         }
     }

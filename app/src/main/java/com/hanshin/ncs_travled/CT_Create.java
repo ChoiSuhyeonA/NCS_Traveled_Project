@@ -144,13 +144,19 @@ public class CT_Create extends Activity {
         community.put("pageNumber", ct_item.getPageNumber());
         community.put("realDate", ct_item.getRealDate());
 
+        //파이어스토리지 업로드
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        //이미지 리스트를 파이어베이스에 업로드
+
+
         //파이어베이스 스토어 업로드 (데이터)
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // 파이어스토어 ( 이메일명/ 지역 / 도시 /포토북명으로 데이터 분류)
         db.collection("community").document().set(community).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                listAdapter.notifyDataSetChanged();
+              // CT_Activity.listAdapter.notifyDataSetChanged();
                 Toast.makeText(CT_Create.this, "데이터 업로드 성공", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -161,25 +167,19 @@ public class CT_Create extends Activity {
             }
         });
 
-
-        //파이어스토리지 업로드
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-        //이미지 리스트를 파이어베이스에 업로드
-
-          StorageReference imageRef = storageRef.child("community" +"/" + loginEmail + "/" + pageNumber ); //파이어베이스에 업로드할 이미지 이름 지정
-            UploadTask uploadTask = imageRef.putFile(image);
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    listAdapter.notifyDataSetChanged();
-                    //업로드 성공할시 데이타 초기화
-                    ct_item = new CT_Create_Item();
-                    Intent intent = new Intent(getApplicationContext(), CT_Activity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
+        StorageReference imageRef = storageRef.child("community" +"/" + loginEmail + "/" + pageNumber ); //파이어베이스에 업로드할 이미지 이름 지정
+        UploadTask uploadTask = imageRef.putFile(image);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+               // CT_Activity.listAdapter.notifyDataSetChanged();
+                //업로드 성공할시 데이타 초기화
+                ct_item = new CT_Create_Item();
+                Intent intent = new Intent(getApplicationContext(), CT_Activity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
     }
